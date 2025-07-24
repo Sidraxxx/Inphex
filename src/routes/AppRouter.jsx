@@ -5,9 +5,7 @@ import SearchMessages from "../pages/Tags/Tags Search/SearchMessages";
 import SearchItems from "../pages/Tags/Tags Search/SearchItems";
 import CrawlADomain from "../pages/crawlers/splashcrawlers/CrawlADomain";
 import FilterOnionDomains from "../pages/crawlers/Domain Explorer/FilterOnionDomains";
-
-
-
+import VanityExplorer from "../pages/crawlers/Domain Explorer/VanityExplorer";
 
 const AppRouter = () => {
   return (
@@ -18,6 +16,7 @@ const AppRouter = () => {
         <Route path="/SearchMessagesByTags" element={<SearchMessages />} />
         <Route path="/CrawlADomain" element={<CrawlADomain />} />
         <Route path="/FilterOnionDomains" element={<FilterOnionDomains/>} />
+        <Route path="/VanityExplorer" element={<VanityExplorer/>} />
       </Routes>
     </BrowserRouter>
   )
