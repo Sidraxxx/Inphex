@@ -1,12 +1,12 @@
 import { useState, useMemo } from 'react';
-import { Sun, Moon, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ChevronDown, Sun, Moon } from 'lucide-react';
 
 const VanityExplorer = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  // Sample data - in a real app, this would come from props or API
+  // Sample data matching the image
   const sampleData = Array.from({ length: 50 }, (_, i) => ({
     id: i + 1,
     date: '2025/06/22',
@@ -33,7 +33,7 @@ const VanityExplorer = () => {
   const goToNextPage = () => goToPage(currentPage + 1);
 
   const getVisiblePageNumbers = () => {
-    const delta = 2;
+    const delta = 1;
     const range = [];
     const rangeWithDots = [];
 
@@ -54,93 +54,84 @@ const VanityExplorer = () => {
     if (currentPage + delta < totalPages - 1) {
       rangeWithDots.push('...', totalPages);
     } else {
-      rangeWithDots.push(totalPages);
+      if (totalPages > 1) rangeWithDots.push(totalPages);
     }
 
-    return rangeWithDots;
+    return rangeWithDots.filter((item, index, arr) => arr.indexOf(item) === index);
   };
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
 
-  const themeClasses = {
-    container: isDarkMode 
-      ? 'min-h-screen bg-slate-900 text-white' 
-      : 'min-h-screen bg-gray-50 text-gray-900',
-    header: isDarkMode 
-      ? 'bg-slate-800 border-b border-slate-700' 
-      : 'bg-white border-b border-gray-200',
-    table: isDarkMode 
-      ? 'bg-slate-800 border border-slate-700' 
-      : 'bg-white border border-gray-200',
-    tableHeader: isDarkMode 
-      ? 'bg-slate-700 text-slate-200' 
-      : 'bg-gray-100 text-gray-700',
-    tableRow: isDarkMode 
-      ? 'border-b border-slate-700 hover:bg-slate-750' 
-      : 'border-b border-gray-200 hover:bg-gray-50',
-    pagination: isDarkMode 
-      ? 'bg-slate-800 border-t border-slate-700' 
-      : 'bg-white border-t border-gray-200',
-    paginationButton: isDarkMode 
-      ? 'text-slate-300 hover:text-white hover:bg-slate-700 disabled:text-slate-600 disabled:cursor-not-allowed' 
-      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed',
-    activePageButton: isDarkMode 
-      ? 'bg-blue-600 text-white' 
-      : 'bg-blue-600 text-white',
-    themeButton: isDarkMode 
-      ? 'text-slate-300 hover:text-white hover:bg-slate-700' 
-      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
-  };
-
   return (
-    <div className={themeClasses.container}>
-      <div className="max-w-6xl mx-auto">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}>
+      <div className="max-w-4xl mx-auto py-8 px-6">
         {/* Header */}
-        <div className={`${themeClasses.header} px-6 py-4 flex justify-between items-center`}>
-          <h1 className="text-xl font-semibold">Vanity Explorer</h1>
-          <button
-            onClick={toggleTheme}
-            className={`p-2 rounded-lg transition-colors ${themeClasses.themeButton}`}
-          >
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-4">
+            <h1 className={`text-xl font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Vanity Explorer
+            </h1>
+            
+            <button
+              onClick={toggleTheme}
+              className={`p-2 rounded-lg transition-colors ${
+                isDarkMode 
+                  ? 'text-gray-300 hover:text-white hover:bg-slate-700' 
+                  : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+              }`}
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+          </div>
+          
+          {/* Gradient separator line */}
+          <div className="h-0.5 bg-gradient-to-r  from-pink-500 to-blue-500  w-full" />
         </div>
 
-        {/* Table */}
-        <div className="p-6">
-          <div className={`${themeClasses.table} rounded-lg overflow-hidden shadow-sm`}>
-            {/* Table Header */}
-            <div className={`${themeClasses.tableHeader} px-6 py-3 grid grid-cols-3 gap-4 text-sm font-medium`}>
-              <div className="flex items-center space-x-1">
+        {/* Table Container */}
+        <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} border rounded-lg overflow-hidden shadow-sm`}>
+          {/* Table Header */}
+          <div className={isDarkMode ? 'bg-slate-700 text-white' : 'bg-slate-700 text-white'}>
+            <div className="grid grid-cols-3 gap-4 px-6 py-3">
+              <div className="flex items-center space-x-1 text-sm font-medium">
                 <span>Date</span>
-                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                </svg>
+                <ChevronDown size={14} className="text-gray-300" />
               </div>
-              <div>Item</div>
-              <div>Action</div>
+              <div className="text-sm font-medium">Item</div>
+              <div className="text-sm font-medium">Action</div>
             </div>
+          </div>
 
-            {/* Table Body */}
-            <div>
-              {currentData.map((row, index) => (
-                <div key={row.id} className={`${themeClasses.tableRow} px-6 py-4 grid grid-cols-3 gap-4 text-sm`}>
-                  <div className="text-slate-400">{row.date}</div>
-                  <div>{row.item}</div>
-                  <div>{row.action}</div>
-                </div>
-              ))}
-            </div>
+          {/* Table Body */}
+          <div className={`divide-y ${isDarkMode ? 'divide-slate-700' : 'divide-gray-100'}`}>
+            {currentData.map((row, index) => (
+              <div key={row.id} className={`grid grid-cols-3 gap-4 px-6 py-3.5 text-sm ${
+                isDarkMode 
+                  ? 'bg-slate-800 hover:bg-slate-750' 
+                  : 'bg-gray-50 hover:bg-gray-100'
+              }`}>
+                <div className={isDarkMode ? 'text-slate-400' : 'text-gray-600'}>{row.date}</div>
+                <div className={isDarkMode ? 'text-slate-200' : 'text-gray-900'}>{row.item}</div>
+                <div className={isDarkMode ? 'text-slate-200' : 'text-gray-900'}>{row.action}</div>
+              </div>
+            ))}
+          </div>
 
-            {/* Pagination */}
-            <div className={`${themeClasses.pagination} px-6 py-4 flex items-center justify-center space-x-1`}>
+          {/* Pagination */}
+          <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-100'} border-t px-6 py-4`}>
+            <div className="flex items-center justify-center space-x-1">
               {/* First Page */}
               <button
                 onClick={goToFirstPage}
                 disabled={currentPage === 1}
-                className={`p-2 rounded transition-colors ${themeClasses.paginationButton}`}
+                className={`p-1.5 transition-colors ${
+                  isDarkMode 
+                    ? 'text-slate-400 hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+                    : 'text-gray-400 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+                }`}
+                title="First"
               >
                 <ChevronsLeft size={16} />
               </button>
@@ -149,36 +140,50 @@ const VanityExplorer = () => {
               <button
                 onClick={goToPreviousPage}
                 disabled={currentPage === 1}
-                className={`p-2 rounded transition-colors ${themeClasses.paginationButton}`}
+                className={`p-1.5 transition-colors ${
+                  isDarkMode 
+                    ? 'text-slate-400 hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+                    : 'text-gray-400 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+                }`}
+                title="Back"
               >
                 <ChevronLeft size={16} />
               </button>
 
               {/* Page Numbers */}
-              {getVisiblePageNumbers().map((pageNum, index) => (
-                <div key={index}>
-                  {pageNum === '...' ? (
-                    <span className="px-3 py-2 text-sm text-slate-400">...</span>
-                  ) : (
-                    <button
-                      onClick={() => goToPage(pageNum)}
-                      className={`px-3 py-2 text-sm rounded transition-colors ${
-                        currentPage === pageNum
-                          ? themeClasses.activePageButton
-                          : themeClasses.paginationButton
-                      }`}
-                    >
-                      {pageNum}
-                    </button>
-                  )}
-                </div>
-              ))}
+              <div className="flex items-center space-x-1 mx-4">
+                {getVisiblePageNumbers().map((pageNum, index) => (
+                  <div key={index}>
+                    {pageNum === '...' ? (
+                      <span className={`px-2 py-1 text-sm ${isDarkMode ? 'text-slate-500' : 'text-gray-400'}`}>...</span>
+                    ) : (
+                      <button
+                        onClick={() => goToPage(pageNum)}
+                        className={`min-w-[32px] h-8 px-3 text-sm rounded transition-colors ${
+                          currentPage === pageNum
+                            ? 'bg-blue-500 text-white'
+                            : isDarkMode 
+                              ? 'text-slate-300 hover:bg-slate-700 hover:text-white'
+                              : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
 
               {/* Next Page */}
               <button
                 onClick={goToNextPage}
                 disabled={currentPage === totalPages}
-                className={`p-2 rounded transition-colors ${themeClasses.paginationButton}`}
+                className={`p-1.5 transition-colors ${
+                  isDarkMode 
+                    ? 'text-slate-400 hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+                    : 'text-gray-400 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+                }`}
+                title="Next"
               >
                 <ChevronRight size={16} />
               </button>
@@ -187,16 +192,16 @@ const VanityExplorer = () => {
               <button
                 onClick={goToLastPage}
                 disabled={currentPage === totalPages}
-                className={`p-2 rounded transition-colors ${themeClasses.paginationButton}`}
+                className={`p-1.5 transition-colors ${
+                  isDarkMode 
+                    ? 'text-slate-400 hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+                    : 'text-gray-400 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+                }`}
+                title="Last"
               >
                 <ChevronsRight size={16} />
               </button>
             </div>
-          </div>
-
-          {/* Page Info */}
-          <div className="mt-4 text-center text-sm text-slate-400">
-            Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, sampleData.length)} of {sampleData.length} entries
           </div>
         </div>
       </div>

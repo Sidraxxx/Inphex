@@ -6,6 +6,9 @@ import SearchItems from "../pages/Tags/Tags Search/SearchItems";
 import ManualCrawler from "../pages/crawlers/splashcrawlers/ManualCrawler";
 import OnionExplorer from "../pages/crawlers/Domain Explorer/OnionExplorer";
 import VanityExplorer from "../pages/crawlers/Domain Explorer/VanityExplorer";
+import AddCookieJar from "../pages/crawlers/cookiejar/AddCookieJar";
+import AllCookieJar from "../pages/crawlers/cookiejar/AllCookieJar";
+
 
 const AppRouter = () => {
   return (
@@ -17,6 +20,9 @@ const AppRouter = () => {
         <Route path="/ManualCrawler" element={<ManualCrawler />} />
         <Route path="/OnionExplorer" element={<OnionExplorer/>} />
         <Route path="/VanityExplorer" element={<VanityExplorer/>} />
+        <Route path="/AddCookieJar" element={< AddCookieJar/>} />
+        <Route path="/AllCookieJar" element={<AllCookieJar/>} />
+
       </Routes>
     </BrowserRouter>
   )
