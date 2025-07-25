@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, Filter, Sun, Moon, ExternalLink, CheckCircle, XCircle } from 'lucide-react';
 
-const FilterOnionDomains = () => {
+const OnionExplorer = () => {
   const [isDark, setIsDark] = useState(true);
   const [blurLevel, setBlurLevel] = useState(50);
   const [startDate, setStartDate] = useState('2025-06-11');
@@ -318,4 +318,4 @@ const FilterOnionDomains = () => {
   );
 };
 
-export default FilterOnionDomains;
+export default OnionExplorer;

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Moon, Sun, X } from 'lucide-react';
+import bgImage from '../../../assets/bg.png';
+
 
 const SearchItems = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -127,7 +129,17 @@ const SearchItems = () => {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div
+  className={`min-h-screen transition-colors duration-300 p-20 ${
+    darkMode ? 'text-white' : 'bg-gray-50 text-gray-900'
+  }`}
+  style={darkMode ? {
+    backgroundImage: `url(${bgImage})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+  } : {}}
+>
       {/* Theme Toggle */}
       <div className="absolute top-4 right-4">
         <button
@@ -140,15 +152,21 @@ const SearchItems = () => {
         </button>
       </div>
 
-      <div className="p-8 max-w-none w-full">
+      <div className="p-8  w-full">
         {/* Title */}
-        <h1 className="text-2xl font-semibold mb-8">Search Items by Tags</h1>
+       <div className="w-full mb-2 pb-4 border-b border-transparent relative inline-block">
+  <h1 className="text-xl  flex justify-start">
+    Search Items by Tags
+    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F56C89] to-[#39D3EC]"></span>
+  </h1>
+</div>
+
 
         {/* Filter Section */}
-        <div className={`p-6 rounded-lg mb-6 ${darkMode ? 'bg-slate-800' : 'bg-white shadow-sm'}`}>
-          <h2 className="text-lg font-medium mb-4">Filter Items</h2>
+        <div className={`p-6 rounded-lg m-6 ${darkMode ? 'bg-slate-800/20 border-1 border-[#2C3440]' : 'bg-white shadow-sm'}`}>
+          <h2 className=" mb-4 flex justify-start">Filter Items</h2>
           
-          <div className="flex flex-col sm:flex-row gap-4 mb-4">
+          <div className="flex justify-center items-center flex-col sm:flex-row gap-2 mb-2">
             <div className="relative flex-1">
               <input
                 type="text"
@@ -157,8 +175,8 @@ const SearchItems = () => {
                 onChange={(e) => handleFilterChange('tag1', e.target.value)}
                 className={`w-full px-3 py-2 border rounded-md pr-8 ${
                   darkMode 
-                    ? 'bg-slate-700 border-slate-600 text-white placeholder-slate-400' 
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                    ? 'border-[#2C3440] text-white placeholder-slate-400' 
+                    : 'bg-white border-[#CBD5E1] text-gray-900 placeholder-gray-500'
                 }`}
               />
               {filters.tag1 && (
@@ -170,7 +188,7 @@ const SearchItems = () => {
                 </button>
               )}
             </div>
-
+<span className=''>-</span>
             <div className="relative flex-1">
               <input
                 type="text"
@@ -179,8 +197,8 @@ const SearchItems = () => {
                 onChange={(e) => handleFilterChange('tag2', e.target.value)}
                 className={`w-full px-3 py-2 border rounded-md pr-8 ${
                   darkMode 
-                    ? 'bg-slate-700 border-slate-600 text-white placeholder-slate-400' 
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                    ? 'border-[#2C3440] text-white placeholder-slate-400' 
+                    : 'bg-white border-[#CBD5E1] text-gray-900 placeholder-gray-500'
                 }`}
               />
               {filters.tag2 && (
@@ -195,33 +213,40 @@ const SearchItems = () => {
           </div>
 
           {/* Tag Selection */}
-          <div className="mb-4">
+          <div className="mb-2">
             <div className="relative">
-              <select
-                value=""
-                onChange={(e) => e.target.value && handleFilterChange('tagSelect1', e.target.value)}
-                className={`w-full px-3 py-2 border rounded-md ${
-                  darkMode 
-                    ? 'bg-slate-700 border-slate-600 text-white' 
-                    : 'bg-white border-gray-300 text-gray-900'
-                }`}
-              >
-                <option value="">Select tags...</option>
-                <option value="org">org</option>
-                <option value="text">text</option>
-                <option value="database">database</option>
-                <option value="automation">automation</option>
-                <option value="prod">prod</option>
-                <option value="dev">dev</option>
-                <option value="staging">staging</option>
-              </select>
-            </div>
+  <select
+    defaultValue=""
+    onChange={(e) =>
+      e.target.value && handleFilterChange('tagSelect1', e.target.value)
+    }
+    className={`w-full px-3 py-2 border rounded-md ${
+      darkMode
+        ? 'border-[#2C3440] text-white bg-[#2C3440]'
+        : 'bg-white border-[#CBD5E1] text-gray-900'
+    }`}
+  >
+    <option value="" disabled hidden className={darkMode ? 'text-slate-300 ' : 'text-gray-400'}>
+      Select Tags
+    </option>
+    <option value="infoleak:automatic-detection-”base-64”">
+      infoleak:automatic-detection-”base-64”
+    </option>
+    <option value="text">text</option>
+    <option value="database">database</option>
+    <option value="automation">automation</option>
+    <option value="prod">prod</option>
+    <option value="dev">dev</option>
+    <option value="staging">staging</option>
+  </select>
+
+</div>
             
             {/* Selected Tags Display */}
             {filters.tagSelect1.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
                 {filters.tagSelect1.map((tag) => (
-                  <span key={tag} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-cyan-500 text-white">
+                  <span key={tag} className="inline-flex items-center px-3 py-1 rounded-md text-sm bg-[#00ADB5] text-white">
                     {tag}
                     <button
                       onClick={() => removeTagFromSelection(tag)}
@@ -263,7 +288,7 @@ const SearchItems = () => {
         </div>
 
         {/* Search and Results Section */}
-        <div className={`rounded-lg ${darkMode ? 'bg-slate-800' : 'bg-white shadow-sm'}`}>
+        <div className={`rounded-lg m-6 ${darkMode ? 'bg-slate-800/20 border-1 border-[#2C3440]' : 'bg-white shadow-sm'}`}>
           {/* Search Bar */}
           <div className={`p-4 border-b ${darkMode ? 'border-slate-700' : 'border-gray-200'}`}>
             <div className="flex items-center justify-between">
@@ -275,8 +300,8 @@ const SearchItems = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className={`px-3 py-2 border rounded-md w-64 ${
                     darkMode 
-                      ? 'bg-slate-700 border-slate-600 text-white placeholder-slate-400' 
-                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                      ? ' border-slate-600 text-white placeholder-slate-400' 
+                      : 'bg-white border-[#CBD5E1] text-gray-900 placeholder-gray-500'
                   }`}
                 />
                 {searchTerm && (
@@ -297,6 +322,7 @@ const SearchItems = () => {
                       : 'bg-white border-gray-300 text-gray-900'
                   }`}
                 >
+                   <option value={5}>5</option>
                   <option value={25}>25</option>
                   <option value={50}>50</option>
                   <option value={100}>100</option>
@@ -345,7 +371,7 @@ const SearchItems = () => {
                   className={`px-2 py-1 text-sm rounded ${
                     currentPage === 1 
                       ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-blue-500 hover:bg-blue-50 dark:hover:bg-slate-700'
+                      : 'text-[#38BDF8] hover:bg-blue-50 dark:hover:bg-slate-700'
                   }`}
                 >
                   First
@@ -357,7 +383,7 @@ const SearchItems = () => {
                   className={`p-1 rounded ${
                     currentPage === 1 
                       ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-blue-500 hover:bg-blue-50 dark:hover:bg-slate-700'
+                      : 'text-[#38BDF8] hover:bg-blue-50 dark:hover:bg-slate-700'
                   }`}
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -369,8 +395,8 @@ const SearchItems = () => {
                     onClick={() => goToPage(page)}
                     className={`px-3 py-1 text-sm rounded ${
                       page === currentPage
-                        ? 'bg-blue-500 text-white'
-                        : 'text-blue-500 hover:bg-blue-50 dark:hover:bg-slate-700'
+                        ? 'bg-[#38BDF8] text-white'
+                        : 'text-[#38BDF8] hover:bg-blue-50 dark:hover:bg-slate-700'
                     }`}
                   >
                     {page}
@@ -383,7 +409,7 @@ const SearchItems = () => {
                   className={`p-1 rounded ${
                     currentPage === totalPages 
                       ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-blue-500 hover:bg-blue-50 dark:hover:bg-slate-700'
+                      : 'text-[#38BDF8] hover:bg-blue-50 dark:hover:bg-slate-700'
                   }`}
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -395,7 +421,7 @@ const SearchItems = () => {
                   className={`px-2 py-1 text-sm rounded ${
                     currentPage === totalPages 
                       ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-blue-500 hover:bg-blue-50 dark:hover:bg-slate-700'
+                      : 'text-[#38BDF8] hover:bg-blue-50 dark:hover:bg-slate-700'
                   }`}
                 >
                   Last

@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import SearchMessages from "../pages/Tags/Tags Search/SearchMessages";
 import SearchItems from "../pages/Tags/Tags Search/SearchItems";
-import CrawlADomain from "../pages/crawlers/splashcrawlers/CrawlADomain";
-import FilterOnionDomains from "../pages/crawlers/Domain Explorer/FilterOnionDomains";
+import ManualCrawler from "../pages/crawlers/splashcrawlers/ManualCrawler";
+import OnionExplorer from "../pages/crawlers/Domain Explorer/OnionExplorer";
 import VanityExplorer from "../pages/crawlers/Domain Explorer/VanityExplorer";
 
 const AppRouter = () => {
@@ -12,10 +12,10 @@ const AppRouter = () => {
      <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/SearchItemsByTags" element={< SearchItems/>} />
-        <Route path="/SearchMessagesByTags" element={<SearchMessages />} />
-        <Route path="/CrawlADomain" element={<CrawlADomain />} />
-        <Route path="/FilterOnionDomains" element={<FilterOnionDomains/>} />
+        <Route path="/Tags/TagsSearch/SearchItems" element={< SearchItems/>} />
+        <Route path="/Tags/TagsSearch/SearchMessages" element={<SearchMessages />} />
+        <Route path="/ManualCrawler" element={<ManualCrawler />} />
+        <Route path="/OnionExplorer" element={<OnionExplorer/>} />
         <Route path="/VanityExplorer" element={<VanityExplorer/>} />
       </Routes>
     </BrowserRouter>

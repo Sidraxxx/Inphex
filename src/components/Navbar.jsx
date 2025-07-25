@@ -276,7 +276,7 @@ const Navbar = () => {
         transition: 'all 0.2s ease-in-out'
       }}
     >
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 16px' }}>
+      <div style={{ padding: '20px 40px'}}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '48px' }}>
           {/* Logo with added padding */}
           <div style={{ flexShrink: 0, paddingRight: '48px' }}>
