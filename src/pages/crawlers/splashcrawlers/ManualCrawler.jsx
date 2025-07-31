@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { useTheme } from "../../../context/ThemeContext"
 
 
 // Icon Components
@@ -35,7 +36,7 @@ const ChevronDownIcon = ({ isOpen = false }) => (
 )
 
 // Custom Dropdown Component
-const Dropdown = ({ value, onChange, options, className = "", placeholder = "Select option" }) => {
+const Dropdown1 = ({ value, onChange, options, className = "", placeholder = "Select option" }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef(null)
 
@@ -55,10 +56,10 @@ const Dropdown = ({ value, onChange, options, className = "", placeholder = "Sel
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-3 py-2 text-left bg-transparent border border-cyan-500 dark:border-cyan-400 rounded text-gray-900 dark:text-white flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm"
+        className="w-full px-3 py-2 text-left bg-transparent border rounded-sm dark:border-[#3F4A5B] border-[#d8d8d8]  text-[#C4C4C4] dark:text-[#8C8A8A] flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm"
       >
-        <span className={value === options[0] ? "text-cyan-500 dark:text-cyan-400" : ""}>{value}</span>
-        <ChevronDownIcon isOpen={isOpen} />
+        <span className={value === options[0] ? "dark:text-[#8C8A8A] text-[#C4C4C4]" : ""}>{value}</span>
+        <ChevronDownIcon isOpen={isOpen} />   
       </button>
       {isOpen && (
         <div className="absolute z-20 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg">
@@ -80,6 +81,52 @@ const Dropdown = ({ value, onChange, options, className = "", placeholder = "Sel
     </div>
   )
 }
+const Dropdown2 = ({ value, onChange, options, className = "", placeholder = "Select option" }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  return (
+    <div className={`relative ${className}`} ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-3 py-2 text-left rounded bg-[#1F6F8B]/20 text-[#1F6F8B] dark:text-white flex justify-between items-center  transition-colors text-sm"
+      >
+        <span className={value === options[0] ? "text-[#1F6F8B] dark:text-[#1F6F8B]" : ""}>{value}</span>
+        <ChevronDownIcon isOpen={isOpen} />   
+      </button>
+      {isOpen && (
+        <div className="absolute z-20 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg">
+          {options.slice(0, 6).map((option, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => {
+                onChange(option)
+                setIsOpen(false)
+              }}
+              className="w-full px-3 py-2 text-left hover:bg-[#1F6F8B]/20 dark:hover:bg-gray-700 text-gray-900 dark:text-white first:rounded-t last:rounded-b transition-colors text-sm"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 
 // Custom Toggle Component
 const Toggle = ({ enabled, onChange, label }) => (
@@ -103,7 +150,6 @@ const Toggle = ({ enabled, onChange, label }) => (
 
 // Main CrawlADomain Component
 const ManualCrawler = () => {
-  const [darkMode, setDarkMode] = useState(true)
   const [customTags, setCustomTags] = useState("")
   const [selectedTags1, setSelectedTags1] = useState("Select Tags")
   const [selectedTaxonomie, setSelectedTaxonomie] = useState("Taxonomie Selected")
@@ -117,6 +163,10 @@ const ManualCrawler = () => {
   const [htmlEnabled, setHtmlEnabled] = useState(false)
   const [screenshotEnabled, setScreenshotEnabled] = useState(true)
   const [harEnabled, setHarEnabled] = useState(false)
+  const [selected, setSelected] = useState("left");
+
+  const { theme } = useTheme();
+const darkMode = theme === "dark";
 
   // Dummy data for dropdowns
   const selectTagsOptions1 = [
@@ -167,9 +217,6 @@ const ManualCrawler = () => {
 
   const depthLimitOptions = ["0", "1", "2", "3", "4", "5"]
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
-  }
 
   const handleSubmit = () => {
     const formData = {
@@ -194,14 +241,7 @@ const ManualCrawler = () => {
     alert("Form submitted successfully! Check console for details.")
   }
 
-  // Apply dark mode class to document
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-  }, [darkMode])
+
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? "bg-gray-900" : "bg-gray-50"}`}>
@@ -209,17 +249,7 @@ const ManualCrawler = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h1 className={`text-xl font-medium ${darkMode ? "text-white" : "text-gray-900"}`}>Crawl A Domain</h1>
-          <button
-            onClick={toggleDarkMode}
-            className={`p-2 rounded-lg transition-colors ${
-              darkMode
-                ? "bg-gray-800 hover:bg-gray-700 text-yellow-400"
-                : "bg-white hover:bg-gray-50 text-gray-600 border border-gray-300"
-            }`}
-            title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-          >
-            {darkMode ? <SunIcon /> : <MoonIcon />}
-          </button>
+          
         </div>
 
         {/* Main Form Container */}
@@ -242,30 +272,83 @@ const ManualCrawler = () => {
               />
 
               {/* Flex layout for dropdowns */}
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <Dropdown value={selectedTags1} onChange={setSelectedTags1} options={selectTagsOptions1} />
-                </div>
-                <div className="flex-1">
-                  <Dropdown value={selectedTaxonomie} onChange={setSelectedTaxonomie} options={taxonomieOptions} />
-                </div>
-                <div className="flex-1">
-                  <Dropdown value={selectedTags2} onChange={setSelectedTags2} options={selectTagsOptions2} />
-                </div>
-                <div className="flex-1">
-                  <Dropdown value={selectedGalaxy} onChange={setSelectedGalaxy} options={galaxyOptions} />
-                </div>
-              </div>
+              <div className="flex gap-5 w-full">
+  {/* part1 */}
+  <div className="flex w-full gap-1">
+    <div className="w-full">
+      <Dropdown1
+        value={selectedTags1}
+        onChange={setSelectedTags1}
+        options={selectTagsOptions1}
+        className="w-full"
+      />
+    </div>
+    <div className="flex-shrink-0">
+      <Dropdown2
+        value={selectedTaxonomie}
+        onChange={setSelectedTaxonomie}
+        options={taxonomieOptions}
+        className=""
+      />
+    </div>
+  </div>
+
+  {/* part 2 */}
+  <div className="flex w-full gap-1">
+    <div className="w-full">
+      <Dropdown1
+        value={selectedTags2}
+        onChange={setSelectedTags2}
+        options={selectTagsOptions2}
+        className="w-full  "
+      />
+    </div>
+    <div className="flex-shrink-0">
+      <Dropdown2
+        value={selectedGalaxy}
+        onChange={setSelectedGalaxy}
+        options={galaxyOptions}
+        className=""
+      />
+    </div>
+  </div>
+</div>
+
             </div>
           </div>
 
           {/* Multiple URLs Section */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <Toggle enabled={multipleUrls} onChange={setMultipleUrls} label="Multiple URLs" />
-              <span className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>Single URL</span>
+          {/* <div className="space-y-4">
+            <div className="flex justify-between w-fit">
+              <span className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-600"} pr-4`}>Single URL</span>
+              <Toggle enabled={multipleUrls} onChange={setMultipleUrls}/>
+              <span className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>Multiple URLs</span>
             </div>
+ </div> */}
 
+            {/* self  */}
+            <div className="space-y-2">
+ <div className="flex gap-3">
+      <button
+        onClick={() => setSelected("left") && setMultipleUrls}
+        className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300
+          ${selected === "left"
+            ? "border border-[#1F6F8B] bg-[#1F6F8B] text-white"
+            : "border border-gray-200 dark:border-[#3F4A5B] dark:text-gray-400 text-gray-700 hover:bg-[#1F6F8B]/20 dark:hover:border-[#1F6F8B]/20 hover:border-[#1F6F8B]/20"}`}
+      >
+        Single Url
+      </button>
+
+      <button
+        onClick={() => setSelected("right") && setMultipleUrls}
+        className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300
+          ${selected === "right"
+            ? "border border-[#1F6F8B] bg-[#1F6F8B] text-white"
+            : "border border-gray-200 dark:border-[#3F4A5B] dark:text-gray-400 text-gray-700 hover:bg-[#1F6F8B]/20 dark:hover:border-[#1F6F8B]/20 hover:border-[#1F6F8B]/20"}`}
+      >
+          Multiple URLs
+      </button>
+    </div>
             <input
               type="text"
               placeholder="Address Or Domain"
@@ -277,7 +360,7 @@ const ManualCrawler = () => {
                   : "bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500"
               }`}
             />
-          </div>
+         </div>
 
           {/* Configuration Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

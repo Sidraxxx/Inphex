@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-
+import { useTheme } from '../context/ThemeContext';
 const Navbar = () => {
-  const [isDark, setIsDark] = useState(false);
+
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
   const [isTagsOpen, setIsTagsOpen] = useState(false);
   const [isLeaksOpen, setIsLeaksOpen] = useState(false);
   const [isCrawlersOpen, setCrawlersOpen] = useState(false);
@@ -140,7 +142,8 @@ const Navbar = () => {
     }
   };
 
-  const currentTheme = isDark ? themes.dark : themes.light;
+   const currentTheme = isDark ? themes.dark : themes.light;
+ 
 
   // Icons as SVG components
   const ChevronDown = ({ style }) => (
@@ -179,32 +182,7 @@ const Navbar = () => {
     </svg>
   );
 
-  // Initialize theme on component mount
-  useEffect(() => {
-    try {
-      const savedTheme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      
-      const shouldBeDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
-      setIsDark(shouldBeDark);
-    } catch (error) {
-      console.log('Theme initialization error:', error);
-      setIsDark(false);
-    }
-  }, []);
 
-  // Handle theme toggle
-  const toggleTheme = () => {
-    const newTheme = !isDark;
-    setIsDark(newTheme);
-    
-    try {
-      localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-      console.log('Switched to', newTheme ? 'dark' : 'light', 'mode');
-    } catch (error) {
-      console.log('Theme toggle error:', error);
-    }
-  };
 
   useEffect(() => {
     function handleClickOutside(event) {

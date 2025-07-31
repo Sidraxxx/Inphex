@@ -18,6 +18,9 @@ import AilSync from "../pages/servermanagement/Ailsync/AilSync";
 import Profile from "../pages/servermanagement/myprofile/Profile";
 
 
+
+
+
 const AppRouter = () => {
   return (
      <BrowserRouter>
