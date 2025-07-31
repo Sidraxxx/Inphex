@@ -13,6 +13,9 @@ import OnionExplorer from "../pages/crawlers/Domain Explorer/OnionExplorer";
 import VanityExplorer from "../pages/crawlers/Domain Explorer/VanityExplorer";
 import AddCookieJar from "../pages/crawlers/cookiejar/AddCookieJar";
 import AllCookieJar from "../pages/crawlers/cookiejar/AllCookieJar";
+import ServerStatus from "../pages/servermanagement/diagnostic/ServerStatus";
+import AilSync from "../pages/servermanagement/Ailsync/AilSync";
+import Profile from "../pages/servermanagement/myprofile/Profile";
 
 
 const AppRouter = () => {
@@ -35,6 +38,11 @@ const AppRouter = () => {
         <Route path="/VanityExplorer" element={<VanityExplorer/>} />
         <Route path="/AddCookieJar" element={< AddCookieJar/>} />
         <Route path="/AllCookieJar" element={<AllCookieJar/>} />
+        <Route path="/ServerStatus" element={<ServerStatus/>} />
+        <Route path="/AilSync" element={<AilSync/>} />
+        <Route path="/Profile" element={<Profile/>} />
+
+       
 
       </Routes>
     </BrowserRouter>
