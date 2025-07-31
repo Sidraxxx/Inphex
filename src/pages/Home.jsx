@@ -1,93 +1,96 @@
-"use client"
+import { AlignLeft, AlignRight } from "lucide-react";
+import React from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 
-import { useState } from "react"
+// Home2 Component
+export default function Home2({ isDark }) {
+  const [selectedDate, setSelectedDate] = React.useState("2024-01-15");
 
-export default function Dashboard() {
-  const [isDark, setIsDark] = useState(false)
-  const [trackersPage, setTrackersPage] = useState(1)
-  const [tagsPage, setTagsPage] = useState(1)
-  const [selectedDate, setSelectedDate] = useState("2024-01-15")
-  const [searchDate, setSearchDate] = useState("")
-  const itemsPerPage = 5
 
-  // Multiple chart datasets for different dates
+
+// Multiple chart datasets for different dates
   const chartDatasets = {
-    "2024-01-15": [
-      { month: "Jan", live: 35, down: 25 },
-      { month: "Feb", live: 55, down: 15 },
-      { month: "Mar", live: 25, down: 35 },
-      { month: "Apr", live: 45, down: 20 },
-      { month: "May", live: 65, down: 10 },
-      { month: "Jun", live: 30, down: 30 },
-      { month: "Jul", live: 50, down: 25 },
-      { month: "Aug", live: 40, down: 20 },
-      { month: "Sep", live: 60, down: 15 },
-      { month: "Oct", live: 35, down: 25 },
-      { month: "Nov", live: 55, down: 20 },
-      { month: "Dec", live: 45, down: 30 },
-    ],
-    "2024-02-20": [
-      { month: "Jan", live: 42, down: 18 },
-      { month: "Feb", live: 38, down: 22 },
-      { month: "Mar", live: 55, down: 15 },
-      { month: "Apr", live: 30, down: 35 },
-      { month: "May", live: 48, down: 12 },
-      { month: "Jun", live: 62, down: 8 },
-      { month: "Jul", live: 35, down: 25 },
-      { month: "Aug", live: 58, down: 12 },
-      { month: "Sep", live: 45, down: 20 },
-      { month: "Oct", live: 52, down: 18 },
-      { month: "Nov", live: 40, down: 30 },
-      { month: "Dec", live: 60, down: 10 },
-    ],
-    "2024-03-10": [
-      { month: "Jan", live: 28, down: 32 },
-      { month: "Feb", live: 65, down: 5 },
-      { month: "Mar", live: 40, down: 20 },
-      { month: "Apr", live: 55, down: 15 },
-      { month: "May", live: 35, down: 25 },
-      { month: "Jun", live: 48, down: 22 },
-      { month: "Jul", live: 62, down: 8 },
-      { month: "Aug", live: 30, down: 30 },
-      { month: "Sep", live: 58, down: 12 },
-      { month: "Oct", live: 45, down: 25 },
-      { month: "Nov", live: 38, down: 22 },
-      { month: "Dec", live: 52, down: 18 },
-    ],
-    "2024-04-05": [
-      { month: "Jan", live: 50, down: 20 },
-      { month: "Feb", live: 32, down: 28 },
-      { month: "Mar", live: 58, down: 12 },
-      { month: "Apr", live: 25, down: 35 },
-      { month: "May", live: 60, down: 10 },
-      { month: "Jun", live: 42, down: 18 },
-      { month: "Jul", live: 38, down: 22 },
-      { month: "Aug", live: 55, down: 15 },
-      { month: "Sep", live: 30, down: 30 },
-      { month: "Oct", live: 48, down: 22 },
-      { month: "Nov", live: 62, down: 8 },
-      { month: "Dec", live: 35, down: 25 },
-    ],
-    "2024-05-12": [
-      { month: "Jan", live: 45, down: 25 },
-      { month: "Feb", live: 60, down: 10 },
-      { month: "Mar", live: 32, down: 28 },
-      { month: "Apr", live: 52, down: 18 },
-      { month: "May", live: 28, down: 32 },
-      { month: "Jun", live: 58, down: 12 },
-      { month: "Jul", live: 40, down: 20 },
-      { month: "Aug", live: 35, down: 25 },
-      { month: "Sep", live: 55, down: 15 },
-      { month: "Oct", live: 42, down: 18 },
-      { month: "Nov", live: 48, down: 22 },
-      { month: "Dec", live: 62, down: 8 },
-    ],
-  }
+  "2024-01-15": [
+    { time: "00:00", live: 35, down: 25 },
+    { time: "02:00", live: 55, down: 15 },
+    { time: "04:00", live: 25, down: 35 },
+    { time: "06:00", live: 45, down: 20 },
+    { time: "08:00", live: 65, down: 10 },
+    { time: "10:00", live: 30, down: 30 },
+    { time: "12:00", live: 50, down: 25 },
+    { time: "14:00", live: 40, down: 20 },
+    { time: "16:00", live: 60, down: 15 },
+    { time: "18:00", live: 35, down: 25 },
+    { time: "20:00", live: 55, down: 20 },
+    { time: "22:00", live: 45, down: 30 },
+  ],
+  "2024-02-20": [
+    { time: "00:00", live: 42, down: 18 },
+    { time: "02:00", live: 38, down: 22 },
+    { time: "04:00", live: 55, down: 15 },
+    { time: "06:00", live: 30, down: 35 },
+    { time: "08:00", live: 48, down: 12 },
+    { time: "10:00", live: 62, down: 8 },
+    { time: "12:00", live: 35, down: 25 },
+    { time: "14:00", live: 58, down: 12 },
+    { time: "16:00", live: 45, down: 20 },
+    { time: "18:00", live: 52, down: 18 },
+    { time: "20:00", live: 40, down: 30 },
+    { time: "22:00", live: 60, down: 10 },
+  ],
+  "2024-03-10": [
+    { time: "00:00", live: 28, down: 32 },
+    { time: "02:00", live: 65, down: 5 },
+    { time: "04:00", live: 40, down: 20 },
+    { time: "06:00", live: 55, down: 15 },
+    { time: "08:00", live: 35, down: 25 },
+    { time: "10:00", live: 48, down: 22 },
+    { time: "12:00", live: 62, down: 8 },
+    { time: "14:00", live: 30, down: 30 },
+    { time: "16:00", live: 58, down: 12 },
+    { time: "18:00", live: 45, down: 25 },
+    { time: "20:00", live: 38, down: 22 },
+    { time: "22:00", live: 52, down: 18 },
+  ],
+  "2024-04-05": [
+    { time: "00:00", live: 50, down: 20 },
+    { time: "02:00", live: 32, down: 28 },
+    { time: "04:00", live: 58, down: 12 },
+    { time: "06:00", live: 25, down: 35 },
+    { time: "08:00", live: 60, down: 10 },
+    { time: "10:00", live: 42, down: 18 },
+    { time: "12:00", live: 38, down: 22 },
+    { time: "14:00", live: 55, down: 15 },
+    { time: "16:00", live: 30, down: 30 },
+    { time: "18:00", live: 48, down: 22 },
+    { time: "20:00", live: 62, down: 8 },
+    { time: "22:00", live: 35, down: 25 },
+  ],
+  "2024-05-12": [
+    { time: "00:00", live: 45, down: 25 },
+    { time: "02:00", live: 60, down: 10 },
+    { time: "04:00", live: 32, down: 28 },
+    { time: "06:00", live: 52, down: 18 },
+    { time: "08:00", live: 28, down: 32 },
+    { time: "10:00", live: 58, down: 12 },
+    { time: "12:00", live: 40, down: 20 },
+    { time: "14:00", live: 35, down: 25 },
+    { time: "16:00", live: 55, down: 15 },
+    { time: "18:00", live: 42, down: 18 },
+    { time: "20:00", live: 48, down: 22 },
+    { time: "22:00", live: 62, down: 8 },
+  ],
+};
 
-  // Get current chart data based on selected date
-  const getCurrentChartData = () => {
-    return chartDatasets[selectedDate] || chartDatasets["2024-01-15"]
-  }
+
 
   // Replace the static categoriesData with dynamic categories based on date
   const categoriesDatasets = {
@@ -158,10 +161,7 @@ export default function Dashboard() {
     ],
   }
 
-  // Add function to get current categories data
-  const getCurrentCategoriesData = () => {
-    return categoriesDatasets[selectedDate] || categoriesDatasets["2024-01-15"]
-  }
+ 
 
   // Extended dummy data for pagination
   const allTrackersData = [
@@ -210,603 +210,495 @@ export default function Dashboard() {
     { id: 20, tags: "network, tcp", time: "3 days ago" },
   ]
 
-  const toggleTheme = () => {
-    setIsDark(!isDark)
+ // Add function to get current categories data
+  const getCurrentCategoriesData = () => {
+    return categoriesDatasets[selectedDate] || categoriesDatasets["2024-01-15"]
   }
-
-  // Date search functionality
-  const handleDateSearch = () => {
-    if (searchDate && chartDatasets[searchDate]) {
-      setSelectedDate(searchDate)
-    } else if (searchDate) {
-      alert("No data available for this date. Available dates: " + Object.keys(chartDatasets).join(", "))
-    }
-  }
-
-  const formatDisplayDate = (dateStr) => {
-    const date = new Date(dateStr)
-    return date.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    })
-  }
-
-  // Pagination logic
-  const totalTrackersPages = Math.ceil(allTrackersData.length / itemsPerPage)
-  const totalTagsPages = Math.ceil(allTagsData.length / itemsPerPage)
-
-  const getCurrentTrackersData = () => {
-    const startIndex = (trackersPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    return allTrackersData.slice(startIndex, endIndex)
-  }
-
-  const getCurrentTagsData = () => {
-    const startIndex = (tagsPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    return allTagsData.slice(startIndex, endIndex)
-  }
-
-  const handleTrackersPageChange = (page) => {
-    if (page >= 1 && page <= totalTrackersPages) {
-      setTrackersPage(page)
-    }
-  }
-
-  const handleTagsPageChange = (page) => {
-    if (page >= 1 && page <= totalTagsPages) {
-      setTagsPage(page)
-    }
-  }
-
-  const feedersData = getCurrentChartData()
-  const maxValue = Math.max(...feedersData.map((d) => d.live + d.down))
-
   const styles = {
     container: {
-      minHeight: "100vh",
-      backgroundColor: isDark ? "#0f172a" : "#f8fafc",
-      color: isDark ? "#ffffff" : "#0f172a",
-      fontFamily: "system-ui, -apple-system, sans-serif",
       padding: "24px",
+      background: isDark ? "#0f172a" : "#f8fafc",
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      gap: "24px",
+      color: isDark ? "#ffffff" : "#0f172a",
     },
-    card: {
-      backgroundColor: isDark ? "#1e293b" : "#ffffff",
-      border: `1px solid ${isDark ? "#334155" : "#e2e8f0"}`,
-      borderRadius: "8px",
-      boxShadow: isDark ? "0 1px 3px rgba(0,0,0,0.3)" : "0 1px 3px rgba(0,0,0,0.1)",
+    topRow: {
+      display: "flex",
+      border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
     },
-    tableHeader: {
-      backgroundColor: isDark ? "#334155" : "#1e293b",
-      color: "#ffffff",
-      padding: "12px 16px",
-      fontSize: "14px",
-      fontWeight: "600",
+    bottomGrid: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "24px",
     },
-    tableRow: {
-      backgroundColor: isDark ? "#1e293b" : "#ffffff",
-      borderBottom: `1px solid ${isDark ? "#334155" : "#e2e8f0"}`,
+  };
+return (
+  <div style={styles.container}>
+    {/* Top Row */}
+    <div style={styles.topRow}>
+      <ChartCard 
+        isDark={isDark} 
+        selectedDate={selectedDate} 
+        chartData={chartDatasets[selectedDate]} 
+      />
+      <TagList 
+        isDark={isDark} 
+        selectedDate={selectedDate} 
+        setSelectedDate={setSelectedDate}
+        categories={getCurrentCategoriesData()}
+      />
+    </div>
+
+    {/* Bottom Row */}
+    <div style={styles.bottomGrid}>
+      <TrackerTable isDark={isDark} data={allTrackersData} />
+      <TagsTable isDark={isDark} data={allTagsData} />
+    </div>
+  </div>
+);} 
+
+
+// Pagination Component
+function Pagination({ isDark, currentPage, totalPages, onPageChange }) {
+  const styles = {
+    container: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "8px 16px",
+      color: isDark ? "#d1d5db" : "#374151",
     },
-    tableCell: {
-      padding: "12px 16px",
-      fontSize: "14px",
-      borderBottom: `1px solid ${isDark ? "#334155" : "#e2e8f0"}`,
+    buttonGroup: {
+      display: "flex",
+      gap: "8px",
     },
     button: {
-      padding: "6px 12px",
-      borderRadius: "4px",
-      border: `1px solid ${isDark ? "#475569" : "#d1d5db"}`,
-      backgroundColor: isDark ? "#475569" : "#ffffff",
-      color: isDark ? "#ffffff" : "#374151",
-      cursor: "pointer",
+      padding: "4px 8px",
       fontSize: "12px",
-      transition: "all 0.2s ease",
+      background: "transparent",
+      border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+      color: isDark ? "#d1d5db" : "#374151",
+      cursor: "pointer",
     },
-    buttonActive: {
-      backgroundColor: "#3b82f6",
-      color: "#ffffff",
+    activeButton: {
+      background: "#3b82f6",
+      color: "#fff",
       border: "1px solid #3b82f6",
     },
-    buttonDisabled: {
-      opacity: 0.5,
-      cursor: "not-allowed",
-    },
-    searchContainer: {
-      display: "flex",
-      alignItems: "center",
-      gap: "8px",
-      marginBottom: "16px",
-      padding: "12px",
-      backgroundColor: isDark ? "#334155" : "#f1f5f9",
-      borderRadius: "6px",
-    },
-    input: {
-      padding: "6px 12px",
-      borderRadius: "4px",
-      border: `1px solid ${isDark ? "#475569" : "#d1d5db"}`,
-      backgroundColor: isDark ? "#475569" : "#ffffff",
-      color: isDark ? "#ffffff" : "#374151",
-      fontSize: "12px",
-      outline: "none",
-    },
-    searchButton: {
-      padding: "6px 12px",
-      borderRadius: "4px",
-      border: "1px solid #3b82f6",
-      backgroundColor: "#3b82f6",
-      color: "#ffffff",
-      cursor: "pointer",
-      fontSize: "12px",
-      transition: "all 0.2s ease",
-    },
-  }
-
-  const PaginationControls = ({ currentPage, totalPages, onPageChange }) => (
-    <div
-      style={{
-        padding: "16px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "4px",
-        borderTop: `1px solid ${isDark ? "#334155" : "#e2e8f0"}`,
-      }}
-    >
-      <button
-        style={{
-          ...styles.button,
-          ...(currentPage === 1 ? styles.buttonDisabled : {}),
-        }}
-        disabled={currentPage === 1}
-        onClick={() => onPageChange(1)}
-      >
-        First
-      </button>
-      <button
-        style={{
-          ...styles.button,
-          ...(currentPage === 1 ? styles.buttonDisabled : {}),
-        }}
-        disabled={currentPage === 1}
-        onClick={() => onPageChange(currentPage - 1)}
-      >
-        Back
-      </button>
-
-      {[...Array(Math.min(5, totalPages))].map((_, index) => {
-        let pageNum
-        if (totalPages <= 5) {
-          pageNum = index + 1
-        } else if (currentPage <= 3) {
-          pageNum = index + 1
-        } else if (currentPage >= totalPages - 2) {
-          pageNum = totalPages - 4 + index
-        } else {
-          pageNum = currentPage - 2 + index
-        }
-
-        return (
-          <button
-            key={pageNum}
-            style={{
-              ...styles.button,
-              ...(currentPage === pageNum ? styles.buttonActive : {}),
-            }}
-            onClick={() => onPageChange(pageNum)}
-          >
-            {pageNum}
-          </button>
-        )
-      })}
-
-      {totalPages > 5 && currentPage < totalPages - 2 && (
-        <>
-          <span style={{ margin: "0 8px", fontSize: "12px" }}>...</span>
-          <button style={styles.button} onClick={() => onPageChange(totalPages)}>
-            {totalPages}
-          </button>
-        </>
-      )}
-
-      <button
-        style={{
-          ...styles.button,
-          ...(currentPage === totalPages ? styles.buttonDisabled : {}),
-        }}
-        disabled={currentPage === totalPages}
-        onClick={() => onPageChange(currentPage + 1)}
-      >
-        Next
-      </button>
-      <button
-        style={{
-          ...styles.button,
-          ...(currentPage === totalPages ? styles.buttonDisabled : {}),
-        }}
-        disabled={currentPage === totalPages}
-        onClick={() => onPageChange(totalPages)}
-      >
-        Last
-      </button>
-    </div>
-  )
+  };
 
   return (
     <div style={styles.container}>
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
-        <h1 style={{ fontSize: "24px", fontWeight: "bold", margin: 0 }}>Dashboard</h1>
+      {/* Left */}
+      <div style={styles.buttonGroup}>
         <button
-          style={{
-            padding: "8px 16px",
-            borderRadius: "6px",
-            border: `1px solid ${isDark ? "#475569" : "#d1d5db"}`,
-            backgroundColor: isDark ? "#475569" : "#ffffff",
-            color: isDark ? "#ffffff" : "#374151",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-          }}
-          onClick={toggleTheme}
+          style={styles.button}
+          onClick={() => onPageChange(1)}
+          disabled={currentPage === 1}
         >
-          {isDark ? "☀️ Light" : "🌙 Dark"}
+          {"<<"} First
+        </button>
+        <button
+          style={styles.button}
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          {"<"} Back
         </button>
       </div>
 
-      {/* Date Search */}
-      <div style={styles.searchContainer}>
-        <span style={{ fontSize: "14px", fontWeight: "500" }}>📅 Search Chart by Date:</span>
-        <input
-          type="date"
-          value={searchDate}
-          onChange={(e) => setSearchDate(e.target.value)}
-          style={styles.input}
-          placeholder="YYYY-MM-DD"
-        />
-        <button style={styles.searchButton} onClick={handleDateSearch}>
-          Search
+      {/* Middle Pages */}
+      <div style={styles.buttonGroup}>
+        {[...Array(totalPages)].slice(0, 4).map((_, idx) => {
+          const pageNum = idx + 1;
+          return (
+            <button
+              key={pageNum}
+              onClick={() => onPageChange(pageNum)}
+              style={
+                pageNum === currentPage
+                  ? { ...styles.button, ...styles.activeButton }
+                  : styles.button
+              }
+            >
+              {pageNum}
+            </button>
+          );
+        })}
+        {totalPages > 4 && <span>... {totalPages}</span>}
+      </div>
+
+      {/* Right */}
+      <div style={styles.buttonGroup}>
+        <button
+          style={styles.button}
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next {">"}
         </button>
-        <div style={{ marginLeft: "auto", fontSize: "12px", color: isDark ? "#94a3b8" : "#64748b" }}>
-          Current: {formatDisplayDate(selectedDate)} | Available: {Object.keys(chartDatasets).length} datasets
-        </div>
-      </div>
-
-      {/* Quick Date Buttons */}
-      <div style={{ display: "flex", gap: "8px", marginBottom: "24px", flexWrap: "wrap" }}>
-        {Object.keys(chartDatasets).map((date) => (
-          <button
-            key={date}
-            style={{
-              ...styles.button,
-              ...(selectedDate === date ? styles.buttonActive : {}),
-              fontSize: "11px",
-            }}
-            onClick={() => setSelectedDate(date)}
-          >
-            {formatDisplayDate(date)}
-          </button>
-        ))}
-      </div>
-
-      {/* Main Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "24px", marginBottom: "24px" }}>
-        {/* Feeders Chart */}
-        <div style={styles.card}>
-          <div style={{ padding: "20px", paddingBottom: "16px" }}>
-            <div
-              style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}
-            >
-              <h3 style={{ fontSize: "18px", fontWeight: "600", margin: 0 }}>
-                Feeders - {formatDisplayDate(selectedDate)}
-              </h3>
-              <div style={{ display: "flex", gap: "8px" }}>
-                <span
-                  style={{
-                    padding: "4px 8px",
-                    borderRadius: "12px",
-                    backgroundColor: "#10b981",
-                    color: "#ffffff",
-                    fontSize: "12px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Live
-                </span>
-                <span
-                  style={{
-                    padding: "4px 8px",
-                    borderRadius: "12px",
-                    backgroundColor: "#ef4444",
-                    color: "#ffffff",
-                    fontSize: "12px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Down
-                </span>
-                <span
-                  style={{
-                    padding: "4px 8px",
-                    borderRadius: "12px",
-                    backgroundColor: "#06b6d4",
-                    color: "#ffffff",
-                    fontSize: "12px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Created
-                </span>
-                <span
-                  style={{
-                    padding: "4px 8px",
-                    borderRadius: "12px",
-                    backgroundColor: "#8b5cf6",
-                    color: "#ffffff",
-                    fontSize: "12px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Deleted
-                </span>
-              </div>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                alignItems: "end",
-                justifyContent: "space-between",
-                height: "200px",
-                gap: "4px",
-              }}
-            >
-              {feedersData.map((data, index) => (
-                <div key={index} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1 }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "end",
-                      height: "160px",
-                      width: "100%",
-                      maxWidth: "24px",
-                      gap: "1px",
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "scale(1.05)"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "scale(1)"
-                    }}
-                    title={`${data.month}: Live ${data.live}, Down ${data.down}, Total: ${data.live + data.down}`}
-                  >
-                    <div
-                      style={{
-                        backgroundColor: "#10b981",
-                        height: `${(data.live / maxValue) * 100}%`,
-                        minHeight: "4px",
-                        transition: "all 0.3s ease",
-                      }}
-                    />
-                    <div
-                      style={{
-                        backgroundColor: "#ef4444",
-                        height: `${(data.down / maxValue) * 100}%`,
-                        minHeight: "4px",
-                        transition: "all 0.3s ease",
-                      }}
-                    />
-                  </div>
-                  <span style={{ fontSize: "11px", marginTop: "8px", color: isDark ? "#94a3b8" : "#64748b" }}>
-                    {data.month}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Categories */}
-        <div style={styles.card}>
-          <div style={{ padding: "20px", paddingBottom: "16px" }}>
-            <div
-              style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}
-            >
-              <h3 style={{ fontSize: "18px", fontWeight: "600", margin: 0 }}>Categories</h3>
-              <span style={{ fontSize: "12px", color: isDark ? "#94a3b8" : "#64748b" }}>
-                {formatDisplayDate(selectedDate)}
-              </span>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              {getCurrentCategoriesData().map((category, index) => (
-                <div
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "6px 8px",
-                    cursor: "pointer",
-                    borderRadius: "6px",
-                    transition: "all 0.2s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = isDark ? "#334155" : "#f1f5f9"
-                    e.currentTarget.style.transform = "translateX(4px)"
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "transparent"
-                    e.currentTarget.style.transform = "translateX(0px)"
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <div
-                      style={{
-                        width: "10px",
-                        height: "10px",
-                        borderRadius: "50%",
-                        backgroundColor: category.color,
-                        boxShadow: `0 0 0 2px ${category.color}20`,
-                      }}
-                    />
-                    <span style={{ fontSize: "13px", fontWeight: "500" }}>{category.name}</span>
-                  </div>
-                  <span
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: "600",
-                      backgroundColor: isDark ? "#475569" : "#e2e8f0",
-                      padding: "2px 8px",
-                      borderRadius: "12px",
-                      minWidth: "20px",
-                      textAlign: "center",
-                    }}
-                  >
-                    {category.count}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Tables */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
-        {/* Trackers Table */}
-        <div style={styles.card}>
-          <div style={styles.tableHeader}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <div style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#3b82f6" }} />
-              <span>Tracker</span>
-              <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "8px" }}>
-                <div style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#3b82f6" }} />
-                <span>time</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            {getCurrentTrackersData().map((item) => (
-              <div
-                key={item.id}
-                style={{
-                  ...styles.tableRow,
-                  transition: "all 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = isDark ? "#334155" : "#f8fafc"
-                  e.currentTarget.style.transform = "translateX(2px)"
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = isDark ? "#1e293b" : "#ffffff"
-                  e.currentTarget.style.transform = "translateX(0px)"
-                }}
-              >
-                <div
-                  style={{
-                    ...styles.tableCell,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#3b82f6" }} />
-                    <span>{item.tracker}</span>
-                  </div>
-                  <span style={{ color: isDark ? "#94a3b8" : "#64748b", fontSize: "12px" }}>{item.time}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <PaginationControls
-            currentPage={trackersPage}
-            totalPages={totalTrackersPages}
-            onPageChange={handleTrackersPageChange}
-          />
-        </div>
-
-        {/* Tags Table - FIXED ALIGNMENT: ID left, tags center, time right */}
-        <div style={styles.card}>
-          <div style={styles.tableHeader}>
-            <div style={{ display: "grid", gridTemplateColumns: "80px 1fr 100px", alignItems: "center", gap: "16px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <div style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#3b82f6" }} />
-                <span>ID</span>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <span>tags</span>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <span>time</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            {getCurrentTagsData().map((item) => (
-              <div
-                key={item.id}
-                style={{
-                  ...styles.tableRow,
-                  transition: "all 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = isDark ? "#334155" : "#f8fafc"
-                  e.currentTarget.style.transform = "translateX(2px)"
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = isDark ? "#1e293b" : "#ffffff"
-                  e.currentTarget.style.transform = "translateX(0px)"
-                }}
-              >
-                <div
-                  style={{
-                    ...styles.tableCell,
-                    display: "grid",
-                    gridTemplateColumns: "80px 1fr 100px",
-                    alignItems: "center",
-                    gap: "16px",
-                  }}
-                >
-                  {/* ID - Left aligned */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#10b981" }} />
-                    <span style={{ fontWeight: "600" }}>{item.id}</span>
-                  </div>
-
-                  {/* Tags - Center aligned */}
-                  <div style={{ textAlign: "center" }}>
-                    <span
-                      style={{
-                        backgroundColor: isDark ? "#475569" : "#e2e8f0",
-                        padding: "4px 8px",
-                        borderRadius: "12px",
-                        fontSize: "12px",
-                        display: "inline-block",
-                      }}
-                    >
-                      {item.tags}
-                    </span>
-                  </div>
-
-                  {/* Time - Right aligned */}
-                  <div style={{ textAlign: "right" }}>
-                    <span style={{ color: isDark ? "#94a3b8" : "#64748b", fontSize: "12px" }}>{item.time}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <PaginationControls currentPage={tagsPage} totalPages={totalTagsPages} onPageChange={handleTagsPageChange} />
-        </div>
+        <button
+          style={styles.button}
+          onClick={() => onPageChange(totalPages)}
+          disabled={currentPage === totalPages}
+        >
+          Last {">>"}
+        </button>
       </div>
     </div>
-  )
+  );
 }
+
+function TrackerTable({ isDark, data }) {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const itemsPerPage = 5;
+
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentData = data.slice(startIndex, startIndex + itemsPerPage);
+
+  const styles = {
+    container: {
+      background: isDark ? "#1f2937" : "#ffffff",
+      border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+      overflow: "hidden",
+    },
+    table: {
+      width: "100%",
+      borderCollapse: "collapse",
+      fontSize: "14px",
+      color: isDark ? "#d1d5db" : "#374151",
+    },
+    thead: {
+      background: isDark ? "#1e293b" : "#e2e8f0",
+    },
+    th: {
+      padding: "8px 16px",
+      textAlign: "left",
+      color: isDark ? "#e5e7eb" : "#374151",
+    },
+    td: {
+      padding: "8px 16px",
+    },
+    row: {
+      borderBottom: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
+      cursor: "pointer",
+      transition: "background 0.2s",
+    },
+  };
+
+  return (
+    <div style={styles.container}>
+      <table style={styles.table}>
+        <thead style={styles.thead}>
+          <tr>
+            <th style={styles.th}>Tracker</th>
+            <th style={styles.th}>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentData.map((item) => (
+            <tr
+              key={item.id}
+              style={styles.row}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = isDark ? "#374151" : "#f1f5f9")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background = "transparent")
+              }
+            >
+              <td style={styles.td}>{item.tracker}</td>
+              <td style={styles.td}>{item.time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <Pagination
+        isDark={isDark}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
+    </div>
+  );
+}
+
+
+function TagsTable({ isDark, data }) {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const itemsPerPage = 5;
+
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentData = data.slice(startIndex, startIndex + itemsPerPage);
+
+  const styles = {
+    container: {
+      background: isDark ? "#1f2937" : "#ffffff",
+      border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+      overflow: "hidden",
+    },
+    table: {
+      width: "100%",
+      borderCollapse: "collapse",
+      fontSize: "14px",
+      color: isDark ? "#d1d5db" : "#374151",
+    },
+    thead: {
+      background: isDark ? "#1e293b" : "#e2e8f0",
+    },
+    th: {
+      padding: "8px 16px",
+      textAlign: "left",
+      color: isDark ? "#e5e7eb" : "#374151",
+    },
+    td: {
+      padding: "8px 16px",
+    },
+    row: {
+      borderBottom: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
+      cursor: "pointer",
+      transition: "background 0.2s",
+    },
+  };
+
+  return (
+    <div style={styles.container}>
+      <table style={styles.table}>
+        <thead style={styles.thead}>
+          <tr>
+            <th style={styles.th}>ID</th>
+            <th style={styles.th}>Tags</th>
+            <th style={styles.th}>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentData.map((item) => (
+            <tr
+              key={item.id}
+              style={styles.row}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = isDark ? "#374151" : "#f1f5f9")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background = "transparent")
+              }
+            >
+              <td style={styles.td}>{item.id}</td>
+              <td style={styles.td}>{item.tags}</td>
+              <td style={styles.td}>{item.time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <Pagination
+        isDark={isDark}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
+    </div>
+  );
+}
+
+
+
+// ChartCard Component
+function ChartCard({ isDark, selectedDate, chartData }) {
+  // Use the chart data passed from parent (Home2)
+  const data = chartData || [];
+
+  // Calculate totals for badges
+  const totalUp = data.reduce((sum, item) => sum + (item.live || 0), 0);
+  const totalDown = data.reduce((sum, item) => sum + (item.down || 0), 0);
+
+  const styles = {
+    container: {
+      background: isDark ? "#1f2937" : "#ffffff",
+      padding: "16px",
+      flex: 1,
+    },
+    header: {
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "8px",
+      color: isDark ? "#fff" : "#0f172a",
+    },
+    badgesRow: {
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "16px",
+      fontSize: "12px",
+    },
+    badges: {
+      display: "flex",
+      gap: "8px",
+      alignItems: "center",
+    },
+    badge: (color) => ({
+      background: color,
+      padding: "4px 8px",
+      borderRadius: "4px",
+      color: "#fff",
+      fontSize: "12px",
+    }),
+    logo: {
+      width: "32px",
+      height: "32px",
+      background: isDark ? "#4b5563" : "#d1d5db",
+      borderRadius: "4px",
+    },
+  };
+
+  return (
+    <div style={styles.container}>
+      <div style={styles.header}>
+        <h2>Feeders ({selectedDate})</h2>
+        <h2>Crawlers</h2>
+      </div>
+      <div style={styles.badgesRow}>
+        <div style={styles.badges}>
+          <div style={styles.logo}></div>
+          <span style={styles.badge("#16a34a")}>{totalUp} Up</span>
+          <span style={styles.badge("#dc2626")}>{totalDown} Down</span>
+          <span style={styles.badge("#2563eb")}>
+            {totalUp + totalDown} Crawled
+          </span>
+          <span style={styles.badge("#38bdf8")}>{data.length} Queued</span>
+        </div>
+        <div style={styles.badges}>
+          <div style={styles.logo}></div>
+          <span style={styles.badge("#16a34a")}>{totalUp} Up</span>
+          <span style={styles.badge("#dc2626")}>{totalDown} Down</span>
+          <span style={styles.badge("#2563eb")}>
+            {totalUp + totalDown} Crawled
+          </span>
+          <span style={styles.badge("#38bdf8")}>{data.length} Queued</span>
+        </div>
+      </div>
+
+    <ResponsiveContainer width="100%" height={320}>
+    <BarChart data={data}>
+    <CartesianGrid
+      stroke={isDark ? "#4b5563" : "#d1d5db"}
+      vertical={false}
+    />
+    {/* NOW USING time FOR X-AXIS */}
+    <XAxis dataKey="time" stroke={isDark ? "#ccc" : "#374151"} />
+    <YAxis stroke={isDark ? "#ccc" : "#374151"} />
+    <Tooltip
+      contentStyle={{
+        background: isDark ? "#1e293b" : "#f9fafb",
+        border: "none",
+        color: isDark ? "#fff" : "#374151",
+      }}
+      labelStyle={{ color: isDark ? "#fff" : "#374151" }}
+    />
+    <Bar dataKey="down" stackId="a" fill="#ef4444" />
+    <Bar dataKey="live" stackId="a" fill="#22c55e" />
+  </BarChart>
+</ResponsiveContainer>
+
+    </div>
+  );
+}
+
+// TagList Component
+function TagList({ selectedDate, setSelectedDate, categories, isDark }) {
+  const styles = {
+    container: {
+      background: isDark ? "#1f2937" : "#ffffff",
+      borderLeft: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+      padding: "15px",
+      width: "280px",
+      display: "flex",
+      flexDirection: "column",
+    },
+    dateInput: {
+      background: isDark ? "#374151" : "#f1f5f9",
+      color: isDark ? "#fff" : "#374151",
+      padding: "4px 8px",
+      fontSize: "14px",
+      marginBottom: "16px",
+      border: "none",
+    },
+    listContainer: {
+      flex: 1,
+      overflowY: "auto",
+      maxHeight: "350px",
+      direction: "ltr",
+      scrollbarWidth: "none",
+      padding: "13px",
+    },
+    list: {
+      listStyle: "none",
+      padding: 0,
+      margin: 0,
+      direction: "ltr",
+    },
+    listItem: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "8px 5px",
+      fontSize: "14px",
+      color: isDark ? "#fff" : "#0f172a",
+      borderBottom: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
+      cursor: "pointer",
+      transition: "background 0.2s",
+    },
+    // listItemHover: {
+    //   background: isDark ? "#374151" : "#f1f5f9",
+    // },
+    circle: (color) => ({
+      width: "12px",
+      height: "12px",
+      background: color,
+    }),
+    count: {
+      fontWeight: "600",
+      marginLeft: "8px",
+    },
+  };
+
+  return (
+    <div style={styles.container}>
+      <input
+        type="date"
+        value={selectedDate}
+        onChange={(e) => setSelectedDate(e.target.value)}
+        style={styles.dateInput}
+      />
+      <div style={styles.listContainer}>
+        <ul style={styles.list}>
+          {categories.map((tag, idx) => (
+            <li
+              key={idx}
+              style={styles.listItem}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = isDark ? "#374151" : "#f1f5f9")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background = "transparent")
+              }
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={styles.circle(tag.color)}></span>
+                {tag.name}
+              </div>
+              <span style={styles.count}>{tag.count}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+
+
