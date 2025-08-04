@@ -16,7 +16,8 @@ import AllCookieJar from "../pages/crawlers/cookiejar/AllCookieJar";
 import ServerStatus from "../pages/servermanagement/diagnostic/ServerStatus";
 import AilSync from "../pages/servermanagement/Ailsync/AilSync";
 import Profile from "../pages/servermanagement/myprofile/Profile";
-
+import AddUser from "../pages/servermanagement/usermanagement/AddUser";
+import AllUsers from "../pages/servermanagement/usermanagement/AllUsers";
 
 
 
@@ -44,7 +45,8 @@ const AppRouter = () => {
         <Route path="/ServerStatus" element={<ServerStatus/>} />
         <Route path="/AilSync" element={<AilSync/>} />
         <Route path="/Profile" element={<Profile/>} />
-
+        <Route path="/AllUsers" element={<AllUsers />} />
+        <Route path="/AddUser" element={<AddUser />} />
        
 
       </Routes>

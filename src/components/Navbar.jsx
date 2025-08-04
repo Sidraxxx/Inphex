@@ -131,6 +131,7 @@ const Navbar = () => {
         borderColor: '#4b5563',
         color: '#f9fafb',
         placeholderColor: '#9ca3af'
+        
       },
       searchIcon: {
         color: '#9ca3af'
@@ -628,25 +629,28 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-            {/* Theme toggle */}
-            
-            <button
-              onClick={toggleTheme}
-              style={{
-                padding: '8px',
-                color: currentTheme.themeButton.color,
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'color 0.2s ease-in-out'
-              }}
-              onMouseEnter={(e) => e.target.style.color = currentTheme.themeButton.hoverColor}
-              onMouseLeave={(e) => e.target.style.color = currentTheme.themeButton.color}
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              type="button"
-            >
-              {isDark ? <Sun style={{ color: 'currentColor' }} /> : <Moon style={{ color: 'currentColor' }} />}
-            </button>
+        {/* Theme toggle button */}
+<button
+  onClick={toggleTheme}
+  style={{
+    padding: '8px',
+    color: currentTheme.themeButton.color,
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'color 0.2s ease-in-out'
+  }}
+  onMouseEnter={(e) => e.currentTarget.style.color = currentTheme.themeButton.hoverColor}
+  onMouseLeave={(e) => e.currentTarget.style.color = currentTheme.themeButton.color}
+  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+
+  type="button"
+>
+  {isDark 
+    ? <Sun style={{ color: 'currentColor', width: '20px', height: '20px' }} /> 
+    : <Moon style={{ color: 'currentColor', width: '20px', height: '20px' }} />}
+</button>
+
 
             {/* Logout button */}
             <button 

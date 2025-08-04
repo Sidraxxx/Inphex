@@ -1,5 +1,6 @@
 import { AlignLeft, AlignRight } from "lucide-react";
-import React from "react";
+import React, { use } from "react";
+import { useTheme } from "../context/ThemeContext";
 import {
   BarChart,
   Bar,
@@ -11,9 +12,10 @@ import {
 } from "recharts";
 
 // Home2 Component
-export default function Home2({ isDark }) {
+export default function Home() {
   const [selectedDate, setSelectedDate] = React.useState("2024-01-15");
-
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
 
 // Multiple chart datasets for different dates
@@ -90,8 +92,6 @@ export default function Home2({ isDark }) {
   ],
 };
 
-
-
   // Replace the static categoriesData with dynamic categories based on date
   const categoriesDatasets = {
     "2024-01-15": [
@@ -160,8 +160,6 @@ export default function Home2({ isDark }) {
       { name: "Frameworks", count: 4, color: "#6b7280" },
     ],
   }
-
- 
 
   // Extended dummy data for pagination
   const allTrackersData = [
@@ -372,12 +370,12 @@ function TrackerTable({ isDark, data }) {
       color: isDark ? "#d1d5db" : "#374151",
     },
     thead: {
-      background: isDark ? "#1e293b" : "#e2e8f0",
+      background: "#1E293B"
     },
     th: {
       padding: "8px 16px",
       textAlign: "left",
-      color: isDark ? "#e5e7eb" : "#374151",
+      color: "#38BDF8",
     },
     td: {
       padding: "8px 16px",
@@ -449,12 +447,12 @@ function TagsTable({ isDark, data }) {
       color: isDark ? "#d1d5db" : "#374151",
     },
     thead: {
-      background: isDark ? "#1e293b" : "#e2e8f0",
+      background: "#1E293B",
     },
     th: {
       padding: "8px 16px",
       textAlign: "left",
-      color: isDark ? "#e5e7eb" : "#374151",
+      color: "#38BDF8",
     },
     td: {
       padding: "8px 16px",
