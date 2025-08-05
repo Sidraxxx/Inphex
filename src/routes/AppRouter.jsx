@@ -16,6 +16,13 @@ import AllCookieJar from "../pages/crawlers/cookiejar/AllCookieJar";
 import ServerStatus from "../pages/servermanagement/diagnostic/ServerStatus";
 import AilSync from "../pages/servermanagement/Ailsync/AilSync";
 import Profile from "../pages/servermanagement/myprofile/Profile";
+import SearchOcrs from "../pages/Tags/Tags Search/SearchOcrs";
+import SearchImages from "../pages/Tags/Tags Search/SearchImages";
+import SearchDomains from "../pages/Tags/Tags Search/SearchDomains";
+import SearchDecodedItems from "../pages/Tags/Tags Search/SearchDecodedItems";
+import SearchScreenshots from "../pages/Tags/Tags Search/SearchScreenshots";
+import WebExplorer from "../pages/crawlers/Domain Explorer/WebExplorer";
+
 import AddUser from "../pages/servermanagement/usermanagement/AddUser";
 import AllUsers from "../pages/servermanagement/usermanagement/AllUsers";
 
@@ -24,7 +31,7 @@ import AllUsers from "../pages/servermanagement/usermanagement/AllUsers";
 
 const AppRouter = () => {
   return (
-     <BrowserRouter>
+     
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/SearchItemsByTags" element={< SearchItems/>} />
@@ -37,8 +44,14 @@ const AppRouter = () => {
 
         <Route path="/Tags/TagsSearch/SearchItems" element={< SearchItems/>} />
         <Route path="/Tags/TagsSearch/SearchMessages" element={<SearchMessages />} />
+        <Route path="/Tags/TagsSearch/SearchOcrs" element={<SearchOcrs />} />
+        <Route path="/Tags/TagsSearch/SearchImages" element={<SearchImages />} />
+        <Route path="/Tags/TagsSearch/SearchDomains" element={<SearchDomains />} />
+        <Route path="/Tags/TagsSearch/SearchDecodedItems" element={<SearchDecodedItems/>} />
+        <Route path="/Tags/TagsSearch/SearchScreenshots" element={<SearchScreenshots/>} />
         <Route path="/ManualCrawler" element={<ManualCrawler />} />
         <Route path="/OnionExplorer" element={<OnionExplorer/>} />
+         <Route path="/WebExplorer" element={<WebExplorer/>} />
         <Route path="/VanityExplorer" element={<VanityExplorer/>} />
         <Route path="/AddCookieJar" element={< AddCookieJar/>} />
         <Route path="/AllCookieJar" element={<AllCookieJar/>} />
@@ -50,7 +63,7 @@ const AppRouter = () => {
        
 
       </Routes>
-    </BrowserRouter>
+    
   )
 }
 

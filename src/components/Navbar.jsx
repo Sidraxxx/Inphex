@@ -1,24 +1,136 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useTheme } from '../context/ThemeContext';
-const Navbar = () => {
+import React, { useState, useRef, useEffect } from "react";
+import {
+  MessageCircle,
+  Search,
+  Image,
+  Eye,
+  Globe,
+  Code,
+  Monitor,
+  Lock,
+  CreditCard,
+  Mail,
+  Shield,
+  Link2,
+  Bitcoin,
+  Terminal,
+  Phone,
+  ChevronDown,
+   Clock,
+  Settings,
+  Plus,
+  List,
+  RefreshCcw,
+  Server,
+  Repeat,
+  Database,
+  User,
+  Key,
+  UserPlus,
+  Users,
+  Building2,
+  Logs
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+const iconMap = {
+  "Search Messages": <MessageCircle className="w-4 h-4" />,
+  "Search Items": <Search className="w-4 h-4" />,
+  "Search Images": <Image className="w-4 h-4" />,
+  "Search Ocrs": <Eye className="w-4 h-4" />,
+  "Search Domains": <Globe className="w-4 h-4" />,
+  "Search Decoded Items": <Code className="w-4 h-4" />,
+  "Search Screenshots": <Monitor className="w-4 h-4" />,
+  "Credentials": <Lock className="w-4 h-4" />,
+  "Credit Cards": <CreditCard className="w-4 h-4" />,
+  "Mails": <Mail className="w-4 h-4" />,
+  "CVEs": <Shield className="w-4 h-4" />,
+  "Onions": <Link2 className="w-4 h-4" />,
+  "Bitcoin": <Bitcoin className="w-4 h-4" />,
+  "Base64": <Terminal className="w-4 h-4" />,
+  "Phones": <Phone className="w-4 h-4" />,
+  "Dashboard": <Monitor className="w-4 h-4" />,
+  "Onion Crawler": <Globe className="w-4 h-4" />,
+  "Web Crawler": <Globe className="w-4 h-4" />,
+  "Manual Crawler": <Terminal className="w-4 h-4" />,
+  "Scheduler": <Clock className="w-4 h-4" />,
+  "Settings": <Settings className="w-4 h-4" />,
+  "Onion Domain": <Link2 className="w-4 h-4" />,
+  "Web Domain": <Link2 className="w-4 h-4" />,
+  "Vanity Explorer": <Eye className="w-4 h-4" />,
+  "Add Cookiejar": <Plus className="w-4 h-4" />,
+  "All Cookiejar": <List className="w-4 h-4" />,
 
+  "Server Status": <Monitor className="w-4 h-4" />,
+  "AIL Sync": <RefreshCcw className="w-4 h-4" />,
+  "Servers": <Server className="w-4 h-4" />,
+  "Sync Queues": <Repeat className="w-4 h-4" />,
+  "Passive DNS": <Database className="w-4 h-4" />,
+  "Profile": <User className="w-4 h-4" />,
+  "Change Password": <Key className="w-4 h-4" />,
+  "Add User": <UserPlus className="w-4 h-4" />,
+  "Users List": <Users className="w-4 h-4" />,
+  "Add Organization": <Building2 className="w-4 h-4" />,
+  "Organizations List": <Logs className="w-4 h-4" />,
+};
+
+const routeMap = {
+  "Search Items": "/Tags/TagsSearch/SearchItems",
+  "Search Messages": "/Tags/TagsSearch/SearchMessages",
+  "Search Images": "/Tags/TagsSearch/SearchImages",
+  "Search Ocrs": "/Tags/TagsSearch/SearchOcrs",
+  "Search Domains": "/Tags/TagsSearch/SearchDomains",
+  "Search Decoded Items": "/Tags/TagsSearch/SearchDecodedItems",
+  "Search Screenshots": "/Tags/TagsSearch/SearchScreenshots",
+  "Taxonomies": "/Taxonomies",
+  "Galaxies": "/Galaxies",
+  "MISP and Hive,autopush": "/TagsExport",
+  "Credentials": "/QuickSearch/Credentials",
+  "Credit Cards": "/QuickSearch/CreditCards",
+  "Mails": "/QuickSearch/Mails",
+  "CVEs": "/QuickSearch/CVEs",
+  "Onions": "/QuickSearch/Onions",
+  "Bitcoin": "/QuickSearch/Bitcoin",
+  "Base64": "/QuickSearch/Base64",
+  "Phones": "/QuickSearch/Phones",
+
+  // Crawlers
+  "Dashboard": "/CrawlerDashboard",
+  "Onion Crawler": "/OnionCrawler",
+  "Web Crawler": "/WebCrawler",
+  "Manual Crawler": "/ManualCrawler",
+  "Scheduler": "/Schedulers",
+  "Settings": "/Settings",
+  "Onion Domain": "/OnionExplorer",
+  "Web Domain": "/WebExplorer",
+  "Vanity Explorer": "/VanityExplorer",
+  "Add Cookiejar": "/AddCookieJar",
+  "All Cookiejar": "/AllCookieJar",
+
+  //Server Management
+  "Server Status":"/ServerStatus",
+  "AIL Sync":"/AilSync",
+  "Servers":"",
+  "Sync Queues":"",
+  "Profile":"/Profile",
+  "Change Password": "",
+  "Add User": "",
+  "Users List": "",
+  "Add Organization":"",
+  "Organizations List": " "
+};
+
+const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
-  const isDark = theme === 'dark';
+  const isDark = theme === "dark";
   const [isTagsOpen, setIsTagsOpen] = useState(false);
-  const [isLeaksOpen, setIsLeaksOpen] = useState(false);
-  const [isCrawlersOpen, setCrawlersOpen] = useState(false);
-  const [isObjectsOpen, setObjectsOpen] = useState(false);
-  const [isServerOpen, setServerOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
+  const [isCrawlersOpen, setisCrawlersOpen] = useState(false);
+  const [isServerManagementOpen, setIsServerManagementOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState(null);
 
   const tagsRef = useRef(null);
-  const leaksRef = useRef(null);
   const crawlersRef = useRef(null);
-  const objectsRef = useRef(null);
   const serverRef = useRef(null);
-
   const tagsDropdownData = [
     {
       title: "Tags Search",
@@ -34,647 +146,512 @@ const Navbar = () => {
     },
     {
       title: "Tags Management",
-      items: ["Search Items", "Search Messages", "Search Images", "Search Ocrs", "Search Screenshots"],
+      items: ["Taxonomies", "Galaxies"],
     },
     {
       title: "Tags Export",
+      items: ["MISP and Hive,autopush"],
+    },
+    {
+      title: "Quick Search",
       items: [
-        "Search Items",
-        "Search Messages",
-        "Search Images",
-        "Search Ocrs",
-        "Search Domains",
-        "Search Decoded Items",
-        "Search Screenshots",
+        "Credentials",
+        "Credit Cards",
+        "Mails",
+        "CVEs",
+        "Onions",
+        "Bitcoin",
+        "Base64",
+        "Phones",
+      ],
+    },
+  ];
+  const crawlersDropdownData = [
+    {
+      title: "Splash Crawlers",
+      items: [
+        "Dashboard",
+        "Onion Crawler",
+        "Web Crawler",
+        "Manual Crawler",
+        "Scheduler",
+        "Settings",
       ],
     },
     {
-      title: "Tags Quick Search",
-      items: ["Search Items", "Search Messages", "Search Screenshots"],
+      title: "Domain Explorer",
+      items: ["Onion Domain", "Web Domain", "Vanity Explorer"],
+    },
+    {
+      title: "CookieJar",
+      items: ["Add Cookiejar", "All Cookiejar"],
     },
   ];
 
-  // Define styles for light and dark themes
-  const themes = {
-    light: {
-      header: {
-        backgroundColor: '#ffffff',
-        borderBottomColor: '#e5e7eb',
-        color: '#111827'
-      },
-      logo: {
-        color: '#111827'
-      },
-      navLink: {
-        color: '#374151',
-        hoverColor: '#111827'
-      },
-      dropdown: {
-        backgroundColor: '#ffffff',
-        borderColor: '#e5e7eb',
-        shadowColor: 'rgba(0, 0, 0, 0.1)'
-      },
-      dropdownTitle: {
-        color: '#111827'
-      },
-      dropdownItem: {
-        color: '#6b7280',
-        hoverColor: '#111827'
-      },
-      dropdownHover: {
-        backgroundColor: '#f3f4f6'
-      },
-      searchInput: {
-        backgroundColor: '#f3f4f6',
-        borderColor: '#e5e7eb',
-        color: '#111827',
-        placeholderColor: '#6b7280'
-      },
-      searchIcon: {
-        color: '#9ca3af'
-      },
-      themeButton: {
-        color: '#6b7280',
-        hoverColor: '#374151'
-      }
+  const serverDropdownData  = [
+    {
+      title: "Diagnostic",
+      items: [
+        "Server Status",
+      ],
     },
-    dark: {
-      header: {
-        backgroundColor: '#111827',
-        borderBottomColor: '#374151',
-        color: '#f9fafb'
-      },
-      logo: {
-        color: '#f9fafb'
-      },
-      navLink: {
-        color: '#d1d5db',
-        hoverColor: '#f9fafb'
-      },
-      dropdown: {
-        backgroundColor: '#1f2937',
-        borderColor: '#374151',
-        shadowColor: 'rgba(0, 0, 0, 0.3)'
-      },
-      dropdownTitle: {
-        color: '#f9fafb'
-      },
-      dropdownItem: {
-        color: '#9ca3af',
-        hoverColor: '#f9fafb'
-      },
-      dropdownHover: {
-        backgroundColor: '#374151'
-      },
-      searchInput: {
-        backgroundColor: '#374151',
-        borderColor: '#4b5563',
-        color: '#f9fafb',
-        placeholderColor: '#9ca3af'
-        
-      },
-      searchIcon: {
-        color: '#9ca3af'
-      },
-      themeButton: {
-        color: '#9ca3af',
-        hoverColor: '#d1d5db'
-      }
-    }
-  };
-
-   const currentTheme = isDark ? themes.dark : themes.light;
- 
-
-  // Icons as SVG components
-  const ChevronDown = ({ style }) => (
-    <svg style={style} className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-  );
-
-  const Sun = ({ style }) => (
-    <svg style={style} className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-    </svg>
-  );
-
-  const Moon = ({ style }) => (
-    <svg style={style} className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-    </svg>
-  );
-
-  const LogOut = ({ style }) => (
-    <svg style={style} className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-    </svg>
-  );
-
-  const Search = ({ style }) => (
-    <svg style={style} className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-    </svg>
-  );
-
-  const X = ({ style }) => (
-    <svg style={style} className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  );
-
-
+    {
+      title: "AIL SYNC",
+      items: ["AIL Sync", "Servers", "Sync Queues"],
+    },
+    {
+      title: "Settings",
+      items: ["Passive DNS"],
+    },
+    {
+      title: "My Profile",
+      items: ["Profile", "Change Password"],
+    },
+    {
+      title: "UserManagement",
+      items: ["Add User", "Users List"],
+    },
+    {
+      title: "Organizations",
+      items: ["Add Organization", "Organizations List"],
+    },
+    
+    
+  ];
 
   useEffect(() => {
     function handleClickOutside(event) {
       if (tagsRef.current && !tagsRef.current.contains(event.target)) {
         setIsTagsOpen(false);
       }
-      if (leaksRef.current && !leaksRef.current.contains(event.target)) {
-        setIsLeaksOpen(false);
-      }
       if (crawlersRef.current && !crawlersRef.current.contains(event.target)) {
-        setCrawlersOpen(false);
-      }
-      if (objectsRef.current && !objectsRef.current.contains(event.target)) {
-        setObjectsOpen(false);
-      }
-      if (serverRef.current && !serverRef.current.contains(event.target)) {
-        setServerOpen(false);
-      }
-
-      const searchContainer = event.target;
-      if (!searchContainer.closest(".relative")) {
-        setIsSearchFocused(false);
+        setisCrawlersOpen(false);
       }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-
-    if (query.trim() === "") {
-      setSearchResults([]);
-      return;
-    }
-
-    const results = [];
-
-    tagsDropdownData.forEach((section) => {
-      const matchingItems = section.items.filter((item) =>
-        item.toLowerCase().includes(query.toLowerCase())
-      );
-
-      if (matchingItems.length > 0) {
-        results.push({
-          title: section.title,
-          items: matchingItems,
-        });
-      }
-    });
-
-    setSearchResults(results);
-  };
-
-  const clearSearch = () => {
-    setSearchQuery("");
-    setSearchResults([]);
-    setIsSearchFocused(false);
-  };
-
   return (
-    <header 
-      style={{
-        backgroundColor: currentTheme.header.backgroundColor,
-        borderBottom: `1px solid ${currentTheme.header.borderBottomColor}`,
-        transition: 'all 0.2s ease-in-out'
-      }}
+    <header
+      className={`relative border-b z-50 transition-all duration-300 ${
+        isDark ? "bg-[#1A1F27] border-gray-800" : "bg-white border-gray-200"
+      }`}
     >
-      <div style={{ padding: '20px 40px'}}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '48px' }}>
-          {/* Logo with added padding */}
-          <div style={{ flexShrink: 0, paddingRight: '48px' }}>
-            <span 
-              style={{ 
-                fontSize: '20px', 
-                fontWeight: 'bold', 
-                color: currentTheme.logo.color,
-                transition: 'color 0.2s ease-in-out'
-              }}
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex justify-between items-center h-16">
+          {/* Left Section - Logo and Navigation */}
+          <div className="flex items-center space-x-8">
+            {/* Logo */}
+            <div
+              className={`text-xl font-bold transition-colors duration-200 ${
+                isDark ? "text-white" : "text-black"
+              }`}
             >
               INPHEX
-            </span>
-          </div>
-
-          {/* Navigation */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-            <a
-              href="#"
-              style={{ 
-                color: currentTheme.navLink.color, 
-                fontSize: '14px', 
-                fontWeight: '500',
-                textDecoration: 'none',
-                transition: 'color 0.2s ease-in-out'
-              }}
-              onMouseEnter={(e) => e.target.style.color = currentTheme.navLink.hoverColor}
-              onMouseLeave={(e) => e.target.style.color = currentTheme.navLink.color}
-            >
-              Home
-            </a>
-            <a
-              href="#"
-              style={{ 
-                color: currentTheme.navLink.color, 
-                fontSize: '14px', 
-                fontWeight: '500',
-                textDecoration: 'none',
-                transition: 'color 0.2s ease-in-out'
-              }}
-              onMouseEnter={(e) => e.target.style.color = currentTheme.navLink.hoverColor}
-              onMouseLeave={(e) => e.target.style.color = currentTheme.navLink.color}
-            >
-              Submit
-            </a>
-
-            {/* Tags Dropdown */}
-            <div style={{ position: 'relative' }} ref={tagsRef}>
-              <button
-                onClick={() => setIsTagsOpen(!isTagsOpen)}
-                style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  color: currentTheme.navLink.color, 
-                  fontSize: '14px', 
-                  fontWeight: '500',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'color 0.2s ease-in-out'
-                }}
-                onMouseEnter={(e) => e.target.style.color = currentTheme.navLink.hoverColor}
-                onMouseLeave={(e) => e.target.style.color = currentTheme.navLink.color}
-              >
-                Tags
-                <span style={{ marginLeft: '4px' }}>
-                  <ChevronDown style={{ color: 'currentColor' }} />
-                </span>
-              </button>
-
-              {isTagsOpen && (
-                <div 
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    marginTop: '4px',
-                    width: '800px',
-                    backgroundColor: currentTheme.dropdown.backgroundColor,
-                    border: `1px solid ${currentTheme.dropdown.borderColor}`,
-                    borderRadius: '8px',
-                    boxShadow: `0 10px 15px -3px ${currentTheme.dropdown.shadowColor}`,
-                    zIndex: 50,
-                    transition: 'all 0.2s ease-in-out'
-                  }}
-                >
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, minHeight: '280px' }}>
-                    {tagsDropdownData.map((section, index) => (
-                      <div
-                        key={section.title}
-                        style={{
-                          padding: '12px',
-                          borderRight: index < 3 ? `1px solid ${currentTheme.dropdown.borderColor}` : 'none',
-                          display: 'flex',
-                          flexDirection: 'column'
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                          <div style={{ width: '6px', height: '6px', backgroundColor: '#22d3ee', borderRadius: '50%', marginRight: '6px', flexShrink: 0 }}></div>
-                          <h3 style={{ 
-                            fontSize: '11px', 
-                            fontWeight: '500', 
-                            color: currentTheme.dropdownTitle.color, 
-                            margin: 0,
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                          }}>
-                            {section.title}
-                          </h3>
-                        </div>
-                        <ul style={{ listStyle: 'none', padding: 0, margin: 0, flex: 1 }}>
-                          {section.items.map((item) => (
-                            <li key={item} style={{ marginBottom: '6px' }}>
-                              <a
-                                href="#"
-                                style={{ 
-                                  display: 'block', 
-                                  fontSize: '11px', 
-                                  color: currentTheme.dropdownItem.color,
-                                  textDecoration: 'none',
-                                  transition: 'color 0.2s ease-in-out',
-                                  whiteSpace: 'nowrap',
-                                  overflow: 'hidden',
-                                  textOverflow: 'ellipsis'
-                                }}
-                                onMouseEnter={(e) => e.target.style.color = currentTheme.dropdownItem.hoverColor}
-                                onMouseLeave={(e) => e.target.style.color = currentTheme.dropdownItem.color}
-                              >
-                                {item}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
 
-            {/* Other Dropdowns */}
-            {[
-              { name: 'Leaks Hunter', ref: leaksRef, isOpen: isLeaksOpen, setOpen: setIsLeaksOpen },
-              { name: 'Crawlers', ref: crawlersRef, isOpen: isCrawlersOpen, setOpen: setCrawlersOpen },
-              { name: 'Objects', ref: objectsRef, isOpen: isObjectsOpen, setOpen: setObjectsOpen },
-              { name: 'Server Management', ref: serverRef, isOpen: isServerOpen, setOpen: setServerOpen }
-            ].map((item) => (
-              <div key={item.name} style={{ position: 'relative' }} ref={item.ref}>
+            {/* Navigation */}
+            <nav className="flex items-center space-x-2">
+              <Link
+                to={"/"}
+                className={`px-3 py-1 text-sm font-medium rounded-full  ${
+                  isDark
+                    ? "text-gray-300 hover:text-white hover:bg-white/10"
+                    : "text-gray-700 hover:text-black hover:bg-gray-100"
+                }`}
+              >
+                Home
+              </Link>
+
+              {/* Tags Dropdown */}
+              <div
+                className="relative"
+                ref={tagsRef}
+                onMouseLeave={() => setIsTagsOpen(false)}
+              >
                 <button
-                  onClick={() => item.setOpen(!item.isOpen)}
-                  style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    color: currentTheme.navLink.color, 
-                    fontSize: '14px', 
-                    fontWeight: '500',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    transition: 'color 0.2s ease-in-out',
-                    whiteSpace: 'nowrap'
-                  }}
-                  onMouseEnter={(e) => e.target.style.color = currentTheme.navLink.hoverColor}
-                  onMouseLeave={(e) => e.target.style.color = currentTheme.navLink.color}
+                  className={`px-3 flex justify-center items-center py-1 text-sm font-medium rounded-full transition-all duration-200 ${
+                    isDark
+                      ? "text-gray-300 hover:text-white hover:bg-white/10"
+                      : "text-gray-700 hover:text-black hover:bg-gray-100"
+                  } ${
+                    isTagsOpen
+                      ? isDark
+                        ? "bg-white/10 text-white"
+                        : "bg-gray-100 text-black"
+                      : ""
+                  }`}
+                  onClick={() => setIsTagsOpen(!isTagsOpen)}
+                  onMouseEnter={() => setIsTagsOpen(true)}
                 >
-                  {item.name}
-                  <span style={{ marginLeft: '4px' }}>
-                    <ChevronDown style={{ color: 'currentColor' }} />
-                  </span>
+                  Tags
+                  <ChevronDown
+                    className={`ml-1 w-4 h-4 transition-transform duration-200 ${
+                      isTagsOpen ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
 
-                {item.isOpen && (
-                  <div 
-                    style={{
-                      position: 'absolute',
-                      top: '100%',
-                      left: 0,
-                      marginTop: '4px',
-                      width: '192px',
-                      backgroundColor: currentTheme.dropdown.backgroundColor,
-                      border: `1px solid ${currentTheme.dropdown.borderColor}`,
-                      borderRadius: '8px',
-                      boxShadow: `0 10px 15px -3px ${currentTheme.dropdown.shadowColor}`,
-                      zIndex: 50,
-                      transition: 'all 0.2s ease-in-out'
-                    }}
-                  >
-                    <div style={{ padding: '8px' }}>
-                      <a
-                        href="#"
-                        style={{ 
-                          display: 'block', 
-                          padding: '12px', 
-                          fontSize: '14px', 
-                          color: currentTheme.dropdownItem.color,
-                          textDecoration: 'none',
-                          borderRadius: '4px',
-                          transition: 'all 0.2s ease-in-out'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.color = currentTheme.dropdownItem.hoverColor;
-                          e.target.style.backgroundColor = currentTheme.dropdownHover.backgroundColor;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.color = currentTheme.dropdownItem.color;
-                          e.target.style.backgroundColor = 'transparent';
-                        }}
-                      >
-                        {item.name === 'Leaks Hunter' ? 'Search Leaks' : 
-                         item.name === 'Crawlers' ? 'Web Crawler' :
-                         item.name === 'Objects' ? 'View Objects' : 'Server Status'}
-                      </a>
-                      <a
-                        href="#"
-                        style={{ 
-                          display: 'block', 
-                          padding: '12px', 
-                          fontSize: '14px', 
-                          color: currentTheme.dropdownItem.color,
-                          textDecoration: 'none',
-                          borderRadius: '4px',
-                          transition: 'all 0.2s ease-in-out'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.color = currentTheme.dropdownItem.hoverColor;
-                          e.target.style.backgroundColor = currentTheme.dropdownHover.backgroundColor;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.color = currentTheme.dropdownItem.color;
-                          e.target.style.backgroundColor = 'transparent';
-                        }}
-                      >
-                        {item.name === 'Leaks Hunter' ? 'Leak Reports' : 
-                         item.name === 'Crawlers' ? 'API Crawler' :
-                         item.name === 'Objects' ? 'Manage Objects' : 'Configuration'}
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {/* Search Field */}
-            
-          </nav>
-
-          {/* Right side buttons */}
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-
-            <div style={{ position: 'relative' }}>
-              <div style={{ position: 'relative' }}>
-                <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }}>
-                  <Search style={{ color: currentTheme.searchIcon.color }} />
-                </span>
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  onFocus={() => setIsSearchFocused(true)}
-                  style={{
-                    width: '200px',
-                    height: '32px',
-                    paddingLeft: '40px',
-                    paddingRight: '40px',
-                    fontSize: '14px',
-                    backgroundColor: currentTheme.searchInput.backgroundColor,
-                    border: `1px solid ${currentTheme.searchInput.borderColor}`,
-                    borderRadius: '4px',
-                    outline: 'none',
-                    color: currentTheme.searchInput.color,
-                    transition: 'all 0.2s ease-in-out',
-                    boxSizing: 'border-box'
-                  }}
-                //   onFocus={(e) => {
-                //     e.target.style.borderColor = '#3b82f6';
-                //     e.target.style.boxShadow = '0 0 0 2px rgba(59, 130, 246, 0.5)';
-                //   }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = currentTheme.searchInput.borderColor;
-                    e.target.style.boxShadow = 'none';
-                  }}
-                />
-                {searchQuery && (
-                  <button
-                    onClick={clearSearch}
-                    style={{
-                      position: 'absolute',
-                      right: '12px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      color: currentTheme.searchIcon.color,
-                      transition: 'color 0.2s ease-in-out'
-                    }}
-                    onMouseEnter={(e) => e.target.style.color = currentTheme.navLink.hoverColor}
-                    onMouseLeave={(e) => e.target.style.color = currentTheme.searchIcon.color}
-                  >
-                    <X style={{ color: 'currentColor' }} />
-                  </button>
-                )}
-              </div>
-
-              {/* Search Results Dropdown */}
-              {isSearchFocused && searchQuery && (
-                <div 
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    marginTop: '4px',
-                    width: '384px',
-                    backgroundColor: currentTheme.dropdown.backgroundColor,
-                    border: `1px solid ${currentTheme.dropdown.borderColor}`,
-                    borderRadius: '8px',
-                    boxShadow: `0 10px 15px -3px ${currentTheme.dropdown.shadowColor}`,
-                    zIndex: 50,
-                    maxHeight: '384px',
-                    overflowY: 'auto',
-                    transition: 'all 0.2s ease-in-out'
-                  }}
+                {/* Dropdown Menu */}
+                <div
+                  className={`z-0 absolute top-full left-0 mt-1 transition-all duration-200 ease-out ${
+                    isTagsOpen
+                      ? "opacity-100 visible transform translate-y-0"
+                      : "opacity-0 invisible transform -translate-y-2"
+                  }`}
+                  onMouseLeave={() => setIsTagsOpen(false)}
                 >
-                  {searchResults.length > 0 ? (
-                    <div style={{ padding: '16px' }}>
-                      <div style={{ fontSize: '12px', color: currentTheme.dropdownItem.color, marginBottom: '12px' }}>
-                        Search results for "{searchQuery}"
-                      </div>
-                      {searchResults.map((section, index) => (
-                        <div key={section.title} style={{ marginTop: index > 0 ? '16px' : '0' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                            <div style={{ width: '8px', height: '8px', backgroundColor: '#22d3ee', borderRadius: '50%', marginRight: '8px' }}></div>
-                            <h3 style={{ fontSize: '14px', fontWeight: '500', color: currentTheme.dropdownTitle.color, margin: 0 }}>
+                  <div
+                    className={`rounded-lg shadow-2xl border backdrop-blur-xl z-50 overflow-hidden ${
+                      isDark
+                        ? "bg-gray-900/95 border-gray-700"
+                        : "bg-white/95 border-gray-200"
+                    }`}
+                  >
+                    <div className="grid grid-cols-4 gap-0 w-[800px]">
+                      {tagsDropdownData.map((section, sectionIndex) => (
+                        <div key={section.title} className="p-6">
+                          <div className="flex items-center mb-4">
+                            <h3
+                              className={`text-sm font-normal ${
+                                isDark ? "text-[#CACACA]" : "text-gray-900"
+                              }`}
+                            >
                               {section.title}
                             </h3>
                           </div>
-                          <ul style={{ listStyle: 'none', padding: 0, margin: 0, marginLeft: '16px' }}>
-                            {section.items.map((item) => (
-                              <li key={item} style={{ marginBottom: '4px' }}>
-                                <a
-                                  href="#"
-                                  onClick={() => clearSearch()}
-                                  style={{ 
-                                    display: 'block', 
-                                    fontSize: '12px', 
-                                    color: currentTheme.dropdownItem.color,
-                                    textDecoration: 'none',
-                                    paddingTop: '4px',
-                                    paddingBottom: '4px',
-                                    transition: 'color 0.2s ease-in-out'
-                                  }}
-                                  onMouseEnter={(e) => e.target.style.color = currentTheme.dropdownItem.hoverColor}
-                                  onMouseLeave={(e) => e.target.style.color = currentTheme.dropdownItem.color}
+                          <ul className="space-y-1">
+                            {section.items.map((item, itemIndex) => (
+                              <li key={item}>
+                                <Link
+                                  to={routeMap[item] || "#"}
+                                  className={`group flex items-center p-2 text-sm rounded-md transition-all duration-200 ${
+                                    isDark
+                                      ? "text-white hover:bg-white/10"
+                                      : "text-gray-600 hover:text-black hover:bg-gray-100"
+                                  }`}
+                                  onMouseEnter={() =>
+                                    setHoveredItem(
+                                      `${sectionIndex}-${itemIndex}`
+                                    )
+                                  }
+                                  onMouseLeave={() => setHoveredItem(null)}
                                 >
-                                  {item}
-                                </a>
+                                  <div
+                                    className={`mr-3 transition-all duration-200 ${
+                                      hoveredItem ===
+                                      `${sectionIndex}-${itemIndex}`
+                                        ? isDark
+                                          ? "text-white"
+                                          : "text-black"
+                                        : isDark
+                                        ? "text-gray-400"
+                                        : "text-black"
+                                    }`}
+                                  >
+                                    {iconMap[item] || (
+                                      <div className="w-4 h-4 rounded border border-current" />
+                                    )}
+                                  </div>
+                                  <span className="truncate">{item}</span>
+                                </Link>
                               </li>
                             ))}
                           </ul>
                         </div>
                       ))}
                     </div>
-                  ) : (
-                    <div style={{ padding: '16px', textAlign: 'center', fontSize: '14px', color: currentTheme.dropdownItem.color }}>
-                      No results found for "{searchQuery}"
-                    </div>
-                  )}
+                  </div>
                 </div>
-              )}
-            </div>
-        {/* Theme toggle button */}
-<button
-  onClick={toggleTheme}
-  style={{
-    padding: '8px',
-    color: currentTheme.themeButton.color,
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'color 0.2s ease-in-out'
-  }}
-  onMouseEnter={(e) => e.currentTarget.style.color = currentTheme.themeButton.hoverColor}
-  onMouseLeave={(e) => e.currentTarget.style.color = currentTheme.themeButton.color}
-  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              </div>
 
-  type="button"
->
-  {isDark 
-    ? <Sun style={{ color: 'currentColor', width: '20px', height: '20px' }} /> 
-    : <Moon style={{ color: 'currentColor', width: '20px', height: '20px' }} />}
-</button>
+              {/* Crawlers Dropdown */}
+              <div
+                className="relative"
+                ref={crawlersRef}
+                onMouseLeave={() => setisCrawlersOpen(false)}
+              >
+                <button
+                  className={`px-3 flex justify-center items-center py-1 text-sm font-medium rounded-full  ${
+                    isDark
+                      ? "text-gray-300 hover:text-white hover:bg-white/10"
+                      : "text-gray-700 hover:text-black hover:bg-gray-100"
+                  } ${
+                    isCrawlersOpen
+                      ? isDark
+                        ? "bg-white/10 text-white"
+                        : "bg-gray-100 text-black"
+                      : ""
+                  }`}
+                  onClick={() => setisCrawlersOpen(!isCrawlersOpen)}
+                  onMouseEnter={() => setisCrawlersOpen(true)}
+                >
+                  Crawlers
+                  <ChevronDown
+                    className={`ml-1 w-4 h-4 transition-transform duration-200 ${
+                      isCrawlersOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {/* Dropdown Menu */}
+                <div
+                  className={`z-0 absolute top-full left-0 mt-1 transition-all duration-200 ease-out ${
+                    isCrawlersOpen
+                      ? "opacity-100 visible transform translate-y-0"
+                      : "opacity-0 invisible transform -translate-y-2"
+                  }`}
+                  onMouseLeave={() => setisCrawlersOpen(false)}
+                >
+                  <div
+                    className={`rounded-lg shadow-2xl border backdrop-blur-xl z-50 overflow-hidden ${
+                      isDark
+                        ? "bg-gray-900/95 border-gray-700"
+                        : "bg-white/95 border-gray-200"
+                    }`}
+                  >
+                    <div className="grid grid-cols-3 gap-0 w-[800px]">
+                      {crawlersDropdownData.map((section, sectionIndex) => (
+                        <div key={section.title} className="p-6">
+                          <div className="flex items-center mb-4">
+                            <h3
+                              className={`text-sm font-normal ${
+                                isDark ? "text-[#CACACA]" : "text-gray-900"
+                              }`}
+                            >
+                              {section.title}
+                            </h3>
+                          </div>
+                          <ul className="space-y-1">
+                            {section.items.map((item, itemIndex) => (
+                              <li key={item}>
+                                <Link
+                                  to={routeMap[item] || "#"}
+                                  className={`group flex items-center p-2 text-sm rounded-md transition-all duration-200 ${
+                                    isDark
+                                      ? "text-white hover:bg-white/10"
+                                      : "text-gray-600 hover:text-black hover:bg-gray-100"
+                                  }`}
+                                  onMouseEnter={() =>
+                                    setHoveredItem(
+                                      `${sectionIndex}-${itemIndex}`
+                                    )
+                                  }
+                                  onMouseLeave={() => setHoveredItem(null)}
+                                >
+                                  <div
+                                    className={`mr-3 transition-all duration-200 ${
+                                      hoveredItem ===
+                                      `${sectionIndex}-${itemIndex}`
+                                        ? isDark
+                                          ? "text-white"
+                                          : "text-black"
+                                        : isDark
+                                        ? "text-gray-400"
+                                        : "text-black"
+                                    }`}
+                                  >
+                                    {iconMap[item] || (
+                                      <div className="w-4 h-4 rounded border border-current" />
+                                    )}
+                                  </div>
+                                  <span className="truncate">{item}</span>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
 
-            {/* Logout button */}
-            <button 
-              type="button"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                backgroundColor: '#dc2626',
-                color: 'white',
-                padding: '8px 16px',
-                fontSize: '14px',
-                borderRadius: '4px',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'background-color 0.2s ease-in-out',
-                height: '32px',
-                boxSizing: 'border-box'
-              }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#b91c1c'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#dc2626'}
+              
+              <Link
+                to={"/"}
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                  isDark
+                    ? "text-gray-300 hover:text-white hover:bg-gray-900"
+                    : "text-gray-700 hover:text-black hover:bg-gray-100"
+                }`}
+              >
+                Objects
+              </Link>
+               {/* Server Management Dropdown */}
+              <div
+                className="relative"
+                ref={serverRef}
+                onMouseLeave={() => setIsServerManagementOpen(false)}
+              >
+                <button
+                  className={`px-3 flex justify-center items-center py-1 text-sm font-medium rounded-full transition-all duration-200 ${
+                    isDark
+                      ? "text-gray-300 hover:text-white hover:bg-white/10"
+                      : "text-gray-700 hover:text-black hover:bg-gray-100"
+                  } ${
+                    isServerManagementOpen
+                      ? isDark
+                        ? "bg-white/10 text-white"
+                        : "bg-gray-100 text-black"
+                      : ""
+                  }`}
+                  onClick={() => setIsServerManagementOpen(!isServerManagementOpen)}
+                  onMouseEnter={() => setIsServerManagementOpen(true)}
+                >
+                  Server Management
+                  <ChevronDown
+                    className={`ml-1 w-4 h-4 transition-transform duration-200 ${
+                      isServerManagementOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {/* Dropdown Menu */}
+                <div
+                  className={`z-0 absolute top-full left-0 mt-1 transition-all duration-200 ease-out ${
+                    isServerManagementOpen
+                      ? "opacity-100 visible transform translate-y-0"
+                      : "opacity-0 invisible transform -translate-y-2"
+                  }`}
+                  onMouseLeave={() => setIsServerManagementOpen(false)}
+                >
+                  <div
+                    className={`rounded-lg shadow-2xl border backdrop-blur-xl z-50 overflow-hidden ${
+                      isDark
+                        ? "bg-gray-900/95 border-gray-700"
+                        : "bg-white/95 border-gray-200"
+                    }`}
+                  >
+                    <div className="grid grid-cols-3 gap-0 w-[800px]">
+                      {serverDropdownData.map((section, sectionIndex) => (
+                        <div key={section.title} className="p-6">
+                          <div className="flex items-center mb-4">
+                            <h3
+                              className={`text-sm font-normal ${
+                                isDark ? "text-[#CACACA]" : "text-gray-900"
+                              }`}
+                            >
+                              {section.title}
+                            </h3>
+                          </div>
+                          <ul className="space-y-1">
+                            {section.items.map((item, itemIndex) => (
+                              <li key={item}>
+                                <Link
+                                  to={routeMap[item] || "#"}
+                                  className={`group flex items-center p-2 text-sm rounded-md transition-all duration-200 ${
+                                    isDark
+                                      ? "text-white hover:bg-white/10"
+                                      : "text-gray-600 hover:text-black hover:bg-gray-100"
+                                  }`}
+                                  onMouseEnter={() =>
+                                    setHoveredItem(
+                                      `${sectionIndex}-${itemIndex}`
+                                    )
+                                  }
+                                  onMouseLeave={() => setHoveredItem(null)}
+                                >
+                                  <div
+                                    className={`mr-3 transition-all duration-200 ${
+                                      hoveredItem ===
+                                      `${sectionIndex}-${itemIndex}`
+                                        ? isDark
+                                          ? "text-white"
+                                          : "text-black"
+                                        : isDark
+                                        ? "text-gray-400"
+                                        : "text-black"
+                                    }`}
+                                  >
+                                    {iconMap[item] || (
+                                      <div className="w-4 h-4 rounded border border-current" />
+                                    )}
+                                  </div>
+                                  <span className="truncate">{item}</span>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </nav>
+          </div>
+
+          {/* Right Section */}
+          <div className="flex items-center space-x-3">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className={`p-2 rounded-md transition-all duration-200 ${
+                isDark
+                  ? "text-gray-300 hover:text-white hover:bg-gray-900"
+                  : "text-gray-700 hover:text-black hover:bg-gray-100"
+              }`}
+              aria-label={
+                isDark ? "Switch to light mode" : "Switch to dark mode"
+              }
             >
-              <span style={{ marginRight: '4px' }}>
-                <LogOut style={{ color: 'currentColor' }} />
-              </span>
+              {isDark ? (
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                  />
+                </svg>
+              )}
+            </button>
+
+            {/* Logout Button */}
+            <button
+              className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                isDark
+                  ? "bg-white text-black hover:bg-gray-100"
+                  : "bg-black text-white hover:bg-gray-800"
+              }`}
+            >
+              <svg
+                className="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
               Logout
             </button>
           </div>

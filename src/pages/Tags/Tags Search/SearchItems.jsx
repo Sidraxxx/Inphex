@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Moon, Sun, X } from 'lucide-react';
-import bgImage from '../../../assets/bg.png';
+
 
 
 const SearchItems = () => {
@@ -133,12 +133,8 @@ const SearchItems = () => {
   className={`min-h-screen transition-colors duration-300 p-20 ${
     darkMode ? 'text-white' : 'bg-gray-50 text-gray-900'
   }`}
-  style={darkMode ? {
-    backgroundImage: `url(${bgImage})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-  } : {}}
+
+  
 >
       {/* Theme Toggle */}
       <div className="absolute top-4 right-4">
