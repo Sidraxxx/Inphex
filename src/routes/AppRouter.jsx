@@ -16,7 +16,6 @@ import AllCookieJar from "../pages/crawlers/cookiejar/AllCookieJar";
 import ServerStatus from "../pages/servermanagement/diagnostic/ServerStatus";
 import AilSync from "../pages/servermanagement/Ailsync/AilSync";
 import Profile from "../pages/servermanagement/myprofile/Profile";
-<<<<<<< Updated upstream
 import SearchOcrs from "../pages/Tags/Tags Search/SearchOcrs";
 import SearchImages from "../pages/Tags/Tags Search/SearchImages";
 import SearchDomains from "../pages/Tags/Tags Search/SearchDomains";
@@ -29,10 +28,8 @@ import AllUsers from "../pages/servermanagement/usermanagement/AllUsers";
 
 
 
-=======
 import OrganizationList from "../pages/servermanagement/Organization/OrganizationList";
 import AddOrganization from "../pages/servermanagement/Organization/AddOrganization";
->>>>>>> Stashed changes
 
 const AppRouter = () => {
   return (
@@ -67,13 +64,10 @@ const AppRouter = () => {
         <Route path="/ServerStatus" element={<ServerStatus/>} />
         <Route path="/AilSync" element={<AilSync/>} />
         <Route path="/Profile" element={<Profile/>} />
-<<<<<<< Updated upstream
         <Route path="/AllUsers" element={<AllUsers />} />
         <Route path="/AddUser" element={<AddUser />} />
-=======
          
 
->>>>>>> Stashed changes
        
 
       </Routes>
