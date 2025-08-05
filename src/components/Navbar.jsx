@@ -135,12 +135,12 @@ const Navbar = () => {
     {
       title: "Tags Search",
       items: [
+        "Search Decoded Items",
+        "Search Domains",
+        "Search Images",
         "Search Items",
         "Search Messages",
-        "Search Images",
         "Search Ocrs",
-        "Search Domains",
-        "Search Decoded Items",
         "Search Screenshots",
       ],
     },
@@ -222,7 +222,7 @@ const Navbar = () => {
   useEffect(() => {
     function handleClickOutside(event) {
       if (tagsRef.current && !tagsRef.current.contains(event.target)) {
-        setIsTagsOpen(false);
+        setIsTagsOpen(false)
       }
       if (crawlersRef.current && !crawlersRef.current.contains(event.target)) {
         setisCrawlersOpen(false);
@@ -658,7 +658,7 @@ const Navbar = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
 export default Navbar;
