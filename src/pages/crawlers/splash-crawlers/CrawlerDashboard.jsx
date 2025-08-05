@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { X } from "lucide-react"
+import { X,} from "lucide-react"
 
 const CrawlerDashboard = () => {
   const [darkMode, setDarkMode] = useState(true)
@@ -117,9 +117,7 @@ const CrawlerDashboard = () => {
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? "bg-slate-900" : "bg-gray-50"}`}>
       {/* Header */}
       <div
-        className={`border-b transition-colors duration-300 ${
-          darkMode ? "border-slate-700 bg-slate-800" : "border-gray-200 bg-white"
-        }`}
+        
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -137,6 +135,12 @@ const CrawlerDashboard = () => {
           </div>
         </div>
       </div>
+      <div className="w-full mb-2 font-medium   pb-4 border-b border-transparent relative inline-block">
+  <h1 className="text-2xl  flex justify-start">
+    
+    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F56C89] to-[#39D3EC]"></span>
+  </h1>
+</div>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -145,12 +149,12 @@ const CrawlerDashboard = () => {
           {/* Onion Crawlers */}
           <div
             className={`rounded-lg p-6 transition-colors duration-300 ${
-              darkMode ? "bg-slate-800 border border-slate-700" : "bg-white border border-gray-200 shadow-sm"
+              darkMode ? "bg-[#0E11164D]/30 border border-slate-700" : "bg-[#232A34] border-gray-200 shadow-sm"
             }`}
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4 ">
               <div>
-                <h2 className={`text-xl font-semibold ${darkMode ? "text-white" : "text-gray-900"}`}>
+                <h2 className={`text-xl font-semibold  ${darkMode ? "text-white" : "text-white"}`}>
                   Onion
                   <br />
                   Crawlers
@@ -159,17 +163,17 @@ const CrawlerDashboard = () => {
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
             </div>
             <div className="flex flex-wrap gap-4 text-sm">
-              <span className={`flex items-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>0 UP
+              <span className={`flex items-center bg-[#4CAF5033]/70 px-2 py-1 rounded-sm  ${darkMode ? "text-gray-300 " : "text-white  font-bold "}`}>
+                0 UP
               </span>
-              <span className={`flex items-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>0 DOWN
+              <span className={`flex items-center bg-[#D0191733]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
+               0 DOWN
               </span>
-              <span className={`flex items-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>0 CRAWLED
+              <span className={`flex items-center bg-[#FFC24633]/90 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
+               0 CRAWLED
               </span>
-              <span className={`flex items-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>0 QUEUED
+              <span className={`flex items-center bg-[#39D3EC33]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
+                0 QUEUED
               </span>
             </div>
           </div>
@@ -177,12 +181,12 @@ const CrawlerDashboard = () => {
           {/* Web Crawlers */}
           <div
             className={`rounded-lg p-6 transition-colors duration-300 ${
-              darkMode ? "bg-slate-800 border border-slate-700" : "bg-white border border-gray-200 shadow-sm"
+              darkMode ? "bg-[#0E11164D]/30 border border-slate-700" : "bg-[#232A34] border-gray-200 shadow-sm"
             }`}
           >
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className={`text-xl font-semibold ${darkMode ? "text-white" : "text-gray-900"}`}>
+                <h2 className={`text-xl font-semibold ${darkMode ? "text-white" : "text-white"}`}>
                   Web
                   <br />
                   Crawlers
@@ -191,17 +195,17 @@ const CrawlerDashboard = () => {
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
             </div>
             <div className="flex flex-wrap gap-4 text-sm">
-              <span className={`flex items-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>0 UP
+              <span className={`flex items-center  bg-[#4CAF5033]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
+               0 UP
               </span>
-              <span className={`flex items-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>0 DOWN
+              <span className={`flex items-center  bg-[#D0191733]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
+                0 DOWN
               </span>
-              <span className={`flex items-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>0 CRAWLED
+              <span className={`flex items-center  bg-[#FFC24633]/90 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
+              0 CRAWLED
               </span>
-              <span className={`flex items-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>0 QUEUED
+              <span className={`flex items-center  bg-[#39D3EC33]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
+               0 QUEUED
               </span>
             </div>
           </div>
@@ -258,11 +262,23 @@ const CrawlerDashboard = () => {
                 </div>
               </div>
 
-              <button
+              {/* <button
                 onClick={handleSearch}
                 className="px-6 py-2 bg-pink-500 hover:bg-pink-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
               >
                 Search
+              </button> */}
+
+              <button
+                onClick={handleSearch}
+                className={`flex items-center justify-center space-x-2  rounded-md font-medium transition-all duration-200 px-5 py-1 ${
+                  
+                     "bg-gradient-to-r from-[#c7547c] to-[#4ec7e0] text-white shadow-lg hover:shadow-xl"
+                    
+                }`}
+              >
+                
+                <span> Search</span>
               </button>
             </div>
           </div>
@@ -279,7 +295,7 @@ const CrawlerDashboard = () => {
                   <input
                     type="date"
                     className={`px-4 py-2 rounded-lg border text-sm transition-colors duration-200 ${
-                      darkMode ? "bg-slate-700 border-slate-600 text-white" : "bg-white border-gray-300 text-gray-900"
+                      darkMode ? " border-slate-600 text-white" : "bg-white border-gray-300 text-gray-900"
                     }`}
                   />
                   <input
