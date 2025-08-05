@@ -215,7 +215,7 @@ export default function Home() {
   const styles = {
     container: {
       padding: "24px",
-      background: isDark ? "#0f172a" : "#f8fafc",
+      // background: isDark ? "#0f172a" : "#f8fafc",
       minHeight: "100vh",
       display: "flex",
       flexDirection: "column",

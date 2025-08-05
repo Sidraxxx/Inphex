@@ -2,25 +2,17 @@ import './App.css'
 import AppRouter from './routes/AppRouter'
 import Navbar from './components/Navbar'
 import { ThemeProvider } from './context/ThemeContext'
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import Layout from './components/Layout'
 
 function App() {
-
   return (
-    <div>
-      <BrowserRouter>
+    <BrowserRouter>
       <ThemeProvider>
-      <Navbar />
-      <AppRouter />
+        <Layout />
       </ThemeProvider>
-      </BrowserRouter>
-    </div>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
-
-
-
-

@@ -245,16 +245,8 @@ const darkMode = theme === "dark";
 
   return (
     <div
-  className={`min-h-screen transition-colors duration-300 ${
-    darkMode ? "" : "bg-gray-50"
-  }`}
-  style={
-    darkMode
-      ? {
-          background: `radial-gradient(circle at center, #1B3449 0%, #1B3042 25%, #1A232E 50%, #1B2027 75%, #1A1F27 100%)`,
-        }
-      : {}
-  }
+  className="min-h-screen transition-colors duration-300 "
+ 
 >
       <div className="container mx-auto px-6 py-6 max-w-6xl">
         {/* Header */}

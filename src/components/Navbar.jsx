@@ -34,6 +34,7 @@ import {
 import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 const iconMap = {
+  // tags 
   "Search Messages": <MessageCircle className="w-4 h-4" />,
   "Search Items": <Search className="w-4 h-4" />,
   "Search Images": <Image className="w-4 h-4" />,
@@ -41,6 +42,7 @@ const iconMap = {
   "Search Domains": <Globe className="w-4 h-4" />,
   "Search Decoded Items": <Code className="w-4 h-4" />,
   "Search Screenshots": <Monitor className="w-4 h-4" />,
+
   "Credentials": <Lock className="w-4 h-4" />,
   "Credit Cards": <CreditCard className="w-4 h-4" />,
   "Mails": <Mail className="w-4 h-4" />,
@@ -114,8 +116,8 @@ const routeMap = {
   "Sync Queues":"",
   "Profile":"/Profile",
   "Change Password": "",
-  "Add User": "",
-  "Users List": "",
+  "Add User": "/AddUser",
+  "Users List": "/AllUsers",
   "Add Organization":"",
   "Organizations List": " "
 };
@@ -471,16 +473,7 @@ const Navbar = () => {
 
 
               
-              <Link
-                to={"/"}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-                  isDark
-                    ? "text-gray-300 hover:text-white hover:bg-gray-900"
-                    : "text-gray-700 hover:text-black hover:bg-gray-100"
-                }`}
-              >
-                Objects
-              </Link>
+              
                {/* Server Management Dropdown */}
               <div
                 className="relative"
