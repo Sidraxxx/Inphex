@@ -14,9 +14,7 @@ export default function AddUser() {
   // Styles
   const styles = {
     container: {
-      padding: "24px",
-      background: isDark ? "#0f172a" : "#f8fafc",
-      minHeight: "100vh",
+      background: isDark ? "transparent" : "#f8fafc",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -31,7 +29,7 @@ export default function AddUser() {
       fontWeight: "bold",
       color: isDark ? "#fff" : "#0f172a",
       padding: "10px",
-      fontSize: "25px",
+      fontSize: "20px",
     },
     gradientBorder: {
       height: "3px",
@@ -42,9 +40,9 @@ export default function AddUser() {
       width: "100%",
       padding: "10px",
       fontSize: "16px",
-      border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+      
       borderRadius: "6px",
-      background: isDark ? "#1f2937" : "#ffffff",
+      background: isDark ? "#0E11164D" : "#B7B7B71A",
       color: isDark ? "#ffffff" : "#0f172a",
       outline: "none",
       marginTop: "10px",
@@ -111,7 +109,7 @@ export default function AddUser() {
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          style={{ ...styles.input, height: "60px" }}
+          style={{ ...styles.input, height: "100px", resize: "none" }}
         />
 
         {/* Toggle */}

@@ -48,9 +48,8 @@ export default function UserList() {
   );
 
   const containerStyle = {
-    padding: "24px",
-    background: isDark ? "#0f172a" : "#f8fafc",
-    minHeight: "100vh",
+    
+    background: isDark ? "transparent" : "#f8fafc",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -60,14 +59,13 @@ export default function UserList() {
 
   const contentWrapper = {
     width: "80%",
-    maxWidth: "1000px",
   };
 
   return (
     <div style={containerStyle}>
       <div style={contentWrapper}>
-        <h1 style={{ fontWeight: "bold", color: isDark ? "#fff" : "#0f172a", padding:"10px", fontSize:"25px" }}>
-          Add Users
+        <h1 style={{ fontWeight: "bold", color: isDark ? "#fff" : "#0f172a", padding:"10px", fontSize:"20px" }}>
+          All Users
         </h1>
         <div
           style={{
@@ -78,6 +76,7 @@ export default function UserList() {
         ></div>
 
         <UserTable isDark={isDark} data={currentData} />
+        <div style={{ padding: "10px" }}></div>
         <Pagination
           isDark={isDark}
           currentPage={currentPage}
@@ -96,10 +95,11 @@ function UserTable({ isDark, data }) {
       style={{
         width: "100%",
         borderCollapse: "collapse",
-        background: isDark ? "#1f2937" : "#ffffff",
+        background: isDark ? "#0E11164D" : "#B7B7B71A",
         borderRadius: "8px",
         overflow: "hidden",
         tableLayout: "fixed", // prevents columns from shifting
+
       }}
     >
       <thead style={{ background: "#1e293b", color: "#50b8e4" }}>
@@ -115,10 +115,11 @@ function UserTable({ isDark, data }) {
             <td
               style={{
                 padding: "12px",
-                borderBottom: "1px solid #374151",
+                
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                color: isDark ? "#94A3B8" : "#475569",
               }}
             >
               {record.date}
@@ -126,11 +127,13 @@ function UserTable({ isDark, data }) {
             <td
               style={{
                 padding: "12px",
-                borderBottom: "1px solid #374151",
+            
                 cursor: "pointer",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                color: isDark ? "#94A3B8" : "#475569",
+
               }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.background = isDark ? "#374151" : "#e0f2fe")
@@ -144,10 +147,12 @@ function UserTable({ isDark, data }) {
             <td
               style={{
                 padding: "12px",
-                borderBottom: "1px solid #374151",
+              
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                color: isDark ? "#94A3B8" : "#475569",
+
               }}
             >
               {record.action}
@@ -189,9 +194,9 @@ function Pagination({ isDark, currentPage, totalPages, setCurrentPage }) {
   };
 
   let pages = [];
-  const maxButtons = 5;
+  const maxButtons = 4;
 
-  // If total pages <= 5, show all
+  // If total pages <= 4, show all
   if (totalPages <= maxButtons) {
     pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   } else {

@@ -214,9 +214,9 @@ export default function Home() {
   }
   const styles = {
     container: {
-      padding: "24px",
+      
       // background: isDark ? "#0f172a" : "#f8fafc",
-      minHeight: "100vh",
+      
       display: "flex",
       flexDirection: "column",
       gap: "24px",
@@ -359,7 +359,7 @@ function TrackerTable({ isDark, data }) {
 
   const styles = {
     container: {
-      background: isDark ? "#1f2937" : "#ffffff",
+      background: isDark ? "transparent" : "#ffffff",
       border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
       overflow: "hidden",
     },
@@ -436,7 +436,7 @@ function TagsTable({ isDark, data }) {
 
   const styles = {
     container: {
-      background: isDark ? "#1f2937" : "#ffffff",
+      background: isDark ? "transparent" : "#ffffff",
       border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
       overflow: "hidden",
     },
@@ -517,7 +517,7 @@ function ChartCard({ isDark, selectedDate, chartData }) {
 
   const styles = {
     container: {
-      background: isDark ? "#1f2937" : "#ffffff",
+      background: isDark ? "transparent" : "#ffffff",
       padding: "16px",
       flex: 1,
     },
@@ -610,7 +610,7 @@ function ChartCard({ isDark, selectedDate, chartData }) {
 function TagList({ selectedDate, setSelectedDate, categories, isDark }) {
   const styles = {
     container: {
-      background: isDark ? "#1f2937" : "#ffffff",
+      background: isDark ? "transparent" : "#ffffff",
       borderLeft: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
       padding: "15px",
       width: "280px",
