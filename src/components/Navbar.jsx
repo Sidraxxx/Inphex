@@ -241,7 +241,7 @@ const Navbar = () => {
         isDark ? "bg-[#1A1F27] border-gray-800" : "bg-white border-gray-200"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="w-full mx-auto px-6">
         <div className="flex justify-between items-center h-16">
           {/* Left Section - Logo and Navigation */}
           <div className="flex items-center space-x-8">

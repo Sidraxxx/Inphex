@@ -9,7 +9,7 @@ const Layout = () => {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300  ${
+      className={`min-h-screen transition-colors duration-300 sm:px-5 md:px-10 lg:px-30 ${
         darkMode ? "" : "bg-gray-50"
       }`}
       style={
