@@ -52,10 +52,16 @@ const ServerStatus = () => {
           {title}
         </h4>
         <p className={`text-sm mb-2 ${ type === 'version'
-          ? (isDarkMode ? 'text-black-500' : 'text-black-800')
-      : (isDarkMode ? 'text-black-300' : 'text-black-800')
+          ? (isDarkMode ? 'text-white' : 'text-black-800')
+      : (isDarkMode ? 'text-white' : 'text-black-800')
         }`}>
           {message}
+        </p>
+        <p className={`text-sm mb-2 ${ type === 'version'
+          ? (isDarkMode ? 'text-red-500' : 'text-red-800')
+      : (isDarkMode ? 'text-yellow-500' : 'text-yellow-800')
+        }`}>
+          {updatedetail}
         </p>
         <button 
           onClick={onLinkClick}
@@ -148,7 +154,8 @@ const ServerStatus = () => {
           <AlertBox
             type="version"
             title="New Version Available!"
-            message="A new version is available. New version: v6.2"
+            message="A new version is available. New version:"
+            updatedetail="v6.2"
             linkText="Check last release notes"
             onLinkClick={handleReleaseNotesClick}
           />
@@ -156,7 +163,8 @@ const ServerStatus = () => {
           <AlertBox
             type="update"
             title="New Update Available!"
-            message="A new update is available. New commit ID: 3bec7fe0e8e0d42e07e60953956e7b8df1a42fe2e"
+            message="A new update is available. New commit ID:"
+            updatedetail="3bec7fe0e8e0d42e07e60953956e7b8df1a42fe2e"
             linkText="Check last commit content"
             onLinkClick={handleCommitContentClick}
           />

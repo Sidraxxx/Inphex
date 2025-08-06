@@ -208,13 +208,13 @@ const AllCookieJar = () => {
         </div>
         
         {/* Pagination */}
-        <div className={`${darkMode ? 'bg-slate-800' : 'bg-white'} px-4 py-4 flex justify-center items-center gap-2 border-t ${darkMode ? 'border-slate-700' : 'border-gray-200'}`}>
+        <div className={`${darkMode ? 'bg-slate-800' : 'bg-gray-50 '} px-4 py-4 flex justify-center items-center gap-2 border-t ${darkMode ? 'border-slate-700' : 'border-gray-200'}`}>
           <button
             onClick={() => setSectionPage(1)}
             disabled={sectionPage === 1}
-            className={`px-2 py-1 text-sm ${
+            className={`px-2 py-1 text-sm bg-white ${
               sectionPage === 1
-                ? `${darkMode ? 'text-slate-600' : 'text-gray-400'} cursor-not-allowed`
+                ? `${darkMode ? 'text-slate-600' : 'text-gray-400 '} cursor-not-allowed`
                 : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-800'} cursor-pointer`
             }`}
           >
@@ -223,7 +223,7 @@ const AllCookieJar = () => {
           <button
             onClick={() => setSectionPage(Math.max(1, sectionPage - 1))}
             disabled={sectionPage === 1}
-            className={`px-2 py-1 text-sm ${
+            className={`px-2 py-1 text-sm bg-white ${
               sectionPage === 1
                 ? `${darkMode ? 'text-slate-600' : 'text-gray-400'} cursor-not-allowed`
                 : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-800'} cursor-pointer`
@@ -257,7 +257,7 @@ const AllCookieJar = () => {
           <button
             onClick={() => setSectionPage(Math.min(totalPages, sectionPage + 1))}
             disabled={sectionPage === totalPages}
-            className={`px-2 py-1 text-sm ${
+            className={`px-2 py-1 text-sm bg-white ${
               sectionPage === totalPages
                 ? `${darkMode ? 'text-slate-600' : 'text-gray-400'} cursor-not-allowed`
                 : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-800'} cursor-pointer`
@@ -268,7 +268,7 @@ const AllCookieJar = () => {
           <button
             onClick={() => setSectionPage(totalPages)}
             disabled={sectionPage === totalPages}
-            className={`px-2 py-1 text-sm ${
+            className={`px-2 py-1 text-sm bg-white${
               sectionPage === totalPages
                 ? `${darkMode ? 'text-slate-600' : 'text-gray-400'} cursor-not-allowed`
                 : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-800'} cursor-pointer`
