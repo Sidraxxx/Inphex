@@ -30,6 +30,7 @@ import AllUsers from "../pages/servermanagement/usermanagement/AllUsers";
 
 import OrganizationList from "../pages/servermanagement/Organization/OrganizationList";
 import AddOrganization from "../pages/servermanagement/Organization/AddOrganization";
+import SignIn from "../pages/SignIn/SignIn";
 
 const AppRouter = () => {
   return (
@@ -68,6 +69,7 @@ const AppRouter = () => {
         <Route path="/AddUser" element={<AddUser />} />
         <Route path="/AddOrganization" element={<AddOrganization />} />
         <Route path="/OrganizationList" element={<OrganizationList />} />
+         <Route path="/SignIn" element={<SignIn />} />
          
 
        
