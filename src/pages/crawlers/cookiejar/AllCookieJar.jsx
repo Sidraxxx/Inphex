@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { Sun, Moon, Search, ChevronDown } from 'lucide-react';
+import { useTheme } from '../../../context/ThemeContext';
 
 const AllCookieJar = () => {
-  const [darkMode, setDarkMode] = useState(false);
+
+ const { theme } = useTheme();
+const darkMode = theme === "dark";
 
   // Sample data for all three sections
   const yourCookieJar = [
@@ -50,9 +53,7 @@ const AllCookieJar = () => {
     { date: '2025/06/19', item: 'global-item6', action: 'remind' },
   ];
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  
 
   const CookieSection = ({ title, data, sectionPage, setSectionPage }) => {
     const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -135,7 +136,7 @@ const AllCookieJar = () => {
         </h3>
         
         {/* Search Bar */}
-        <div className={`${darkMode ? 'bg-slate-700' : 'bg-gray-700'} px-4 py-3 flex justify-between items-center`}>
+        <div className={`${darkMode ? 'bg-[#3F4A5B]/20' : 'bg-[#1E293B]'} px-4 py-3 flex justify-between items-center`}>
           <div className="flex items-center flex-1">
             <Search size={16} className="text-gray-400 mr-3" />
             <input 
@@ -144,7 +145,7 @@ const AllCookieJar = () => {
               className="bg-transparent text-white placeholder-gray-400 text-sm outline-none flex-1"
             />
           </div>
-          <div className="flex items-center text-white text-sm">
+          <div className="flex items-center text-[#50B8E4] text-sm">
             <span className="mr-2">Result per page:</span>
             <div className="relative">
               <button
@@ -175,9 +176,9 @@ const AllCookieJar = () => {
         </div>
         
         {/* Table */}
-        <div className={`${darkMode ? 'bg-slate-800' : 'bg-white'}`}>
+        <div>
           {/* Column Headers */}
-          <div className={`grid grid-cols-3 ${darkMode ? 'bg-slate-800' : 'bg-white'} py-3 border-b ${darkMode ? 'border-slate-700' : 'border-gray-300'}`}>
+          <div className={`grid grid-cols-3 ${darkMode ? 'bg-[#2C3440]/20' : 'bg-[#F8F8F8]'} py-3 border ${darkMode ? 'border-[#2C3440]/40' : 'border-gray-300'}`}>
             <div className={`px-4 text-sm font-normal ${darkMode ? 'text-blue-400' : 'text-blue-500'}`}>
               Date ↓
             </div>
@@ -191,8 +192,8 @@ const AllCookieJar = () => {
           
           {/* Data Rows */}
           {currentData.map((row, index) => (
-            <div key={index} className={`grid grid-cols-3 py-3 border-b ${darkMode ? 'border-slate-700' : 'border-gray-200'} ${
-              darkMode ? 'bg-slate-800' :'bg-gray-50 hover:bg-gray-200'
+            <div key={index} className={`grid grid-cols-3 py-3 border ${darkMode ? 'border-[#2C3440]/40' : 'border-gray-200'} ${
+              darkMode ? 'bg-[#2C3440]/10' :'bg-[#F8F8F8] hover:bg-gray-200'
             }`}>
               <div className={`px-4 text-sm ${darkMode ? 'text-gray-400' : 'text-gray-700'}`}>
                 {row.date}
@@ -208,13 +209,14 @@ const AllCookieJar = () => {
         </div>
         
         {/* Pagination */}
-        <div className={`${darkMode ? 'bg-slate-800' : 'bg-gray-50 '} px-4 py-4 flex justify-center items-center gap-2 border-t ${darkMode ? 'border-slate-700' : 'border-gray-200'}`}>
+        <div className={`${darkMode ? 'bg-[#2C3440]/10 border-[#2C3440]/40' : 'bg-gray-50 '} border px-4 py-2 flex justify-center items-center gap-2 border-t 
+        ${darkMode ? 'border-[#25313F]' : 'border-gray-200'}`}>
           <button
             onClick={() => setSectionPage(1)}
             disabled={sectionPage === 1}
-            className={`px-2 py-1 text-sm bg-white ${
+            className={`px-3 py-0.5 text-sm  rounded-sm ${
               sectionPage === 1
-                ? `${darkMode ? 'text-slate-600' : 'text-gray-400 '} cursor-not-allowed`
+                ? `${darkMode ? 'text-slate-600 border border-[#3F4A5B] '  : 'text-gray-400 bg-white'} cursor-not-allowed`
                 : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-800'} cursor-pointer`
             }`}
           >
@@ -223,9 +225,9 @@ const AllCookieJar = () => {
           <button
             onClick={() => setSectionPage(Math.max(1, sectionPage - 1))}
             disabled={sectionPage === 1}
-            className={`px-2 py-1 text-sm bg-white ${
+            className={`px-3 py-0.5 text-sm   rounded-sm ${
               sectionPage === 1
-                ? `${darkMode ? 'text-slate-600' : 'text-gray-400'} cursor-not-allowed`
+                ? `${darkMode ? 'text-slate-600 border border-[#3F4A5B]' : 'text-gray-400 bg-white'} cursor-not-allowed`
                 : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-800'} cursor-pointer`
             }`}
           >
@@ -236,17 +238,17 @@ const AllCookieJar = () => {
           {paginationNumbers.map((pageNum, index) => (
             <span key={index}>
               {pageNum === '...' ? (
-                <span className={`px-2 py-1 text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                <span className={`px-3 py-0.5 text-sm  rounded sm ${darkMode ? 'text-gray-400 border border-[#3F4A5B]' : 'text-gray-600 bg-white'}`}>
                   ...
                 </span>
               ) : pageNum === sectionPage ? (
-                <span className={`px-3 py-1 text-sm ${darkMode ? 'bg-blue-500 text-white' : 'bg-blue-400 text-white'} rounded`}>
+                <span className={`px-3 py-1 text-sm  ${darkMode ? 'bg-blue-500 text-white' : 'bg-blue-400 text-white'} rounded`}>
                   {pageNum}
                 </span>
               ) : (
                 <button
                   onClick={() => setSectionPage(pageNum)}
-                  className={`px-2 py-1 text-sm ${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-800'} cursor-pointer`}
+                  className={`px-3 py-0.5 text-sm  rounded sm ${darkMode ? 'text-gray-400 hover:text-gray-500 border border-[#3F4A5B]' : 'text-gray-600 hover:text-gray-800 bg-white'} cursor-pointer`}
                 >
                   {pageNum}
                 </button>
@@ -257,10 +259,10 @@ const AllCookieJar = () => {
           <button
             onClick={() => setSectionPage(Math.min(totalPages, sectionPage + 1))}
             disabled={sectionPage === totalPages}
-            className={`px-2 py-1 text-sm bg-white ${
+            className={`px-3 py-0.5 text-sm  rounded sm ${
               sectionPage === totalPages
-                ? `${darkMode ? 'text-slate-600' : 'text-gray-400'} cursor-not-allowed`
-                : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-800'} cursor-pointer`
+                ? `${darkMode ? 'text-slate-600 border border-[#3F4A5B]' : 'text-gray-400 bg-white'} cursor-not-allowed`
+                : `${darkMode ? 'text-gray-400 border-[#3F4A5B] hover:text-gray-300' : 'text-gray-600 bg-white hover:text-gray-800'} cursor-pointer`
             }`}
           >
             Next ›
@@ -268,10 +270,10 @@ const AllCookieJar = () => {
           <button
             onClick={() => setSectionPage(totalPages)}
             disabled={sectionPage === totalPages}
-            className={`px-2 py-1 text-sm bg-white${
+            className={`px-3 py-0.5 text-sm  rounded sm  ${
               sectionPage === totalPages
-                ? `${darkMode ? 'text-slate-600' : 'text-gray-400'} cursor-not-allowed`
-                : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-800'} cursor-pointer`
+                ? `${darkMode ? 'text-slate-600 border border-[#3F4A5B]' : 'text-gray-400 bg-white'} cursor-not-allowed`
+                : `${darkMode ? 'text-gray-400 border-[#3F4A5B] hover:text-gray-300' : 'text-gray-600 bg-white hover:text-gray-800'} cursor-pointer`
             }`}
           >
             Last »
@@ -286,23 +288,14 @@ const AllCookieJar = () => {
   const [globalPage, setGlobalPage] = useState(1);
 
   return (
-    <div className={`min-h-screen transition-colors duration-200 ${darkMode ? 'bg-slate-900' : 'bg-white'}`}>
-      <div className="max-w-7xl mx-auto p-6">
+    <div className={`mt-12 `}>
+      <div >
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h1 className={`text-xl font-normal ${darkMode ? 'text-white' : 'text-gray-800'}`}>
             Create CookieJar
           </h1>
-          <button
-            onClick={toggleDarkMode}
-            className={`p-2 rounded-lg transition-colors ${
-              darkMode 
-                ? 'bg-slate-700 text-yellow-400 hover:bg-slate-600' 
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+        
         </div>
         
         {/* Separator Line */}
