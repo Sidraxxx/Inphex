@@ -39,8 +39,7 @@ const darkMode = theme === "dark";
     </div>
   );
 
-  const AlertBox = ({ type, title, message, linkText, onLinkClick , updatedetail}) => {
-  
+  const AlertBox = ({ type, title, message, linkText, onLinkClick, updatedetail }) => {
     const bgColor = type === 'version' 
       ? (darkMode ? 'bg-[#8F1A19]/20 ' : 'bg-[#E38F8F78]')
       : (darkMode ? 'bg-[#EEC84E]/20 ' : 'bg-[#EEC84E52] ');

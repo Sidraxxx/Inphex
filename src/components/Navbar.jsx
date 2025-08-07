@@ -31,6 +31,7 @@ import {
   Building2,
   Logs
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 const iconMap = {
@@ -123,16 +124,21 @@ const routeMap = {
 };
 
 const Navbar = () => {
+  // theme 
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
+
   const [isTagsOpen, setIsTagsOpen] = useState(false);
   const [isCrawlersOpen, setisCrawlersOpen] = useState(false);
   const [isServerManagementOpen, setIsServerManagementOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
+  const navigate = useNavigate();
+
 
   const tagsRef = useRef(null);
   const crawlersRef = useRef(null);
   const serverRef = useRef(null);
+
   const tagsDropdownData = [
     {
       title: "Tags Search",
@@ -237,8 +243,8 @@ const Navbar = () => {
 
   return (
     <header
-      className={`relative border-b z-50 transition-all duration-300 ${
-        isDark ? "bg-[#1A1F27] border-gray-800" : "bg-white border-gray-200"
+      className={`relative border-b z-50  ${
+        isDark ? "bg-[#1A1F27]/10 border-gray-800" : " border-gray-200"
       }`}
     >
       <div className="w-full mx-auto px-6">
@@ -255,10 +261,10 @@ const Navbar = () => {
             </div>
 
             {/* Navigation */}
-            <nav className="flex items-center space-x-2">
+            <nav className="flex items-center space-x-1">
               <Link
                 to={"/"}
-                className={`px-3 py-1 text-sm font-medium rounded-full  ${
+                className={`px-2 py-1 text-xs font-medium rounded-full  ${
                   isDark
                     ? "text-gray-300 hover:text-white hover:bg-white/10"
                     : "text-gray-700 hover:text-black hover:bg-gray-100"
@@ -274,7 +280,7 @@ const Navbar = () => {
                 onMouseLeave={() => setIsTagsOpen(false)}
               >
                 <button
-                  className={`px-3 flex justify-center items-center py-1 text-sm font-medium rounded-full transition-all duration-200 ${
+                  className={`px-3 flex justify-center items-center py-1 text-xs font-medium rounded-full transition-all duration-200 ${
                     isDark
                       ? "text-gray-300 hover:text-white hover:bg-white/10"
                       : "text-gray-700 hover:text-black hover:bg-gray-100"
@@ -298,7 +304,7 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 <div
-                  className={`z-0 absolute top-full left-0 mt-1 transition-all duration-200 ease-out ${
+                  className={`z-0 absolute top-full left-0 mt-0.5 transition-all duration-200 ease-out ${
                     isTagsOpen
                       ? "opacity-100 visible transform translate-y-0"
                       : "opacity-0 invisible transform -translate-y-2"
@@ -317,7 +323,7 @@ const Navbar = () => {
                         <div key={section.title} className="p-6">
                           <div className="flex items-center mb-4">
                             <h3
-                              className={`text-sm font-normal ${
+                              className={`text-xs font-normal ${
                                 isDark ? "text-[#CACACA]" : "text-gray-900"
                               }`}
                             >
@@ -329,7 +335,7 @@ const Navbar = () => {
                               <li key={item}>
                                 <Link
                                   to={routeMap[item] || "#"}
-                                  className={`group flex items-center p-2 text-sm rounded-md transition-all duration-200 ${
+                                  className={`group flex items-center p-2 text-xs rounded-md transition-all duration-200 ${
                                     isDark
                                       ? "text-white hover:bg-white/10"
                                       : "text-gray-600 hover:text-black hover:bg-gray-100"
@@ -376,7 +382,7 @@ const Navbar = () => {
                 onMouseLeave={() => setisCrawlersOpen(false)}
               >
                 <button
-                  className={`px-3 flex justify-center items-center py-1 text-sm font-medium rounded-full  ${
+                  className={`px-2 flex justify-center items-center py-1 text-xs font-medium rounded-full  ${
                     isDark
                       ? "text-gray-300 hover:text-white hover:bg-white/10"
                       : "text-gray-700 hover:text-black hover:bg-gray-100"
@@ -400,7 +406,7 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 <div
-                  className={`z-0 absolute top-full left-0 mt-1 transition-all duration-200 ease-out ${
+                  className={`z-0 absolute top-full left-0 mt-0.5 transition-all duration-200 ease-out ${
                     isCrawlersOpen
                       ? "opacity-100 visible transform translate-y-0"
                       : "opacity-0 invisible transform -translate-y-2"
@@ -419,19 +425,19 @@ const Navbar = () => {
                         <div key={section.title} className="p-6">
                           <div className="flex items-center mb-4">
                             <h3
-                              className={`text-sm font-normal ${
+                              className={`text-xs font-normal ${
                                 isDark ? "text-[#CACACA]" : "text-gray-900"
                               }`}
                             >
                               {section.title}
                             </h3>
                           </div>
-                          <ul className="space-y-1">
+                          <ul className="space-y-0.5">
                             {section.items.map((item, itemIndex) => (
                               <li key={item}>
                                 <Link
                                   to={routeMap[item] || "#"}
-                                  className={`group flex items-center p-2 text-sm rounded-md transition-all duration-200 ${
+                                  className={`group flex items-center p-2 text-xs rounded-md transition-all duration-200 ${
                                     isDark
                                       ? "text-white hover:bg-white/10"
                                       : "text-gray-600 hover:text-black hover:bg-gray-100"
@@ -481,7 +487,7 @@ const Navbar = () => {
                 onMouseLeave={() => setIsServerManagementOpen(false)}
               >
                 <button
-                  className={`px-3 flex justify-center items-center py-1 text-sm font-medium rounded-full transition-all duration-200 ${
+                  className={`px-2 flex justify-center items-center py-1 text-xs font-medium rounded-full transition-all duration-200 ${
                     isDark
                       ? "text-gray-300 hover:text-white hover:bg-white/10"
                       : "text-gray-700 hover:text-black hover:bg-gray-100"
@@ -505,7 +511,7 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 <div
-                  className={`z-0 absolute top-full left-0 mt-1 transition-all duration-200 ease-out ${
+                  className={`z-0 absolute top-full left-0 mt-0.5 transition-all duration-200 ease-out ${
                     isServerManagementOpen
                       ? "opacity-100 visible transform translate-y-0"
                       : "opacity-0 invisible transform -translate-y-2"
@@ -524,19 +530,19 @@ const Navbar = () => {
                         <div key={section.title} className="p-6">
                           <div className="flex items-center mb-4">
                             <h3
-                              className={`text-sm font-normal ${
+                              className={`text-xs font-normal ${
                                 isDark ? "text-[#CACACA]" : "text-gray-900"
                               }`}
                             >
                               {section.title}
                             </h3>
                           </div>
-                          <ul className="space-y-1">
+                          <ul className="space-y-0.5">
                             {section.items.map((item, itemIndex) => (
                               <li key={item}>
                                 <Link
                                   to={routeMap[item] || "#"}
-                                  className={`group flex items-center p-2 text-sm rounded-md transition-all duration-200 ${
+                                  className={`group flex items-center p-2 text-xs rounded-md transition-all duration-200 ${
                                     isDark
                                       ? "text-white hover:bg-white/10"
                                       : "text-gray-600 hover:text-black hover:bg-gray-100"
@@ -584,7 +590,7 @@ const Navbar = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className={`p-2 rounded-md transition-all duration-200 ${
+              className={`p-1 rounded-full transition-all duration-200 ${
                 isDark
                   ? "text-gray-300 hover:text-white hover:bg-gray-900"
                   : "text-gray-700 hover:text-black hover:bg-gray-100"
@@ -626,13 +632,14 @@ const Navbar = () => {
 
             {/* Logout Button */}
             <button
-              className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+              className={`flex items-center px-4 py-1 text-xs font-medium rounded-sm transition-all duration-200 ${
                 isDark
                   ? "bg-white text-black hover:bg-gray-100"
                   : "bg-black text-white hover:bg-gray-800"
               }`}
+               onClick={() => navigate("/SignIn")}
             >
-              <svg
+              {/* <svg
                 className="w-4 h-4 mr-2"
                 fill="none"
                 stroke="currentColor"
@@ -644,7 +651,7 @@ const Navbar = () => {
                   strokeWidth={2}
                   d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                 />
-              </svg>
+              </svg> */}
               Logout
             </button>
           </div>

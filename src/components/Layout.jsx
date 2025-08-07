@@ -9,8 +9,8 @@ const Layout = () => {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 sm:px-5 md:px-10 lg:px-30 ${
-        darkMode ? "" : "bg-gray-50"
+      className={`min-h-screen sm:px-5 md:px-10 lg:20 xl:px-30 ${
+        darkMode ? "" : "bg-white"
       }`}
       style={
         darkMode
