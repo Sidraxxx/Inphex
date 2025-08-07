@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Plus, Trash2, Upload, Moon, Sun, ChevronDown } from 'lucide-react';
-
+import { useTheme } from '../../../context/ThemeContext';
 const AddCookieJar = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  
   const [taskDescription, setTaskDescription] = useState('');
   const [viewLevel, setViewLevel] = useState('Global');
   const [cookies, setCookies] = useState([
@@ -22,10 +22,8 @@ const AddCookieJar = () => {
     'Team',
     'Department'
   ];
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+const { theme } = useTheme();
+const darkMode = theme === "dark";
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -90,36 +88,29 @@ const AddCookieJar = () => {
   };
 
   const themeClasses = darkMode 
-    ? 'bg-gray-900 text-white' 
-    : 'bg-white text-gray-900';
+    ? ' text-white' 
+    : ' text-gray-900';
 
   const cardClasses = darkMode 
-    ? 'bg-gray-800 border-gray-700' 
-    : 'bg-gray-50 border-gray-200';
+    ? 'bg-[#1A1F27]/20 border-gray-600' 
+    : 'bg-white border-gray-200 ';
 
   const inputClasses = darkMode 
-    ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500' 
-    : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500';
+    ? 'bg-[#2C3440]/30 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500' 
+    : 'bg-[#F5F5F7] border-gray-200 text-[#2C3440]/30 placeholder-gray-500 focus:border-blue-500';
+    const colorClasses =darkMode
+    ? '':'';
 
   return (
     <div className={`min-h-screen transition-all duration-300 ${themeClasses}`}>
-      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+      <div className=" mx-auto p-4 sm:p-6 lg:p-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl sm:text-3xl font-bold">Create CookieJar</h1>
-            <button
-              onClick={toggleDarkMode}
-              className={`p-2 rounded-lg transition-colors ${
-                darkMode 
-                  ? 'bg-gray-700 hover:bg-gray-600' 
-                  : 'bg-gray-200 hover:bg-gray-300'
-              }`}
-            >
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
+            <h1 className="text-xl  font-semibold">Create CookieJar</h1>
+          
           </div>
-          <div className={`h-0.5 mt-2 bg-gradient-to-r from-pink-500 to-blue-500 transition-all duration-300 w-full`} />
+          <div className={` h-0.5 mt-2 bg-gradient-to-r from-pink-500 to-blue-500 transition-all duration-300 w-full`} />
         </div>
 
         {/* Task Description */}
@@ -128,7 +119,7 @@ const AddCookieJar = () => {
             value={taskDescription}
             onChange={(e) => setTaskDescription(e.target.value)}
             placeholder="Task Description (optional)"
-            className={`w-full h-20 py-2 px-3 rounded border transition-colors resize-none ${inputClasses}`}
+            className={`w-full h-20 py-2 px-3 rounded  transition-colors resize-none ${inputClasses}`}
           />
         </div>
 
@@ -167,35 +158,44 @@ const AddCookieJar = () => {
         </div>
 
         {/* Import Cookies Section */}
-        <div className={`p-6 rounded-lg border mb-6 ${cardClasses}`}>
+        <div className={`w-full p-6 rounded-lg border mb-6 ${cardClasses}`}>
           <h3 className="font-semibold mb-4">Import Cookies</h3>
-          
           <div
-            className={`border-2 border-dashed rounded-lg p-8 text-center transition-all ${
+            className={` rounded-lg p-8 text-center transition-all ${
               dragActive 
-                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
+                ? ' bg-white dark:bg-[#3F4A5B]/50' 
                 : darkMode 
-                  ? 'border-gray-600 hover:border-gray-500' 
-                  : 'border-gray-300 hover:border-gray-400'
+                  ? 'border-gray-500 hover:border-gray-500' 
+                  : 'border-gray-500 hover:border-gray-400'
             }`}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
             onDrop={handleDrop}
           >
+            <div className={`w-full p-5 rounded-lg  mb-6 ${inputClasses}`}>
+
+           <div className="flex flex-col items-center justify-center mb-4">
             <Upload className="w-8 h-8 mx-auto mb-3 text-gray-500" />
-            <p className="text-lg font-medium mb-2">UPLOAD FILE</p>
-            <p className="text-sm text-gray-500 mb-4">Drag and Drop here</p>
-            
+             <p className="text-lg font-medium mb-2 text-center ">UPLOAD FILE</p>
+  
+             {/* Drag & Drop Box */}
+          <p className="p-2 w-[280px] text-sm  text-gray-500 border-2 border-dashed rounded-md text-center">
+            Drag and Drop here
+          </p>
+    
+
+         </div>
+
             {uploadedFile && (
-              <div className="mb-4 p-2 bg-green-100 dark:bg-green-900/30 rounded text-green-700 dark:text-green-300">
+              <div className="mb-4 p-2 bg-green-400 dark:bg-green-600 rounded text-green-700 dark:text-green-300">
                 File uploaded: {uploadedFile.name}
               </div>
             )}
             
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+              className="px-8 py-2 bg-[#3DA9FC] hover:bg-blue-600 text-white rounded-lg transition-colors"
             >
               Select file
             </button>
@@ -206,6 +206,7 @@ const AddCookieJar = () => {
               className="hidden"
               accept=".json,.txt,.csv"
             />
+          </div>
           </div>
         </div>
 
@@ -229,21 +230,21 @@ const AddCookieJar = () => {
                   placeholder="Cookie Name"
                   value={cookie.name}
                   onChange={(e) => updateCookie(cookie.id, 'name', e.target.value)}
-                  className={`flex-1 py-2 px-3 rounded border transition-colors ${inputClasses}`}
+                  className={`flex-1 py-2 px-3 rounded  transition-colors ${inputClasses}`}
                 />
                 <input
                   type="text"
                   placeholder="Cookie Value"
                   value={cookie.value}
                   onChange={(e) => updateCookie(cookie.id, 'value', e.target.value)}
-                  className={`flex-1 py-2 px-3 rounded border transition-colors ${inputClasses}`}
+                  className={`flex-1 py-2 px-3 rounded  transition-colors ${inputClasses}`}
                 />
                 <button
                   onClick={() => deleteCookie(cookie.id)}
                   className={`py-2 px-3 rounded transition-colors flex-shrink-0 ${
                     darkMode 
-                      ? 'bg-red-500 hover:bg-red-600 text-white' 
-                      : 'bg-white hover:bg-gray-100 text-red-500 border border-gray-300'
+                      ? 'bg-[#D01917] hover:bg-red-800 text-white' 
+                      : 'bg-[#D01917] hover:bg-red-700 text-white border '
                   }`}
                   disabled={cookies.length <= 1}
                 >
@@ -258,16 +259,16 @@ const AddCookieJar = () => {
         <div className="text-center">
           <button
             onClick={handleSendToSpider}
-            className="px-8 py-3 bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600 text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg"
+            className="px-27 py-2 bg-gradient-to-r from-[#E47692] to-[#47CBE4] hover:from-pink-400 hover:to-blue-400 text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg"
           >
             Send To Spider
           </button>
         </div>
 
         {/* Footer Info */}
-        <div className="mt-8 text-center text-sm text-gray-500">
+        {/* <div className="mt-8 text-center text-sm text-gray-500">
           <p>Upload cookie files or create custom cookies for your web scraping tasks</p>
-        </div>
+        </div> */}
       </div>
 
       {/* Click outside to close dropdown */}
