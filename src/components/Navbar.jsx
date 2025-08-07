@@ -119,8 +119,9 @@ const routeMap = {
   "Change Password": "",
   "Add User": "/AddUser",
   "Users List": "/AllUsers",
-  "Add Organization":"",
-  "Organizations List": " "
+  "Add Organization":"/AddOrganization",
+  "Organizations List": "/OrganizationList ",
+ 
 };
 
 const Navbar = () => {
@@ -152,27 +153,8 @@ const Navbar = () => {
         "Search Screenshots",
       ],
     },
-    {
-      title: "Tags Management",
-      items: ["Taxonomies", "Galaxies"],
-    },
-    {
-      title: "Tags Export",
-      items: ["MISP and Hive,autopush"],
-    },
-    {
-      title: "Quick Search",
-      items: [
-        "Credentials",
-        "Credit Cards",
-        "Mails",
-        "CVEs",
-        "Onions",
-        "Bitcoin",
-        "Base64",
-        "Phones",
-      ],
-    },
+    
+   
   ];
   const crawlersDropdownData = [
     {
@@ -304,7 +286,7 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 <div
-                  className={`z-0 absolute top-full left-0 mt-0.5 transition-all duration-200 ease-out ${
+                  className={`z-0 absolute top-full left-0  transition-all duration-200 ease-out ${
                     isTagsOpen
                       ? "opacity-100 visible transform translate-y-0"
                       : "opacity-0 invisible transform -translate-y-2"
@@ -318,7 +300,7 @@ const Navbar = () => {
                         : "bg-white/95 border-gray-200"
                     }`}
                   >
-                    <div className="grid grid-cols-4 gap-0 w-[800px]">
+                    <div className="flex-col ">
                       {tagsDropdownData.map((section, sectionIndex) => (
                         <div key={section.title} className="p-6">
                           <div className="flex items-center mb-4">
@@ -406,7 +388,7 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 <div
-                  className={`z-0 absolute top-full left-0 mt-0.5 transition-all duration-200 ease-out ${
+                  className={`z-0 absolute top-full left-0  transition-all duration-200 ease-out ${
                     isCrawlersOpen
                       ? "opacity-100 visible transform translate-y-0"
                       : "opacity-0 invisible transform -translate-y-2"
@@ -420,9 +402,9 @@ const Navbar = () => {
                         : "bg-white/95 border-gray-200"
                     }`}
                   >
-                    <div className="grid grid-cols-3 gap-0 w-[800px]">
+                    <div className="grid grid-cols-3 w-[500px]">
                       {crawlersDropdownData.map((section, sectionIndex) => (
-                        <div key={section.title} className="p-6">
+                        <div key={section.title} className="p-4">
                           <div className="flex items-center mb-4">
                             <h3
                               className={`text-xs font-normal ${
@@ -511,7 +493,7 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 <div
-                  className={`z-0 absolute top-full left-0 mt-0.5 transition-all duration-200 ease-out ${
+                  className={`z-0 absolute top-full left-0  transition-all duration-200 ease-out ${
                     isServerManagementOpen
                       ? "opacity-100 visible transform translate-y-0"
                       : "opacity-0 invisible transform -translate-y-2"
@@ -525,9 +507,9 @@ const Navbar = () => {
                         : "bg-white/95 border-gray-200"
                     }`}
                   >
-                    <div className="grid grid-cols-3 gap-0 w-[800px]">
+                    <div className="grid grid-cols-3 gap-0 w-[550px]">
                       {serverDropdownData.map((section, sectionIndex) => (
-                        <div key={section.title} className="p-6">
+                        <div key={section.title} className="p-4">
                           <div className="flex items-center mb-4">
                             <h3
                               className={`text-xs font-normal ${

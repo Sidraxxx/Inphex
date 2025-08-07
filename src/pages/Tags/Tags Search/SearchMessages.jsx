@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Moon, Sun, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Moon, Sun, X , ChevronDown} from "lucide-react";
 
 import { useTheme } from "../../../context/ThemeContext";
 
@@ -16,6 +16,7 @@ const SearchMessages = () => {
     tag2: "",
     tagSelect1: [],
   });
+const [dropdownOpen, setDropdownOpen] = useState(true);
 
    const availableTags = [
     "auto-hsi-automatic-detection-base-64",
@@ -166,9 +167,9 @@ const SearchMessages = () => {
 
         {/* Filter Section */}
         <div
-          className={`p-6 rounded-sm mb-3 ${
+          className={`p-4 rounded-sm mb-3 ${
             darkMode
-              ? "bg-slate-800/20 border-1 border-[#2C3440]"
+              ? "bg-slate-800/20 border-1 border-slate-600"
               : "bg-white shadow-sm"
           }`}
         >
@@ -187,7 +188,7 @@ const SearchMessages = () => {
                 onChange={(e) => handleFilterChange("tag1", e.target.value)}
                 className={`w-full px-3 py-2 border rounded-sm pr-8 text-xs ${
                   darkMode
-                    ? "border-[#2C3440] text-white placeholder-slate-400"
+                    ? "border-slate-600 text-white placeholder-slate-400"
                     : "bg-white border-[#CBD5E1] text-gray-900 placeholder-gray-500"
                 }`}
               />
@@ -200,7 +201,7 @@ const SearchMessages = () => {
                 </button>
               )}
             </div>
-            <span className="">-</span>
+            <span className="text-slate-600">-</span>
             <div className="relative flex-1">
               <input
                 type="text"
@@ -209,7 +210,7 @@ const SearchMessages = () => {
                 onChange={(e) => handleFilterChange("tag2", e.target.value)}
                 className={`w-full px-3 py-2 border rounded-sm pr-8 ${
                   darkMode
-                    ? "border-[#2C3440] text-white placeholder-slate-400"
+                    ? "border-slate-600 text-white placeholder-slate-400"
                     : "bg-white border-[#CBD5E1] text-gray-900 placeholder-gray-500"
                 }`}
               />
@@ -224,95 +225,102 @@ const SearchMessages = () => {
             </div>
           </div>
 
-          {/* Tag Selection */}
-          <div className="mb-2">
-            <div className="relative">
-              <select
-                defaultValue=""
-                onChange={(e) =>
-                  e.target.value &&
-                  handleFilterChange("tagSelect1", e.target.value)
-                }
-                className={`w-full px-3 py-2 border rounded-sm text-xs ${
-                  darkMode?
-                    "border-slate-600 text-white bg-slate-700" : "bg-white border-gray-300 text-gray-900"
-                }`}
-              >
-                <option
-                  value=""
-                  disabled
-                  hidden
-                  className={darkMode ? "text-slate-300 " : "text-gray-400"}
-                >
-                  Select Tags
-                </option>
-                <option value="infoleak:automatic-detection-”base-64”">
-                  infoleak:automatic-detection-”base-64”
-                </option>
-                <option value="text">text</option>
-                <option value="database">database</option>
-                <option value="automation">automation</option>
-                <option value="prod">prod</option>
-                <option value="dev">dev</option>
-                <option value="staging">staging</option>
-              </select>
+         <div className="mb-2">
+  <div className="relative">
+    {/* Custom Dropdown Wrapper */}
+    <div className="relative">
+      <select
+        defaultValue=""
+        onChange={(e) =>
+          e.target.value && handleFilterChange("tagSelect1", e.target.value)
+        }
+        onClick={() => setDropdownOpen((prev) => !prev)}
+        className={`w-full appearance-none px-3 py-2 border rounded-sm text-xs transition-all duration-300
+          ${darkMode ? "border-slate-600 text-white " : "border-gray-300 text-gray-900"}
+        `}
+      >
+        <option
+          value=""
+          disabled
+          hidden
+          className={darkMode ? "text-gray-400" : "text-gray-400"}
+        >
+          Select Tags
+        </option>
+        <option value="infoleak:automatic-detection-”base-64”" className={`${darkMode?"bg-[#1C2E42]":""}`}>
+          infoleak:automatic-detection-”base-64”
+        </option>
+        <option value="text" className={`${darkMode?"bg-[#1C2E42]":""}`}>text</option>
+        <option value="database" className={`${darkMode?"bg-[#1C2E42]":""}`}>database</option>
+        <option value="automation" className={`${darkMode?"bg-[#1C2E42]":""}`}>automation</option>
+        <option value="prod" className={`${darkMode?"bg-[#1C2E42]":""}`}>prod</option>
+        <option value="dev" className={`${darkMode?"bg-[#1C2E42]":""}`}>dev</option>
+        <option value="staging" className={`${darkMode?"bg-[#1C2E42]":""}`}>staging</option>
+      </select>
 
-              
-            </div>
+      {/* Animated Arrow */}
+      <ChevronDown
+        className={`absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 transition-transform duration-300 pointer-events-none
+          ${dropdownOpen ? "rotate-180" : "rotate-0"}
+          ${darkMode ? "text-gray-300" : "text-gray-600"}
+        `}
+      />
+    </div>
+  </div>
 
-            {/* Selected Tags Display */}
-            {filters.tagSelect1.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                {filters.tagSelect1.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center px-3 py-1 rounded-sm text-sm bg-[#00ADB5] text-white"
-                  >
-                    {tag}
-                    <button
-                      onClick={() => removeTagFromSelection(tag)}
-                      className="ml-2 hover:bg-cyan-600 rounded-full p-0.5"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
+  {/* Selected Tags */}
+  {filters.tagSelect1.length > 0 && (
+    <div className="flex flex-wrap gap-2 mt-2">
+      {filters.tagSelect1.map((tag) => (
+        <span
+          key={tag}
+          className="inline-flex items-center px-3 py-1 rounded-sm text-sm bg-[#00ADB5] text-white"
+        >
+          {tag}
+          <button
+            onClick={() => removeTagFromSelection(tag)}
+            className="ml-2 p-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-200 shadow-sm"
+          >
+            <X className="w-3 h-3" />
+          </button>
+        </span>
+      ))}
+    </div>
+  )}
+</div>
 
-          {/* Active Filter Tags */}
-          <div className="flex flex-wrap gap-2">
-            {filters.tag1 && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-cyan-500 text-white">
-                {filters.tag1}
-                <button
-                  onClick={() => clearFilter("tag1")}
-                  className="ml-2 hover:bg-cyan-600 rounded-full p-0.5"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-            {filters.tag2 && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-cyan-500 text-white">
-                {filters.tag2}
-                <button
-                  onClick={() => clearFilter("tag2")}
-                  className="ml-2 hover:bg-cyan-600 rounded-full p-0.5"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-          </div>
+{/* Active Filter Tags */}
+<div className="flex flex-wrap gap-2">
+  {filters.tag1 && (
+    <span className="inline-flex items-center px-3 py-1 rounded-sm text-sm bg-cyan-500 text-white">
+      {filters.tag1}
+      <button
+        onClick={() => clearFilter("tag1")}
+        className="ml-2 p-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-200 shadow-sm"
+      >
+        <X className="w-3 h-3" />
+      </button>
+    </span>
+  )}
+  {filters.tag2 && (
+    <span className="inline-flex items-center px-3 py-1 rounded-sm text-sm bg-cyan-500 text-white">
+      {filters.tag2}
+      <button
+        onClick={() => clearFilter("tag2")}
+        className="ml-2 p-0.5 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-200 shadow-sm"
+      >
+        <X className="w-3 h-3" />
+      </button>
+    </span>
+  )}
+</div>
         </div>
 
         {/* Search and Results Section */}
         <div
           className={`rounded-sm  ${
             darkMode
-              ? "bg-slate-800/20 border-1 border-[#2C3440]"
+              ? "bg-slate-800/20 border-1 border-slate-600"
               : "bg-white shadow-sm"
           }`}
         >
@@ -381,12 +389,12 @@ const SearchMessages = () => {
           </div>
 
           {/* Table Body */}
-          <div className="divide-y  dark:divide-slate-700 text-xs">
+          <div className={`divide-y ${darkMode?"divide-slate-700":""}  text-xs`}>
             {currentData.length > 0 ? (
               currentData.map((item) => (
                 <div
                   key={item.id}
-                  className={`px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors`}
+                  className={`px-4 py-3  text-cyan-400 transition-colors ${darkMode? "hover:bg-slate-700":""}`}
                 >
                   <div className="grid grid-cols-3 gap-4">
                     <div className="text-cyan-400">{item.date}</div>

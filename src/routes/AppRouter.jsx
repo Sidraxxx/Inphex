@@ -66,6 +66,8 @@ const AppRouter = () => {
         <Route path="/Profile" element={<Profile/>} />
         <Route path="/AllUsers" element={<AllUsers />} />
         <Route path="/AddUser" element={<AddUser />} />
+        <Route path="/AddOrganization" element={<AddOrganization />} />
+        <Route path="/OrganizationList" element={<OrganizationList />} />
          
 
        

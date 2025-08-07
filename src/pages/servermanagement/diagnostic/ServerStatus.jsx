@@ -10,22 +10,22 @@ const darkMode = theme === "dark";
 
   const StatusCard = ({ title, subtitle, icon: Icon, iconColor, hasUpdate = false, isWarning = false }) => (
     <div className={`
-      relative rounded-lg p-6 flex items-center justify-between py-10 
+      relative rounded-lg p-6 flex items-center justify-between py-4 
       ${darkMode 
-        ? 'bg-[#0E11164D]/30 text-[#FFFFFF]' 
+        ? 'bg-[#0E11164D]/70 text-[#FFFFFF]' 
         : 'bg-[#232A34] text-white'
       }
     `}>
       <div>
-        <h3 className="font-semibold mb-1.5 text-3xl">{title}</h3>
-        <p className={`text-xl ${darkMode ? 'text-[#FFFFFF]/80' : 'text-gray-300'}`}>
+        <h3 className="font-semibold mb-1.5 text-xl">{title}</h3>
+        <p className={`text-md ${darkMode ? 'text-[#FFFFFF]/80' : 'text-gray-300'}`}>
           {subtitle}
         </p>
         {hasUpdate && (
 
           <div className="flex items-center mt-2.5">
-          <Info className={`w-6 h-6 mr-2 ${isWarning ? 'text-[#EB5757]' : 'text-[#EEC84E]'}`} />
-         <span className={`text-sm ${isWarning ? 'text-red-400' : 'text-yellow-400'}`}>
+          <Info className={`w-4 h-4 mr-2 ${isWarning ? 'text-[#EB5757]' : 'text-[#EEC84E]'}`} />
+         <span className={`text-xs ${isWarning ? 'text-red-400' : 'text-yellow-400'}`}>
          {isWarning ? 'New Version Available!' : 'New Update Available!'}
           </span>
           </div>
@@ -33,7 +33,7 @@ const darkMode = theme === "dark";
         )}
       </div>
       <div className='rounded-full bg-[#BB6BD9]/20 p-2'>
-<Icon className={`w-9 h-9  ${iconColor}`} />
+<Icon className={`w-8 h-8  ${iconColor}`} />
       </div>
       
     </div>
@@ -45,21 +45,21 @@ const darkMode = theme === "dark";
       : (darkMode ? 'bg-[#EEC84E]/20 ' : 'bg-[#EEC84E52] ');
     
     const textColor = type === 'version'
-      ? (darkMode ? 'text-[#8F1A19]' : 'text-red-800')
+      ? (darkMode ? 'text-[#b82523]' : 'text-red-800')
       : (darkMode ? 'text-[#C58A0A]' : 'text-yellow-800');
 
     return (
-      <div className={`rounded-lg p-4  ${bgColor}`}>
+      <div className={`rounded-md text-sm p-4  ${bgColor}`}>
         <h4 className={`font-semibold mb-2 ${textColor}`}>
           {title}
         </h4>
-        <p className={`text-sm mb-2  ${ type === 'version'
+        <p className={`text-xs mb-2  ${ type === 'version'
           ? (darkMode ? 'text-white ' : 'text-black-800')
       : (darkMode ? 'text-white' : 'text-black-800')
         }`}>
           {message + " "}
-          <span className={`text-sm mb-2  ${ type === 'version'
-          ? (darkMode ? 'text-[#8F1A19] ' : 'text-red-800')
+          <span className={`text-xs mb-2  ${ type === 'version'
+          ? (darkMode ? 'text-[#b82523] ' : 'text-red-800')
       : (darkMode ? 'text-yellow-500' : 'text-yellow-800')
         }`}>
           {updatedetail + " "}
@@ -68,7 +68,7 @@ const darkMode = theme === "dark";
        
         <button 
           onClick={onLinkClick}
-          className={`text-sm underline hover:no-underline ${
+          className={`text-xs underline hover:no-underline ${
             type === 'version' 
               ? (darkMode ? 'text-[#2780E3] hover:text-blue-600' : 'text-blue-600 hover:text-blue-800')
               : (darkMode ? 'text-[#2780E3] hover:text-blue-600' : 'text-blue-600 hover:text-blue-800')
@@ -90,17 +90,17 @@ const darkMode = theme === "dark";
 
   return (
     <div >
-      <div >
+      <div  className='mt-12'>
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          <h1 className={`text-xl  ${darkMode ? 'text-white' : 'text-gray-900'}`}>
             AIL Framework Status
           </h1>
           
         </div>
          
         {/* Header Line */}
-        <div className={`w-full mb-6 h-0.5 bg-gradient-to-r  from-pink-500 to-blue-500  ${
+        <div className={`w-full mb-6 h-0.5 bg-gradient-to-r  from-[#F56C89] to-[#39D3EC]  ${
           darkMode ? 'bg-slate-600' : 'bg-gray-300'
         }`}></div>
 
@@ -143,7 +143,7 @@ const darkMode = theme === "dark";
         </div>
 
         {/* Alert Boxes */}
-        <div className="space-y-3 p-30px hug h-148px fill w-1334px gap-10px rounded text-lg ">
+        <div className="space-y-1 p-30px hug  fill w-full rounded text-lg ">
           <AlertBox
             type="version"
             title="New Version Available!"
