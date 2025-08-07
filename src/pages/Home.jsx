@@ -546,9 +546,8 @@ function ChartCard({ isDark, selectedDate, chartData }) {
       fontSize: "12px",
     }),
     logo: {
-      width: "32px",
-      height: "32px",
-      background: isDark ? "#4b5563" : "#d1d5db",
+      width: "25px",
+      height: "25px",
       borderRadius: "4px",
     },
   };
@@ -561,7 +560,7 @@ function ChartCard({ isDark, selectedDate, chartData }) {
       </div>
       <div style={styles.badgesRow}>
         <div style={styles.badges}>
-          <div style={styles.logo}></div>
+          <img src="/security 1.svg" style={styles.logo}></img>
           <span style={styles.badge("#16a34a")}>{totalUp} Up</span>
           <span style={styles.badge("#dc2626")}>{totalDown} Down</span>
           <span style={styles.badge("#2563eb")}>
@@ -570,7 +569,7 @@ function ChartCard({ isDark, selectedDate, chartData }) {
           <span style={styles.badge("#38bdf8")}>{data.length} Queued</span>
         </div>
         <div style={styles.badges}>
-          <div style={styles.logo}></div>
+          <img src="/Shape.svg" style={styles.logo}></img>
           <span style={styles.badge("#16a34a")}>{totalUp} Up</span>
           <span style={styles.badge("#dc2626")}>{totalDown} Down</span>
           <span style={styles.badge("#2563eb")}>
@@ -656,6 +655,7 @@ function TagList({ selectedDate, setSelectedDate, categories, isDark }) {
     circle: (color) => ({
       width: "12px",
       height: "12px",
+      borderRadius: "50%",
       background: color,
     }),
     count: {

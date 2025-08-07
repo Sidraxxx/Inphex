@@ -55,22 +55,23 @@ export default function UserList() {
     alignItems: "center",
     gap: "24px",
     color: isDark ? "#ffffff" : "#0f172a",
+    marginTop: "30px",
   };
 
   const contentWrapper = {
-    width: "80%",
+    width: "100%",
   };
 
   return (
     <div style={containerStyle}>
       <div style={contentWrapper}>
-        <h1 style={{ fontWeight: "bold", color: isDark ? "#fff" : "#0f172a", padding:"10px", fontSize:"20px" }}>
+        <h1 style={{ fontWeight: "bold", color: isDark ? "#fff" : "#0f172a", marginBottom: "10px", fontSize:"20px" }}>
           All Users
         </h1>
         <div
           style={{
             height: "3px",
-            background: "linear-gradient(to right, #ff0080, #7928ca, #00bfff)",
+            background: "linear-gradient(to right, #ff0080, #00bfff)",
             marginBottom:"20px",
           }}
         ></div>

@@ -1,10 +1,12 @@
 "use client"
+import { use, useState } from "react"
+import { X, } from "lucide-react"
+import { useTheme } from "../../../context/ThemeContext";
 
-import { useState } from "react"
-import { X,} from "lucide-react"
 
 const CrawlerDashboard = () => {
-  const [darkMode, setDarkMode] = useState(true)
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [searchBy, setSearchBy] = useState("Tags")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
@@ -43,9 +45,6 @@ const CrawlerDashboard = () => {
 
   const dropdownOptions = ["Tags", "Name", "Date", "Languages"]
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode)
-  }
 
   const handleSearch = () => {
     console.log(`Searching in ${searchBy}`)
@@ -113,66 +112,85 @@ const CrawlerDashboard = () => {
     setLanguageToggles({ "Domain UP": false, "Domain Down": false })
   }
 
+  const toggleStyle = (isOn, isDark) => ({
+    width: "40px",
+    height: "20px",
+    borderRadius: "20px",
+    backgroundColor: isOn ? "#06b6d4" : isDark ? "#475569" : "#ccc",
+    position: "relative",
+    cursor: "pointer",
+    transition: "background-color 0.2s ease",
+  });
+
+  const knobStyle = (isOn) => ({
+    width: "18px",
+    height: "18px",
+    borderRadius: "50%",
+    backgroundColor: "#fff",
+    position: "absolute",
+    top: "1px",
+    left: isOn ? "20px" : "1px",
+    transition: "left 0.2s ease",
+  });
+
+
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? "bg-slate-900" : "bg-gray-50"}`}>
+    <div className={` transition-colors duration-300 ${isDark ? "transparent" : "bg-gray-50"}`}>
       {/* Header */}
-      <div
-        
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <h1 className={`text-lg font-medium ${darkMode ? "text-white" : "text-gray-900"}`}>Crawler Dashboard</h1>
-            <button
-              onClick={toggleTheme}
-              className={`p-2 rounded-lg transition-colors duration-200 ${
-                darkMode
-                  ? "bg-slate-700 hover:bg-slate-600 text-yellow-400"
-                  : "bg-gray-200 hover:bg-gray-300 text-gray-600"
-              }`}
-            >
-              {darkMode ? "☀️" : "🌙"}
-            </button>
+      <div>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center h-16">
+            <h1 className={`text-lg font-bold text-xl mt-[30px] ${isDark ? "text-white" : "text-gray-900"}`}>
+              Crawler Dashboard
+            </h1>
+
           </div>
+
         </div>
+
       </div>
-      <div className="w-full mb-2 font-medium   pb-4 border-b border-transparent relative inline-block">
-  <h1 className="text-2xl  flex justify-start">
-    
-    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F56C89] to-[#39D3EC]"></span>
-  </h1>
-</div>
+
+      <div className="w-full mb-2 font-medium  pb-4 border-b border-transparent relative inline-block mt-[10px]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#ff0080] to-[#00bfff] h-1 rounded-md"></div>
+      </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="  sm:px-6 lg:px-0 py-8">
         {/* Crawler Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 ">
           {/* Onion Crawlers */}
           <div
-            className={`rounded-lg p-6 transition-colors duration-300 ${
-              darkMode ? "bg-[#0E11164D]/30 border border-slate-700" : "bg-[#232A34] border-gray-200 shadow-sm"
-            }`}
+            className={`rounded-lg p-6 transition-colors duration-300 ${isDark
+              ? "bg-[#0E11164D] border border-[#2C3440]"
+              : "bg-[#232A34] border border-gray-200 shadow-sm"
+              }`}
           >
-            <div className="flex items-center justify-between mb-4 ">
-              <div>
-                <h2 className={`text-xl font-semibold  ${darkMode ? "text-white" : "text-white"}`}>
+            <div className="flex items-center justify-between mb-4  ">
+              <div >
+                <h2 className={`text-xl font-semibold  ${isDark ? "text-white" : "text-white"}`}>
                   Onion
                   <br />
                   Crawlers
                 </h2>
               </div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div className="w-12 h-12 rounded-md bg-[#6FD8661A] flex items-center justify-center">
+              <img src="/coin-dollar.svg" className="rounded-full"></img>
+              </div>
             </div>
+
+            {/* Need to add function that gets data from backend and updates here in real time */}
+
             <div className="flex flex-wrap gap-4 text-sm">
-              <span className={`flex items-center bg-[#4CAF5033]/70 px-2 py-1 rounded-sm  ${darkMode ? "text-gray-300 " : "text-white  font-bold "}`}>
+              <span className={`flex items-center bg-[#4CAF5033]/70 px-2 py-1 rounded-sm  ${isDark ? "text-gray-300 " : "text-white"}`}>
                 0 UP
               </span>
-              <span className={`flex items-center bg-[#D0191733]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
-               0 DOWN
+              <span className={`flex items-center bg-[#D0191733]/70 px-2 py-1 rounded-sm ${isDark ? "text-gray-300" : "text-white"}`}>
+                0 DOWN
               </span>
-              <span className={`flex items-center bg-[#FFC24633]/90 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
-               0 CRAWLED
+              <span className={`flex items-center bg-[#FFC24633]/90 px-2 py-1 rounded-sm ${isDark ? "text-gray-300" : "text-white "}`}>
+                0 CRAWLED
               </span>
-              <span className={`flex items-center bg-[#39D3EC33]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
+              <span className={`flex items-center bg-[#39D3EC33]/70 px-2 py-1 rounded-sm ${isDark ? "text-gray-300" : "text-white"}`}>
                 0 QUEUED
               </span>
             </div>
@@ -180,32 +198,35 @@ const CrawlerDashboard = () => {
 
           {/* Web Crawlers */}
           <div
-            className={`rounded-lg p-6 transition-colors duration-300 ${
-              darkMode ? "bg-[#0E11164D]/30 border border-slate-700" : "bg-[#232A34] border-gray-200 shadow-sm"
-            }`}
+            className={`rounded-lg p-6 transition-colors duration-300 ${isDark
+              ? "bg-[#0E11164D] border border-[#2C3440]"
+              : "bg-[#232A34] border border-gray-200 shadow-sm"
+              }`}
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4 rounded-full">
               <div>
-                <h2 className={`text-xl font-semibold ${darkMode ? "text-white" : "text-white"}`}>
+                <h2 className={`text-xl font-semibold ${isDark ? "text-white" : "text-white"}`}>
                   Web
                   <br />
                   Crawlers
                 </h2>
               </div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+             <div className="w-12 h-12 rounded-md bg-[#6FD8661A] flex items-center justify-center">
+              <img src="/coin-dollar.svg" className="rounded-full"></img>
+              </div>
             </div>
             <div className="flex flex-wrap gap-4 text-sm">
-              <span className={`flex items-center  bg-[#4CAF5033]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
-               0 UP
+              <span className={`flex items-center  bg-[#4CAF5033]/70 px-2 py-1 rounded-sm ${isDark ? "text-gray-300" : "text-white"}`}>
+                0 UP
               </span>
-              <span className={`flex items-center  bg-[#D0191733]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
+              <span className={`flex items-center  bg-[#D0191733]/70 px-2 py-1 rounded-sm ${isDark ? "text-gray-300" : "text-white"}`}>
                 0 DOWN
               </span>
-              <span className={`flex items-center  bg-[#FFC24633]/90 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
-              0 CRAWLED
+              <span className={`flex items-center  bg-[#FFC24633]/90 px-2 py-1 rounded-sm ${isDark ? "text-gray-300" : "text-white"}`}>
+                0 CRAWLED
               </span>
-              <span className={`flex items-center  bg-[#39D3EC33]/70 px-2 py-1 rounded-sm ${darkMode ? "text-gray-300" : "text-white font-bold"}`}>
-               0 QUEUED
+              <span className={`flex items-center  bg-[#39D3EC33]/70 px-2 py-1 rounded-sm ${isDark ? "text-gray-300" : "text-white"}`}>
+                0 QUEUED
               </span>
             </div>
           </div>
@@ -213,15 +234,13 @@ const CrawlerDashboard = () => {
 
         {/* Search Section */}
         <div
-          className={`rounded-lg transition-colors duration-300 ${
-            darkMode ? "bg-slate-800 border border-slate-700" : "bg-white border border-gray-200 shadow-sm"
-          }`}
+          className={`rounded-md transition-colors duration-300 ${isDark ? "bg-transparent border border-[#2C3440]" : "bg-white border border-gray-200 shadow-sm"
+            }`}
         >
           {/* Search Header */}
           <div
-            className={`px-6 py-4 border-b transition-colors duration-300 ${
-              darkMode ? "border-slate-700 bg-slate-900" : "border-gray-200 bg-gray-800"
-            }`}
+            className={`px-6 py-4 border-b rounded-t-md transition-colors duration-300 ${isDark ? "border-[#2C3440] bg-[#0E11164D]" : "border-gray-200 bg-gray-800"
+              }`}
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex items-center gap-4">
@@ -231,7 +250,7 @@ const CrawlerDashboard = () => {
                 <div className="relative">
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-600 text-sm font-medium transition-colors duration-200 bg-slate-700 text-white hover:bg-slate-600"
+                    className="flex items-center gap-2 px-7 py-2 rounded-lg  text-sm font-medium transition-colors duration-200 bg-[#232A34] text-white hover:bg-slate-600"
                   >
                     {searchBy}
                     <svg
@@ -245,14 +264,13 @@ const CrawlerDashboard = () => {
                   </button>
 
                   {isDropdownOpen && (
-                    <div className="absolute top-full left-0 mt-1 w-full rounded-lg border border-slate-600 shadow-lg z-10 bg-slate-700">
+                    <div className="absolute top-full left-0 mt-1 w-full rounded-lg border border-[#2C3440] shadow-lg z-10 bg-[#232A34]">
                       {dropdownOptions.map((option) => (
                         <button
                           key={option}
                           onClick={() => handleSearchTypeChange(option)}
-                          className={`w-full text-left px-4 py-2 text-sm transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg text-white hover:bg-slate-600 ${
-                            searchBy === option ? "bg-slate-600" : ""
-                          }`}
+                          className={`w-full text-left px-4 py-2 text-sm transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg text-white hover:bg-slate-600 ${searchBy === option ? "bg-slate-600" : ""
+                            }`}
                         >
                           {option}
                         </button>
@@ -271,51 +289,27 @@ const CrawlerDashboard = () => {
 
               <button
                 onClick={handleSearch}
-                className={`flex items-center justify-center space-x-2  rounded-md font-medium transition-all duration-200 px-5 py-1 ${
-                  
-                     "bg-gradient-to-r from-[#c7547c] to-[#4ec7e0] text-white shadow-lg hover:shadow-xl"
-                    
-                }`}
+                className={`flex items-center justify-center space-x-2  rounded-md font-medium transition-all duration-200 px-5 py-1 ${"bg-gradient-to-r from-[#c7547c] to-[#4ec7e0] text-white shadow-lg hover:shadow-xl"
+
+                  }`}
               >
-                
-                <span> Search</span>
+
+                <span>Search</span>
               </button>
             </div>
           </div>
 
           {/* Search Content */}
           <div className="p-6">
-            {/* Date Range for Date Search */}
-            {searchBy === "Date" && (
-              <div className="mb-6">
-                <div className={`text-sm font-medium mb-3 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                  Select Date Range
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="date"
-                    className={`px-4 py-2 rounded-lg border text-sm transition-colors duration-200 ${
-                      darkMode ? " border-slate-600 text-white" : "bg-white border-gray-300 text-gray-900"
-                    }`}
-                  />
-                  <input
-                    type="date"
-                    className={`px-4 py-2 rounded-lg border text-sm transition-colors duration-200 ${
-                      darkMode ? "bg-slate-700 border-slate-600 text-white" : "bg-white border-gray-300 text-gray-900"
-                    }`}
-                  />
-                </div>
-              </div>
-            )}
+
 
             {/* Section Headers */}
-            <div className={`text-sm font-medium mb-4 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+            <div className={`text-sm font-medium mb-4 ${isDark ? "text-gray-300" : "text-gray-600"}`}>
               {searchBy === "Tags" && "Select Tags"}
-              {searchBy === "Name" && "Select Domain Types"}
-              {searchBy === "Date" && "Select Domain Status"}
-              {searchBy === "Languages" && "Select Domain Status"}
+              {searchBy === "Name" && "Select Names"}
+              {searchBy === "Date" && "Select Date Range"}
+              {searchBy === "Languages" && "Select Languages"}
             </div>
-
             {/* TAGS - Dropdown Selection */}
             {searchBy === "Tags" && (
               <div className="mb-4">
@@ -328,11 +322,10 @@ const CrawlerDashboard = () => {
                         e.target.value = ""
                       }
                     }}
-                    className={`w-full px-3 py-2 border rounded-md ${
-                      darkMode ? "border-slate-600 text-white bg-slate-700" : "bg-white border-gray-300 text-gray-900"
-                    }`}
+                    className={`w-full px-3 py-2 border rounded-md ${isDark ? "border-[#2C3440] text-white bg-transparent" : "bg-white border-gray-300 text-gray-900"
+                      }`}
                   >
-                    <option value="" disabled hidden className={darkMode ? "text-slate-300" : "text-gray-400"}>
+                    <option value="" disabled hidden className={isDark ? "text-slate-300" : "text-gray-400"}>
                       Select Tags
                     </option>
                     {availableTags.map((tag) => (
@@ -354,7 +347,7 @@ const CrawlerDashboard = () => {
                     {selectedTags.map((tag) => (
                       <span
                         key={tag}
-                        className="inline-flex items-center px-3 py-1 rounded-md text-sm bg-cyan-500 text-white"
+                        className="inline-flex items-center px-3 py-1 rounded-md text-sm bg-[#00ADB5] text-white"
                       >
                         {tag}
                         <button
@@ -369,7 +362,7 @@ const CrawlerDashboard = () => {
                 )}
 
                 {selectedTags.length === 0 && (
-                  <div className={`text-center py-8 w-full ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
+                  <div className={`text-center py-8 w-full ${isDark ? "text-gray-400" : "text-gray-500"}`}>
                     Select tags from the dropdown above
                   </div>
                 )}
@@ -378,119 +371,188 @@ const CrawlerDashboard = () => {
 
             {/* NAME - Toggle Buttons */}
             {searchBy === "Name" && (
-              <div className="mb-4">
-                <div className="flex flex-wrap gap-3">
-                  {Object.entries(nameToggles).map(([option, isActive]) => (
-                    <button
-                      key={option}
-                      onClick={() => toggleNameOption(option)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border-2 ${
-                        isActive
-                          ? "bg-cyan-500 border-cyan-500 text-white shadow-lg transform scale-105"
-                          : darkMode
-                            ? "bg-slate-600 border-slate-500 text-gray-300 hover:bg-slate-500 hover:border-slate-400"
-                            : "bg-gray-200 border-gray-300 text-gray-700 hover:bg-gray-300 hover:border-gray-400"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${isActive ? "bg-white" : "bg-gray-400"}`}></div>
-                        {option}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-
-                {!Object.values(nameToggles).some(Boolean) && (
-                  <div className={`text-center py-8 w-full ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
-                    Click the toggle buttons above to select domain types
+              <div style={{ marginBottom: "24px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  {/* Name Search Bar */}
+                  <div style={{ marginBottom: "16px" }}>
+                    <input
+                      type="text"
+                      placeholder="Search domain name..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      style={{
+                        width: "100%",
+                        padding: "10px 14px",
+                        borderRadius: "6px",
+                        border: `1px solid ${isDark ? "#2C3440" : "#cbd5e1"}`,
+                        backgroundColor: isDark ? "#0E11164D" : "#B7B7B71A",
+                        color: isDark ? "#f8fafc" : "#0f172a",
+                      }}
+                    />
                   </div>
-                )}
+
+                  {/* Onion Toggle */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <div
+                      style={toggleStyle(nameToggles["Onion Domains"], isDark)}
+                      onClick={() => toggleNameOption("Onion Domains")}
+                    >
+                      <div style={knobStyle(nameToggles["Onion Domains"])} />
+                    </div>
+                    <span style={{ color: isDark ? "#e2e8f0" : "#1e293b" }}>Onion Domains</span>
+                  </div>
+
+                  {/* Web Toggle */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <div
+                      style={toggleStyle(nameToggles["Web Domains"], isDark)}
+                      onClick={() => toggleNameOption("Web Domains")}
+                    >
+                      <div style={knobStyle(nameToggles["Web Domains"])} />
+                    </div>
+                    <span style={{ color: isDark ? "#e2e8f0" : "#1e293b" }}>Web Domains</span>
+                  </div>
+                </div>
               </div>
             )}
 
-            {/* DATE - Toggle Buttons */}
+
             {searchBy === "Date" && (
-              <div className="mb-4">
-                <div className="flex flex-wrap gap-3">
-                  {Object.entries(dateToggles).map(([option, isActive]) => (
-                    <button
-                      key={option}
-                      onClick={() => toggleDateOption(option)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border-2 ${
-                        isActive
-                          ? "bg-cyan-500 border-cyan-500 text-white shadow-lg transform scale-105"
-                          : darkMode
-                            ? "bg-slate-600 border-slate-500 text-gray-300 hover:bg-slate-500 hover:border-slate-400"
-                            : "bg-gray-200 border-gray-300 text-gray-700 hover:bg-gray-300 hover:border-gray-400"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <div
-                          className={`w-2 h-2 rounded-full ${
-                            option === "Domain UP"
-                              ? isActive
-                                ? "bg-white"
-                                : "bg-yellow-500"
-                              : isActive
-                                ? "bg-white"
-                                : "bg-blue-500"
-                          }`}
-                        ></div>
-                        {option}
+              <div style={{ marginBottom: "24px" }}>
+                {/* 🔍 Search Bar for Domain Name */}
+                <div style={{ marginBottom: "16px" }}>
+                  {/* Date Range for Date Search */}
+                  {searchBy === "Date" && (
+                    <div className="mb-6">
+                      <div className={`text-sm font-medium mb-3 ${isDark ? "text-gray-300" : "text-gray-600"}`}>
+
                       </div>
-                    </button>
-                  ))}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input
+                          type="date"
+                          className={`px-4 py-2 rounded-lg border text-sm transition-colors duration-200 ${isDark ? " transparent border-[#2C3440] text-white" : "bg-white border-gray-300 text-gray-900"
+                            }`}
+                        />
+                        <input
+                          type="date"
+                          className={`px-4 py-2 rounded-lg border text-sm transition-colors duration-200 ${isDark ? "transparent border-[#2C3440] text-white" : "bg-white border-gray-300 text-gray-900"
+                            }`}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <div className={`text-sm font-medium mb-3 ${isDark ? "text-gray-300" : "text-gray-600"}`}>
+                    Select Name
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search domain name..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "10px 14px",
+                      borderRadius: "6px",
+                      border: `1px solid ${isDark ? "#2C3440" : "#cbd5e1"}`,
+                      backgroundColor: isDark ? "#0E11164D" : "#B7B7B71A",
+                      color: isDark ? "#f8fafc" : "#0f172a",
+                    }}
+                  />
                 </div>
 
-                {!Object.values(dateToggles).some(Boolean) && (
-                  <div className={`text-center py-8 w-full ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
-                    Click the toggle buttons above to select domain status
+                {/* Domain UP Toggle */}
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                  <div
+                    style={toggleStyle(dateToggles["Domain UP"], isDark)}
+                    onClick={() => toggleDateOption("Domain UP")}
+                  >
+                    <div style={knobStyle(dateToggles["Domain UP"])} />
                   </div>
-                )}
+                  <span style={{ color: isDark ? "#e2e8f0" : "#1e293b" }}>Domain UP</span>
+                </div>
+
+                {/* Domain DOWN Toggle */}
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div
+                    style={toggleStyle(dateToggles["Domain Down"], isDark)}
+                    onClick={() => toggleDateOption("Domain Down")}
+                  >
+                    <div style={knobStyle(dateToggles["Domain Down"])} />
+                  </div>
+                  <span style={{ color: isDark ? "#e2e8f0" : "#1e293b" }}>Domain Down</span>
+                </div>
               </div>
             )}
+
+
+
 
             {/* LANGUAGES - Toggle Buttons */}
             {searchBy === "Languages" && (
-              <div className="mb-4">
-                <div className="flex flex-wrap gap-3">
-                  {Object.entries(languageToggles).map(([option, isActive]) => (
-                    <button
-                      key={option}
-                      onClick={() => toggleLanguageOption(option)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border-2 ${
-                        isActive
-                          ? "bg-cyan-500 border-cyan-500 text-white shadow-lg transform scale-105"
-                          : darkMode
-                            ? "bg-slate-600 border-slate-500 text-gray-300 hover:bg-slate-500 hover:border-slate-400"
-                            : "bg-gray-200 border-gray-300 text-gray-700 hover:bg-gray-300 hover:border-gray-400"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <div
-                          className={`w-2 h-2 rounded-full ${
-                            option === "Domain UP"
-                              ? isActive
-                                ? "bg-white"
-                                : "bg-yellow-500"
-                              : isActive
-                                ? "bg-white"
-                                : "bg-blue-500"
-                          }`}
-                        ></div>
-                        {option}
-                      </div>
-                    </button>
-                  ))}
+              <div style={{ marginBottom: "24px" }}>
+                {/* 🔤 Language Search Bar [do we need this as a drop down?] */}
+                <div style={{ marginBottom: "16px" }}>
+                  <input
+                    type="text"
+                    placeholder="Search language..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "10px 14px",
+                      borderRadius: "6px",
+                      border: `1px solid ${isDark ? "#2C3440" : "#cbd5e1"}`,
+                      backgroundColor: isDark ? "#0E11164D" : "#B7B7B71A",
+                      color: isDark ? "#f8fafc" : "#0f172a",
+                    }}
+                  />
                 </div>
 
-                {!Object.values(languageToggles).some(Boolean) && (
-                  <div className={`text-center py-8 w-full ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
-                    Click the toggle buttons above to select domain status
+                {/* 🔍 Domain Name Search Bar */}
+                <div className={`mb-16 text-sm font-medium mb-4 ${isDark ? "text-gray-300" : "text-gray-600"}`}>
+                  Select Names
+                  <input
+                    type="text"
+                    placeholder="Search domain name..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{
+                      marginTop: "16px",
+                      width: "100%",
+                      padding: "10px 14px",
+                      borderRadius: "6px",
+                      border: `1px solid ${isDark ? "#2C3440" : "#cbd5e1"}`,
+                      backgroundColor: isDark ? "#0E11164D" : "#B7B7B71A",
+
+                      color: isDark ? "#f8fafc" : "#0f172a",
+                    }}
+                  />
+                </div>
+
+                {/* Domain UP Toggle */}
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                  <div
+                    style={toggleStyle(languageToggles["Domain UP"], isDark)}
+                    onClick={() => toggleLanguageOption("Domain UP")}
+                  >
+                    <div style={knobStyle(languageToggles["Domain UP"])} />
                   </div>
-                )}
+                  <span style={{ color: isDark ? "#e2e8f0" : "#1e293b" }}>Domain UP</span>
+                </div>
+
+                {/*Domain DOWN Toggle */}
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div
+                    style={toggleStyle(languageToggles["Domain Down"], isDark)}
+                    onClick={() => toggleLanguageOption("Domain Down")}
+                  >
+                    <div style={knobStyle(languageToggles["Domain Down"])} />
+                  </div>
+                  <span style={{ color: isDark ? "#e2e8f0" : "#1e293b" }}>Domain Down</span>
+                </div>
               </div>
             )}
+
           </div>
         </div>
       </div>

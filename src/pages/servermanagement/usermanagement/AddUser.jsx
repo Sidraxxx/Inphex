@@ -22,19 +22,18 @@ export default function AddUser() {
       color: isDark ? "#ffffff" : "#0f172a",
     },
     contentWrapper: {
-      width: "80%",
-      maxWidth: "1000px",
+      width: "100%",
     },
     title: {
       fontWeight: "bold",
       color: isDark ? "#fff" : "#0f172a",
-      padding: "10px",
       fontSize: "20px",
+      marginTop: "30px",
+      marginBottom: "10px",
     },
     gradientBorder: {
       height: "3px",
-      background: "linear-gradient(to right, #ff0080, #7928ca, #00bfff)",
-      marginBottom: "20px",
+      background: "linear-gradient(to right, #ff0080, #00bfff)",
     },
     input: {
       width: "100%",
@@ -89,6 +88,8 @@ export default function AddUser() {
       <div style={styles.contentWrapper}>
         <h1 style={styles.title}>Add MISP API</h1>
         <div style={styles.gradientBorder}></div>
+        {/* padding after Gradient idk why it isnt working in the css of gradient  */}
+        <div style={{ marginTop: "10px" }}></div> 
 
         {/* Input boxes */}
         <input
