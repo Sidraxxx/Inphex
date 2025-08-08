@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
+import { useTheme } from '../../../context/ThemeContext';
 
 export default function AddOrganization() {
-  const [darkMode, setDarkMode] = useState(true);
+  
   const [formData, setFormData] = useState({
     url: '',
     name: '',
@@ -37,63 +38,61 @@ export default function AddOrganization() {
     }, 1000);
   };
 
-  const theme = darkMode ? 'dark' : '';
+ 
+  const { theme } = useTheme();
+const darkMode = theme === "dark";
 
   return (
     <div className={`${theme}`}>
-      <div className="min-h-screen bg-gray-100 dark:bg#1A1F27] text-gray-900 dark:text-white transition-all duration-300">
-        
-        {/* Main Container */}
-        <div className="bg-white dark:bg-slate-900 min-h-screen">
+      
           
-          {/* Header */}
-          <div className="flex justify-between items-center px-8 py-6">
-            <h1 className="text-xl font-medium text-gray-900 dark:text-white">Add Organization</h1>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors text-gray-700 dark:text-gray-300"
-            >
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-          </div>
+           <div className={`w-full pb-4 border-b border-transparent relative inline-block mt-12 mb-5 ${
+            darkMode
+              ? "text-white"
+              : "text-[#1E293B]/80"
+          }`}>
+          <h1 className="text-md  flex justify-start ">
+           Create Organization
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F56C89] to-[#39D3EC]"></span>
+          </h1>
+        </div>
 
-          {/* Gradient Line */}
-          <div className="mx-8 h-1 bg-gradient-to-r from-red-500 via-purple-500 to-cyan-500 mb-12"></div>
+      
           
           {/* Form Container */}
-          <div className="max-w-7xl mx-auto px-8" >
+          <div >
             
             {/* URL Field */}
-            <div className="mb-4">
+            <div className="mb-2">
               <input
                 type="url"
                 value={formData.url}
                 onChange={(e) => handleInputChange('url', e.target.value)}
-                className="w-full px-4 py-4 bg-[#0E11164D]/30 dark:bg-[#0E11164D]/30  rounded-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-base"
+                className="w-full px-4 py-2 bg-[#0E11164D]/40 text-xs  rounded-xs focus:outline-none focus:ring-1 focus:ring-cyan-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                 placeholder="URL"
                 style={{ backgroundColor: darkMode ? '' : '#B7B7B71A' }}
               />
             </div>
 
             {/* Name Field */}
-            <div className="mb-4">
+            <div className="mb-2">
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
-                className="w-full px-4 py-4 bg-[#0E11164D]/30 dark:bg[#0E11164D]/30   rounded-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-base"
+                className="w-full px-4 py-2 bg-[#0E11164D]/40 rounded-xs focus:outline-none focus:ring-1 focus:ring-cyan-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-xs"
                 placeholder="Name"
                 style={{ backgroundColor: darkMode ? '' : '#B7B7B71A' }}
               />
             </div>
 
             {/* Description Field */}
-            <div className="mb-9">
+            <div className="mb-20">
               <textarea
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
                 rows={4}
-                className="w-full px-4 py-4 bg-[#0E11164D]/30 dark:bg[#0E11164D]/30   rounded-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none text-base"
+                className="w-full px-4 py-4 bg-[#0E11164D]/40 dark:bg[#0E11164D]/30   rounded-xs focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none text-xs"
                 placeholder="Description"
                 style={{ backgroundColor: darkMode ? '' : '#B7B7B71A' }}
               />
@@ -101,31 +100,21 @@ export default function AddOrganization() {
 
             {/* Submit Button */}
             <div className="flex justify-center">
-              <button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className={`px-16 py-3 w-90 rounded-sm text-white font-medium transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed ${
-                  isSubmitting 
-                    ? 'bg-gray-400 dark:bg-gray-600' 
-                    : 'bg-gradient-to-r from-pink-500 to-cyan-500 hover:from-pink-600 hover:to-cyan-600'
-                }`}
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>Submitting...</span>
-                  </div>
-                ) : (
-                  'Submit'
-                )}
-              </button>
+                <div className="flex justify-center pt-4">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="px-20 py-2 bg-gradient-to-r from-[#E47692] to-[#47CBE4] hover:from-[#df6180] hover:to-[#3ac9e6] text-white font-medium rounded-sm transition-all duration-200 shadow-sm text-sm"
+            >
+              Send To Spider
+            </button>
+          </div>
             </div>
 
 
 
           </div>
-        </div>
-      </div>
+        
     </div>
   );
 }
