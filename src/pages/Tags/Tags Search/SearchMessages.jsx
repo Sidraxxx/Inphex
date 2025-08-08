@@ -327,7 +327,7 @@ const [dropdownOpen, setDropdownOpen] = useState(true);
           {/* Search Bar */}
           <div
             className={`p-4 border-b ${
-              darkMode ? "border-slate-700" : "border-gray-200"
+              darkMode ? "border-slate-700 bg-[#1C2937]" : "border-gray-200"
             }`}
           >
             <div className="flex items-center justify-between text-xs">
