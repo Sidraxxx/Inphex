@@ -87,7 +87,7 @@ const darkMode = theme === "dark";
             </div>
 
             {/* Description Field */}
-            <div className="mb-20">
+            <div className="mb-10">
               <textarea
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}

@@ -109,7 +109,6 @@ const routeMap = {
   "Vanity Explorer": "/VanityExplorer",
   "Add Cookiejar": "/AddCookieJar",
   "All Cookiejar": "/AllCookieJar",
-  "Settings" : "/Settings",
 
   //Server Management
   "Server Status":"/ServerStatus",

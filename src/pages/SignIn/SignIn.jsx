@@ -2,18 +2,30 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // ✅ Correct hook for React Router
+import { useAuth } from '../../context/AuthContext';
 
 export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); // ✅ Use navigate instead of router.push
+   const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
+event.preventDefault();
+    setIsLoading(true);
 
-    navigate('/'); // ✅ Use navigate in React projects
+    // Simulate API login delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // ✅ Set fake token to mark user as logged in
+    login("fake-jwt-token");
+
+    // ✅ Redirect to home
+    navigate('/');
+
     setIsLoading(false);
   };
 

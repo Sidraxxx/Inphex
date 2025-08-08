@@ -2,6 +2,7 @@ import React from "react";
 import { useTheme } from "../context/ThemeContext";
 import Navbar from "./Navbar";
 import AppRouter from "../routes/AppRouter";
+import { AuthProvider } from "../context/AuthContext";
 
 const Layout = () => {
   const { theme } = useTheme();
@@ -21,7 +22,10 @@ const Layout = () => {
       }
     >
       <Navbar />
+      <AuthProvider>
+        
       <AppRouter />
+      </AuthProvider>
     </div>
   );
 };
