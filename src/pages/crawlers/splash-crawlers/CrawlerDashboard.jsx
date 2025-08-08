@@ -2,7 +2,7 @@
 import { use, useState } from "react"
 import { X, } from "lucide-react"
 import { useTheme } from "../../../context/ThemeContext";
-
+import Select from "react-select";
 
 const CrawlerDashboard = () => {
   const { theme } = useTheme();
@@ -133,6 +133,51 @@ const CrawlerDashboard = () => {
     transition: "left 0.2s ease",
   });
 
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: 'transparent',
+    borderColor: state.isFocused
+      ? (isDark ? '#f8fafc' : '#2C3440')
+      : (isDark ? '#2C3440' : '#CBD5E1'),
+    boxShadow: 'none',
+    color: '#fff',
+    padding: '2px',
+  }),
+
+
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: '#2C3440',
+    color: '#fff',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused
+      ? (isDark ? '#00ADB5' : '#F5F5F7')
+      : (isDark ? '#232A34' : '#fff'),
+    color: isDark ? '#ffffff' : '#475569',
+    cursor: 'pointer',
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: '#00ADB5',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: '#fff',
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: '#fff',
+    ':hover': {
+      backgroundColor: '#007b8a',
+      color: '#fff',
+    },
+  }),
+};
+
+
 
   return (
     <div className={` transition-colors duration-300 ${isDark ? "transparent" : "bg-gray-50"}`}>
@@ -140,7 +185,7 @@ const CrawlerDashboard = () => {
       <div>
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center h-16">
-            <h1 className={`text-lg font-bold text-xl mt-[30px] ${isDark ? "text-white" : "text-gray-900"}`}>
+            <h1 className={`text-lg text-xl mt-[30px] ${isDark ? "text-white" : "text-gray-900"}`}>
               Crawler Dashboard
             </h1>
 
@@ -155,7 +200,7 @@ const CrawlerDashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className="  sm:px-6 lg:px-0 py-8">
+      <div className="  sm:px-6 lg:px-0 py-0">
         {/* Crawler Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 ">
           {/* Onion Crawlers */}
@@ -212,7 +257,7 @@ const CrawlerDashboard = () => {
                 </h2>
               </div>
              <div className="w-12 h-12 rounded-md bg-[#6FD8661A] flex items-center justify-center">
-              <img src="/coin-dollar.svg" className="rounded-full"></img>
+              <img src="/globe.svg" className="rounded-full"></img>
               </div>
             </div>
             <div className="flex flex-wrap gap-4 text-sm">
@@ -310,65 +355,54 @@ const CrawlerDashboard = () => {
               {searchBy === "Date" && "Select Date Range"}
               {searchBy === "Languages" && "Select Languages"}
             </div>
-            {/* TAGS - Dropdown Selection */}
-            {searchBy === "Tags" && (
-              <div className="mb-4">
-                <div className="relative">
-                  <select
-                    defaultValue=""
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        handleTagSelect(e.target.value)
-                        e.target.value = ""
-                      }
-                    }}
-                    className={`w-full px-3 py-2 border rounded-md ${isDark ? "border-[#2C3440] text-white bg-transparent" : "bg-white border-gray-300 text-gray-900"
-                      }`}
-                  >
-                    <option value="" disabled hidden className={isDark ? "text-slate-300" : "text-gray-400"}>
-                      Select Tags
-                    </option>
-                    {availableTags.map((tag) => (
-                      <option
-                        key={tag}
-                        value={tag}
-                        disabled={selectedTags.includes(tag)}
-                        className={selectedTags.includes(tag) ? "opacity-50" : ""}
-                      >
-                        {tag}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+           {searchBy === "Tags" && (
+  <div className="mb-4">
+    {/* Tags Select */}
+    <div className="relative">
+      <Select
+        options={availableTags
+          .filter((tag) => !selectedTags.includes(tag))
+          .map((tag) => ({ label: tag, value: tag }))}
+        onChange={(selected) => {
+          if (selected?.value) {
+            handleTagSelect(selected.value);
+          }
+        }}
+        placeholder={null}
+        styles={customStyles}
+        
+        isClearable={false}
+        isSearchable={false}
+        components={{ IndicatorSeparator: () => null }} 
+        menuPlacement="top"
+      />
+    </div>
 
-                {/* Selected Tags Display */}
-                {selectedTags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {selectedTags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center px-3 py-1 rounded-md text-sm bg-[#00ADB5] text-white"
-                      >
-                        {tag}
-                        <button
-                          onClick={() => removeTagFromSelection(tag)}
-                          className="ml-2 hover:bg-cyan-600 rounded-full p-0.5 transition-colors duration-200"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {selectedTags.length === 0 && (
-                  <div className={`text-center py-8 w-full ${isDark ? "text-gray-400" : "text-gray-500"}`}>
-                    Select tags from the dropdown above
-                  </div>
-                )}
-              </div>
-            )}
-
+    {/* Selected Tags Display */}
+    {selectedTags.length > 0 ? (
+      <div className="flex flex-wrap gap-2 mt-3">
+        {selectedTags.map((tag) => (
+          <span
+            key={tag}
+            className="inline-flex items-center px-3 py-1 rounded-md text-sm bg-[#00ADB5] text-white"
+          >
+            {tag}
+            <button
+              onClick={() => removeTagFromSelection(tag)}
+              className="ml-2 hover:bg-cyan-600 rounded-full p-0.5 transition-colors duration-200"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          </span>
+        ))}
+      </div>
+    ) : (
+      <div className={`text-center py-8 w-full ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+        Select tags from the dropdown above
+      </div>
+    )}
+  </div>
+)}
             {/* NAME - Toggle Buttons */}
             {searchBy === "Name" && (
               <div style={{ marginBottom: "24px" }}>

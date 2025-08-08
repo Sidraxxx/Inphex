@@ -1,49 +1,30 @@
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, ChevronDown, Sun, Moon } from 'lucide-react';
-
-export default function OrganizationList() {
-  const [darkMode, setDarkMode] = useState(true);
-  const [currentPage, setCurrentPage] = useState(2);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [newItem, setNewItem] = useState({ item: '', action: '' });
+import { useState, useMemo } from 'react';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ChevronDown, Sun, Moon } from 'lucide-react';
+import { useTheme } from "../../../context/ThemeContext";
   
-  const totalPages = 25;
+
+
+
+const OrganizationList = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";  
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  // Sample data matching the image
+  const sampleData = Array.from({ length: 50 }, (_, i) => ({
+    id: i + 1,
+    date: '2025/06/22',
+    item: i === 0 ? 'org' : 'text',
+    action: 'text'
+  }));
+
+  const totalPages = Math.ceil(sampleData.length / itemsPerPage);
   
-  const [data, setData] = useState([
-    { id: 1, date: '2025/08/22', item: '.org', action: 'text' },
-    { id: 2, date: '2025/08/22', item: 'text', action: 'text' },
-    { id: 3, date: '2025/08/22', item: 'text', action: 'text' },
-    { id: 4, date: '2025/08/22', item: 'text', action: 'text' },
-    { id: 5, date: '2025/08/22', item: 'text', action: 'text' },
-    { id: 6, date: '2025/08/22', item: 'text', action: 'text' },
-  ]);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
-  const handleOrganizationList = () => {
-    setShowAddForm(true);
-  };
-
-  const handleSubmit = () => {
-    if (newItem.item.trim() && newItem.action.trim()) {
-      const newEntry = {
-        id: data.length + 1,
-        date: new Date().toISOString().split('T')[0].replace(/-/g, '/').replace(/(\d{4})\/(\d{2})\/(\d{2})/, '$1/$3/$2'),
-        item: newItem.item,
-        action: newItem.action
-      };
-      setData([...data, newEntry]);
-      setNewItem({ item: '', action: '' });
-      setShowAddForm(false);
-    }
-  };
-
-  const handleCancel = () => {
-    setShowAddForm(false);
-    setNewItem({ item: '', action: '' });
-  };
+  const currentData = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return sampleData.slice(startIndex, startIndex + itemsPerPage);
+  }, [currentPage, sampleData]);
 
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -51,180 +32,174 @@ export default function OrganizationList() {
     }
   };
 
-  const theme = darkMode ? 'dark' : '';
+  const goToFirstPage = () => setCurrentPage(1);
+  const goToLastPage = () => setCurrentPage(totalPages);
+  const goToPreviousPage = () => goToPage(currentPage - 1);
+  const goToNextPage = () => goToPage(currentPage + 1);
+
+  const getVisiblePageNumbers = () => {
+    const delta = 1;
+    const range = [];
+    const rangeWithDots = [];
+
+    for (let i = Math.max(2, currentPage - delta); 
+         i <= Math.min(totalPages - 1, currentPage + delta); 
+         i++) {
+      range.push(i);
+    }
+
+    if (currentPage - delta > 2) {
+      rangeWithDots.push(1, '...');
+    } else {
+      rangeWithDots.push(1);
+    }
+
+    rangeWithDots.push(...range);
+
+    if (currentPage + delta < totalPages - 1) {
+      rangeWithDots.push('...', totalPages);
+    } else {
+      if (totalPages > 1) rangeWithDots.push(totalPages);
+    }
+
+    return rangeWithDots.filter((item, index, arr) => arr.indexOf(item) === index);
+  };
 
   return (
-    <div className={`${theme}`}>
-      <div className="min-h-screen bg-gray-100 dark:bg-[#1A1F27] text-gray-900 dark:text-white transition-all duration-300">
-        
-        {/* Add Form Modal */}
-        {showAddForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white dark:bg-slate-700 p-6 rounded-lg w-96 max-w-md mx-4 shadow-xl">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Add New Organization</h2>
-              <div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Item</label>
-                  <input
-                    type="text"
-                    value={newItem.item}
-                    onChange={(e) => setNewItem({ ...newItem, item: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400"
-                    placeholder="Enter item"
-                  />
-                </div>
-                <div className="mb-6">
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Action</label>
-                  <input
-                    type="text"
-                    value={newItem.action}
-                    onChange={(e) => setNewItem({ ...newItem, action: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400"
-                    placeholder="Enter action"
-                  />
-                </div>
-                <div className="flex justify-end space-x-3">
-                  <button
-                    onClick={handleCancel}
-                    className="px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-md hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors text-gray-700 dark:text-gray-300"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleSubmit}
-                    className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white rounded-md transition-colors"
-                  >
-                    Add Entry
-                  </button>
-                </div>
-              </div>
-            </div>
+    <div className={`${isDark ? 'bg-transparent' : 'bg-white'}`}>
+      <div className="py-8">
+        {/* Header */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-4">
+            <h1 className={`text-xl font-medium ${isDark ? 'text-white' : 'text-black'}`}>
+              Organization List
+            </h1>
           </div>
-        )}
-
-        {/* Main Container */}
-        <div className="bg-white dark:bg-slate-900 min-h-screen">
-          {/* Header */}
-          <div className="flex justify-between items-center p-6 pb-4">
-            <h1 className="text-xl font-medium text-gray-900 dark:text-white">Organization List</h1>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors text-gray-700 dark:text-gray-300"
-            >
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-          </div>
-
-          {/* Gradient Line */}
-          <div className="mx-6 h-1 bg-gradient-to-r from-red-500 via-purple-500 to-cyan-500 mb-0"></div>
           
-          {/* Table Container */}
-          <div className="mx-6 bg-white dark:bg-slate-900">
-            {/* Table Header */}
-            <div className="grid grid-cols-3 gap-6 px-6 py-4 border-b border-gray-200 dark:border-slate-700">
-              <div className="flex items-center space-x-1">
-                <span className="text-sm font-medium text-cyan-600 dark:text-cyan-400">Date</span>
-                <ChevronDown className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-              </div>
-              <div className="text-sm font-medium text-gray-700 dark:text-gray-300">Item</div>
-              <div className="text-sm font-medium text-cyan-600 dark:text-cyan-400">Action</div>
-            </div>
+          {/* Gradient separator line */}
+        <div className=" inset-0 bg-gradient-to-r from-[#ff0080] to-[#00bfff] h-1 rounded-md"></div>
 
-            {/* Table Body */}
-            <div>
-              {data.map((row, index) => (
-                <div key={row.id} className="grid grid-cols-3 gap-6 px-6 py-4 border-b border-gray-100 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
-                  <div className="text-sm text-gray-600 dark:text-gray-400">{row.date}</div>
-                  <div className="text-sm text-gray-700 dark:text-gray-300">{row.item}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">{row.action}</div>
-                </div>
-              ))}
+        </div>
+
+        {/* Table Container */}
+        <div className={`${isDark ? 'bg-transparent border-slate-700' : 'bg-white border-gray-200'} border border-[#2C34401A] rounded-lg overflow-hidden`}>
+          {/* Table Header */}
+          <div className={isDark ? 'bg-[#2C344033] text-[#50B8E4]' : 'bg-[#1E293B] text-[#50B8E4]'}>
+            <div className="grid grid-cols-3 gap-4 px-6 py-3">
+              <div className="flex items-center space-x-1 text-sm font-medium">
+                <span>Date</span>
+                <ChevronDown size={14} className="text-gray-300" />
+              </div>
+              <div className="text-sm font-medium">Item</div>
+              <div className="text-sm font-medium">Action</div>
             </div>
+          </div>
+
+          {/* Table Body */}
+          <div className={`divide-y ${isDark ? 'divide-slate-700 bg-[#2C34401A]' : 'divide-gray-100 bg-[#2C34400A]'}`}>
+            {currentData.map((row, index) => (
+              <div key={row.id} className={`grid grid-cols-3 gap-4 px-6 py-3.5 text-sm ${
+                isDark 
+                  ? ' hover:bg-slate-750' 
+                  : ' hover:bg-gray-100'
+              }`}>
+                <div className={isDark ? 'text-[#94A3B8]' : ' text-[#475569]'}>{row.date}</div>
+                <div className={isDark ? 'text-[#94A3B8]' : 'text-[#475569]'}>{row.item}</div>
+                <div className={isDark ? 'text-[#94A3B8]' : 'text-[#475569]'}>{row.action}</div>
+              </div>
+            ))}
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-center py-8 space-x-1">
-            <button
-              onClick={() => goToPage(1)}
-              disabled={currentPage === 1}
-              className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-            >
-              <ChevronLeft className="w-4 h-4 mr-1" />
-              First
-            </button>
-            
-            <button
-              onClick={() => goToPage(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-            >
-              <ChevronLeft className="w-4 h-4 mr-1" />
-              Back
-            </button>
+<div className={`${isDark ? 'bg-transparent border-slate-700' : 'bg-[#2C34400A] border-gray-100'} border-t px-6 py-4`}>
+  <div className="flex items-center justify-center space-x-1 text-xs">
+    
+    {/* First Page */}
+    <button
+      onClick={goToFirstPage}
+      disabled={currentPage === 1}
+      className={`flex items-center gap-1 px-2 py-1 transition-colors border rounded ${
+        isDark 
+          ? 'text-slate-400 border-[#25313F] hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+          : 'bg-white text-gray-400 border-gray-300 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+      }`}
+      title="First"
+    >
+      <ChevronsLeft size={14} /> First
+    </button>
 
-            {/* Page Numbers */}
+    {/* Previous Page */}
+    <button
+      onClick={goToPreviousPage}
+      disabled={currentPage === 1}
+      className={`flex items-center gap-1 px-2 py-1 transition-colors border rounded ${
+        isDark 
+          ? 'text-slate-400 border-[#25313F] hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+          : 'bg-white text-gray-400 border-gray-300 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+      }`}
+      title="Back"
+    >
+      <ChevronLeft size={14} /> Prev
+    </button>
+
+    {/* Page Numbers */}
+    <div className="flex items-center space-x-1 mx-4">
+      {getVisiblePageNumbers().map((pageNum, index) => (
+        <div key={index}>
+          {pageNum === '...' ? (
+            <span className={`px-2 py-1 text-sm ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>...</span>
+          ) : (
             <button
-              onClick={() => goToPage(1)}
-              className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              onClick={() => goToPage(pageNum)}
+              className={`min-w-[32px] h-8 px-3 text-sm rounded transition-colors ${
+                currentPage === pageNum
+                  ? 'bg-blue-500 text-white'
+                  : isDark 
+                    ? 'text-slate-300 border border-[#25313F] hover:bg-slate-700 hover:text-white'
+                    : 'bg-white border border-gray-300 text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+              }`}
             >
-              1
+              {pageNum}
             </button>
+          )}
+        </div>
+      ))}
+    </div>
 
-            <button
-              onClick={() => goToPage(2)}
-              className="px-3 py-2 text-sm bg-cyan-600 dark:bg-cyan-500 text-white rounded transition-colors"
-            >
-              2
-            </button>
+    {/* Next Page */}
+    <button
+      onClick={goToNextPage}
+      disabled={currentPage === totalPages}
+      className={`flex items-center gap-1 px-2 py-1 transition-colors border rounded ${
+        isDark 
+          ? 'text-slate-400 border-[#25313F] hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+          : 'bg-white text-gray-400 border-gray-300 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+      }`}
+      title="Next"
+    >
+      Next <ChevronRight size={14} />
+    </button>
 
-            <button
-              onClick={() => goToPage(3)}
-              className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-            >
-              3
-            </button>
+    {/* Last Page */}
+    <button
+      onClick={goToLastPage}
+      disabled={currentPage === totalPages}
+      className={`flex items-center gap-1 px-2 py-1 transition-colors border rounded ${
+        isDark 
+          ? 'text-slate-400 border-[#25313F] hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+          : 'bg-white border-gray-100 text-gray-400 border-gray-300 hover:text-gray-600  disabled:text-gray-300 disabled:cursor-not-allowed'
+      }`}
+      title="Last"
+    >
+      Last <ChevronsRight size={14} />
+    </button>
 
-            <button
-              onClick={() => goToPage(4)}
-              className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-            >
-              4
-            </button>
-
-            <span className="px-3 py-2 text-sm text-gray-500 dark:text-gray-500">...</span>
-
-            <button
-              onClick={() => goToPage(25)}
-              className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-            >
-              25
-            </button>
-
-            <button
-              onClick={() => goToPage(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-            >
-              Next
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </button>
-
-            <button
-              onClick={() => goToPage(totalPages)}
-              disabled={currentPage === totalPages}
-              className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-            >
-              Last
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </button>
-          </div>
-
-          {/* Add Organization Button */}
-          <div className="flex justify-center pb-8">
-            
-          </div>
+  </div>
+</div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default OrganizationList;

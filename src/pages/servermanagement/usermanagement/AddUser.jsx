@@ -25,7 +25,6 @@ export default function AddUser() {
       width: "100%",
     },
     title: {
-      fontWeight: "bold",
       color: isDark ? "#fff" : "#0f172a",
       fontSize: "20px",
       marginTop: "30px",

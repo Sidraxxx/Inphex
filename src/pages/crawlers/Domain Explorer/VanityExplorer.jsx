@@ -1,8 +1,13 @@
 import { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ChevronDown, Sun, Moon } from 'lucide-react';
+import { useTheme } from "../../../context/ThemeContext";
+  
+
+
 
 const VanityExplorer = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
@@ -60,40 +65,27 @@ const VanityExplorer = () => {
     return rangeWithDots.filter((item, index, arr) => arr.indexOf(item) === index);
   };
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}>
-      <div className="max-w-4xl mx-auto py-8 px-6">
+    <div className={`${isDark ? 'bg-transparent' : 'bg-white'}`}>
+      <div className="py-8">
         {/* Header */}
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h1 className={`text-xl font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h1 className={`text-xl font-medium ${isDark ? 'text-white' : 'text-black'}`}>
               Vanity Explorer
             </h1>
-            
-            <button
-              onClick={toggleTheme}
-              className={`p-2 rounded-lg transition-colors ${
-                isDarkMode 
-                  ? 'text-gray-300 hover:text-white hover:bg-slate-700' 
-                  : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
-              }`}
-            >
-              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+
           </div>
           
           {/* Gradient separator line */}
-          <div className="h-0.5 bg-gradient-to-r  from-pink-500 to-blue-500  w-full" />
+        <div className=" inset-0 bg-gradient-to-r from-[#ff0080] to-[#00bfff] h-1 rounded-md"></div>
+
         </div>
 
         {/* Table Container */}
-        <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} border rounded-lg overflow-hidden shadow-sm`}>
+        <div className={`${isDark ? 'bg-transparent border-slate-700' : 'bg-white border-gray-200'} border border-[#2C34401A] rounded-lg overflow-hidden`}>
           {/* Table Header */}
-          <div className={isDarkMode ? 'bg-slate-700 text-white' : 'bg-slate-700 text-white'}>
+          <div className={isDark ? 'bg-[#2C344033] text-[#50B8E4]' : 'bg-[#1E293B] text-[#50B8E4]'}>
             <div className="grid grid-cols-3 gap-4 px-6 py-3">
               <div className="flex items-center space-x-1 text-sm font-medium">
                 <span>Date</span>
@@ -105,104 +97,106 @@ const VanityExplorer = () => {
           </div>
 
           {/* Table Body */}
-          <div className={`divide-y ${isDarkMode ? 'divide-slate-700' : 'divide-gray-100'}`}>
+          <div className={`divide-y ${isDark ? 'divide-slate-700 bg-[#2C34401A]' : 'divide-gray-100 bg-[#2C34400A]'}`}>
             {currentData.map((row, index) => (
               <div key={row.id} className={`grid grid-cols-3 gap-4 px-6 py-3.5 text-sm ${
-                isDarkMode 
-                  ? 'bg-slate-800 hover:bg-slate-750' 
-                  : 'bg-gray-50 hover:bg-gray-100'
+                isDark 
+                  ? ' hover:bg-slate-750' 
+                  : ' hover:bg-gray-100'
               }`}>
-                <div className={isDarkMode ? 'text-slate-400' : 'text-gray-600'}>{row.date}</div>
-                <div className={isDarkMode ? 'text-slate-200' : 'text-gray-900'}>{row.item}</div>
-                <div className={isDarkMode ? 'text-slate-200' : 'text-gray-900'}>{row.action}</div>
+                <div className={isDark ? 'text-[#94A3B8]' : ' text-[#475569]'}>{row.date}</div>
+                <div className={isDark ? 'text-[#94A3B8]' : 'text-[#475569]'}>{row.item}</div>
+                <div className={isDark ? 'text-[#94A3B8]' : 'text-[#475569]'}>{row.action}</div>
               </div>
             ))}
           </div>
 
           {/* Pagination */}
-          <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-100'} border-t px-6 py-4`}>
-            <div className="flex items-center justify-center space-x-1">
-              {/* First Page */}
-              <button
-                onClick={goToFirstPage}
-                disabled={currentPage === 1}
-                className={`p-1.5 transition-colors ${
-                  isDarkMode 
-                    ? 'text-slate-400 hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
-                    : 'text-gray-400 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
-                }`}
-                title="First"
-              >
-                <ChevronsLeft size={16} />
-              </button>
+<div className={`${isDark ? 'bg-transparent border-slate-700' : 'bg-[#2C34400A] border-gray-100'} border-t px-6 py-4`}>
+  <div className="flex items-center justify-center space-x-1 text-xs">
+    
+    {/* First Page */}
+    <button
+      onClick={goToFirstPage}
+      disabled={currentPage === 1}
+      className={`flex items-center gap-1 px-2 py-1 transition-colors border rounded ${
+        isDark 
+          ? 'text-slate-400 border-[#25313F] hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+          : 'bg-white text-gray-400 border-gray-300 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+      }`}
+      title="First"
+    >
+      <ChevronsLeft size={14} /> First
+    </button>
 
-              {/* Previous Page */}
-              <button
-                onClick={goToPreviousPage}
-                disabled={currentPage === 1}
-                className={`p-1.5 transition-colors ${
-                  isDarkMode 
-                    ? 'text-slate-400 hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
-                    : 'text-gray-400 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
-                }`}
-                title="Back"
-              >
-                <ChevronLeft size={16} />
-              </button>
+    {/* Previous Page */}
+    <button
+      onClick={goToPreviousPage}
+      disabled={currentPage === 1}
+      className={`flex items-center gap-1 px-2 py-1 transition-colors border rounded ${
+        isDark 
+          ? 'text-slate-400 border-[#25313F] hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+          : 'bg-white text-gray-400 border-gray-300 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+      }`}
+      title="Back"
+    >
+      <ChevronLeft size={14} /> Prev
+    </button>
 
-              {/* Page Numbers */}
-              <div className="flex items-center space-x-1 mx-4">
-                {getVisiblePageNumbers().map((pageNum, index) => (
-                  <div key={index}>
-                    {pageNum === '...' ? (
-                      <span className={`px-2 py-1 text-sm ${isDarkMode ? 'text-slate-500' : 'text-gray-400'}`}>...</span>
-                    ) : (
-                      <button
-                        onClick={() => goToPage(pageNum)}
-                        className={`min-w-[32px] h-8 px-3 text-sm rounded transition-colors ${
-                          currentPage === pageNum
-                            ? 'bg-blue-500 text-white'
-                            : isDarkMode 
-                              ? 'text-slate-300 hover:bg-slate-700 hover:text-white'
-                              : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                        }`}
-                      >
-                        {pageNum}
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
+    {/* Page Numbers */}
+    <div className="flex items-center space-x-1 mx-4">
+      {getVisiblePageNumbers().map((pageNum, index) => (
+        <div key={index}>
+          {pageNum === '...' ? (
+            <span className={`px-2 py-1 text-sm ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>...</span>
+          ) : (
+            <button
+              onClick={() => goToPage(pageNum)}
+              className={`min-w-[32px] h-8 px-3 text-sm rounded transition-colors ${
+                currentPage === pageNum
+                  ? 'bg-blue-500 text-white'
+                  : isDark 
+                    ? 'text-slate-300 border border-[#25313F] hover:bg-slate-700 hover:text-white'
+                    : 'bg-white border border-gray-300 text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+              }`}
+            >
+              {pageNum}
+            </button>
+          )}
+        </div>
+      ))}
+    </div>
 
-              {/* Next Page */}
-              <button
-                onClick={goToNextPage}
-                disabled={currentPage === totalPages}
-                className={`p-1.5 transition-colors ${
-                  isDarkMode 
-                    ? 'text-slate-400 hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
-                    : 'text-gray-400 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
-                }`}
-                title="Next"
-              >
-                <ChevronRight size={16} />
-              </button>
+    {/* Next Page */}
+    <button
+      onClick={goToNextPage}
+      disabled={currentPage === totalPages}
+      className={`flex items-center gap-1 px-2 py-1 transition-colors border rounded ${
+        isDark 
+          ? 'text-slate-400 border-[#25313F] hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+          : 'bg-white text-gray-400 border-gray-300 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
+      }`}
+      title="Next"
+    >
+      Next <ChevronRight size={14} />
+    </button>
 
-              {/* Last Page */}
-              <button
-                onClick={goToLastPage}
-                disabled={currentPage === totalPages}
-                className={`p-1.5 transition-colors ${
-                  isDarkMode 
-                    ? 'text-slate-400 hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
-                    : 'text-gray-400 hover:text-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed'
-                }`}
-                title="Last"
-              >
-                <ChevronsRight size={16} />
-              </button>
-            </div>
-          </div>
+    {/* Last Page */}
+    <button
+      onClick={goToLastPage}
+      disabled={currentPage === totalPages}
+      className={`flex items-center gap-1 px-2 py-1 transition-colors border rounded ${
+        isDark 
+          ? 'text-slate-400 border-[#25313F] hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
+          : 'bg-white border-gray-100 text-gray-400 border-gray-300 hover:text-gray-600  disabled:text-gray-300 disabled:cursor-not-allowed'
+      }`}
+      title="Last"
+    >
+      Last <ChevronsRight size={14} />
+    </button>
+
+  </div>
+</div>
         </div>
       </div>
     </div>

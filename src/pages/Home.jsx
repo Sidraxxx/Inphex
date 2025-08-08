@@ -224,7 +224,9 @@ export default function Home() {
     },
     topRow: {
       display: "flex",
-      border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+       border: "1.5px solid",
+        borderColor: isDark ? "#25313F" : "#d1d5db",
+        borderRadius: "8px",
     },
     bottomGrid: {
       display: "grid",
@@ -271,12 +273,14 @@ function Pagination({ isDark, currentPage, totalPages, onPageChange }) {
     buttonGroup: {
       display: "flex",
       gap: "8px",
+      
     },
     button: {
-      padding: "4px 8px",
+      padding: "2px 10px",
       fontSize: "12px",
       background: "transparent",
-      border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+      border: `1px solid ${isDark ? "#25313F" : "#d1d5db"}`,
+      borderRadius: "4px",
       color: isDark ? "#d1d5db" : "#374151",
       cursor: "pointer",
     },
@@ -360,7 +364,8 @@ function TrackerTable({ isDark, data }) {
   const styles = {
     container: {
       background: isDark ? "transparent" : "#ffffff",
-      border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+      border: `1.5px solid ${isDark ? "#25313F" : "#d1d5db"}`,
+      borderRadius: "8px",
       overflow: "hidden",
     },
     table: {
@@ -381,7 +386,7 @@ function TrackerTable({ isDark, data }) {
       padding: "8px 16px",
     },
     row: {
-      borderBottom: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
+      borderBottom: `1.5px solid ${isDark ? "#25313F" : "#e5e7eb"}`,
       cursor: "pointer",
       transition: "background 0.2s",
     },
@@ -437,7 +442,8 @@ function TagsTable({ isDark, data }) {
   const styles = {
     container: {
       background: isDark ? "transparent" : "#ffffff",
-      border: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+      border: `1.5px solid ${isDark ? "#25313F" : "#d1d5db"}`,
+      borderRadius: "8px",
       overflow: "hidden",
     },
     table: {
@@ -520,6 +526,7 @@ function ChartCard({ isDark, selectedDate, chartData }) {
       background: isDark ? "transparent" : "#ffffff",
       padding: "16px",
       flex: 1,
+      
     },
     header: {
       display: "flex",
@@ -560,7 +567,7 @@ function ChartCard({ isDark, selectedDate, chartData }) {
       </div>
       <div style={styles.badgesRow}>
         <div style={styles.badges}>
-          <img src="/security 1.svg" style={styles.logo}></img>
+          <img src="/security-grey.svg" style={styles.logo}></img>
           <span style={styles.badge("#16a34a")}>{totalUp} Up</span>
           <span style={styles.badge("#dc2626")}>{totalDown} Down</span>
           <span style={styles.badge("#2563eb")}>
@@ -569,7 +576,7 @@ function ChartCard({ isDark, selectedDate, chartData }) {
           <span style={styles.badge("#38bdf8")}>{data.length} Queued</span>
         </div>
         <div style={styles.badges}>
-          <img src="/Shape.svg" style={styles.logo}></img>
+          <img src="/shape-grey.svg" style={styles.logo}></img>
           <span style={styles.badge("#16a34a")}>{totalUp} Up</span>
           <span style={styles.badge("#dc2626")}>{totalDown} Down</span>
           <span style={styles.badge("#2563eb")}>
@@ -610,7 +617,7 @@ function TagList({ selectedDate, setSelectedDate, categories, isDark }) {
   const styles = {
     container: {
       background: isDark ? "transparent" : "#ffffff",
-      borderLeft: `1px solid ${isDark ? "#4b5563" : "#d1d5db"}`,
+      borderLeft: `1.5px solid ${isDark ? "#25313F" : "#d1d5db"}`,
       padding: "15px",
       width: "280px",
       display: "flex",

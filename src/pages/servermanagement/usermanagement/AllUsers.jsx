@@ -65,7 +65,7 @@ export default function UserList() {
   return (
     <div style={containerStyle}>
       <div style={contentWrapper}>
-        <h1 style={{ fontWeight: "bold", color: isDark ? "#fff" : "#0f172a", marginBottom: "10px", fontSize:"20px" }}>
+        <h1 style={{color: isDark ? "#fff" : "#0f172a", marginBottom: "10px", fontSize:"20px" }}>
           All Users
         </h1>
         <div
