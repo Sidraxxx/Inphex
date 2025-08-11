@@ -34,6 +34,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 const iconMap = {
   // tags 
   "Search Messages": <MessageCircle className="w-4 h-4" />,
@@ -135,7 +136,7 @@ const Navbar = () => {
   const [hoveredItem, setHoveredItem] = useState(null);
   const navigate = useNavigate();
 
-
+const { logout } = useAuth();
   const tagsRef = useRef(null);
   const crawlersRef = useRef(null);
   const serverRef = useRef(null);
@@ -179,20 +180,8 @@ const Navbar = () => {
   ];
 
   const serverDropdownData  = [
-    {
-      title: "Diagnostic",
-      items: [
-        "Server Status",
-      ],
-    },
-    {
-      title: "AIL SYNC",
-      items: ["AIL Sync", "Servers", "Sync Queues"],
-    },
-    {
-      title: "Settings",
-      items: ["Passive DNS"],
-    },
+   
+   
     {
       title: "My Profile",
       items: ["Profile", "Change Password"],
@@ -205,7 +194,16 @@ const Navbar = () => {
       title: "Organizations",
       items: ["Add Organization", "Organizations List"],
     },
-    
+     {
+      title: "AIL SYNC",
+      items: ["AIL Sync"],
+    },
+     {
+      title: "Diagnostic",
+      items: [
+        "Server Status",
+      ],
+    },
     
   ];
 
@@ -619,7 +617,10 @@ const Navbar = () => {
                   ? "bg-white text-black hover:bg-gray-100"
                   : "bg-black text-white hover:bg-gray-800"
               }`}
-               onClick={() => navigate("/SignIn")}
+               onClick={() =>{
+        logout(); // clears token + sets isAuthenticated = false
+        navigate("/SignIn"); // then navigate to sign in
+      }}
             >
               {/* <svg
                 className="w-4 h-4 mr-2"

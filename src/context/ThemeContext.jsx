@@ -9,6 +9,7 @@ export const ThemeProvider = ({ children }) => {
 
   // Initialize theme from localStorage or system preference
   useEffect(() => {
+    
     const saved = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     setTheme(saved || (prefersDark ? 'dark' : 'light'));

@@ -180,12 +180,12 @@ const customStyles = {
 
 
   return (
-    <div className={` transition-colors duration-300 ${isDark ? "transparent" : "bg-gray-50"}`}>
+    <div className={`mt-12`}>
       {/* Header */}
       <div>
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center h-16">
-            <h1 className={`text-lg text-xl mt-[30px] ${isDark ? "text-white" : "text-gray-900"}`}>
+        <div>
+          <div className="flex items-center">
+            <h1 className={`text-md ${isDark ? "text-white" : "text-gray-900"}`}>
               Crawler Dashboard
             </h1>
 
@@ -196,7 +196,7 @@ const customStyles = {
       </div>
 
       <div className="w-full mb-2 font-medium  pb-4 border-b border-transparent relative inline-block mt-[10px]">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#ff0080] to-[#00bfff] h-1 rounded-md"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#ff0080] to-[#00bfff] h-0.5 rounded-md"></div>
       </div>
 
       {/* Main Content */}

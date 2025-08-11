@@ -235,7 +235,7 @@ export default function Home() {
     },
   };
 return (
-  <div style={styles.container}>
+  <div className="mt-12" style={styles.container}>
     {/* Top Row */}
     <div style={styles.topRow}>
       <ChartCard 

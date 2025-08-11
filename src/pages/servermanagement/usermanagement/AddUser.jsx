@@ -14,15 +14,8 @@ export default function AddUser() {
   // Styles
   const styles = {
     container: {
-      background: isDark ? "transparent" : "#f8fafc",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
       gap: "24px",
       color: isDark ? "#ffffff" : "#0f172a",
-    },
-    contentWrapper: {
-      width: "100%",
     },
     title: {
       color: isDark ? "#fff" : "#0f172a",
@@ -30,15 +23,10 @@ export default function AddUser() {
       marginTop: "30px",
       marginBottom: "10px",
     },
-    gradientBorder: {
-      height: "3px",
-      background: "linear-gradient(to right, #ff0080, #00bfff)",
-    },
     input: {
       width: "100%",
       padding: "10px",
       fontSize: "16px",
-      
       borderRadius: "6px",
       background: isDark ? "#0E11164D" : "#B7B7B71A",
       color: isDark ? "#ffffff" : "#0f172a",
@@ -84,11 +72,17 @@ export default function AddUser() {
 
   return (
     <div style={styles.container}>
-      <div style={styles.contentWrapper}>
-        <h1 style={styles.title}>Add MISP API</h1>
-        <div style={styles.gradientBorder}></div>
-        {/* padding after Gradient idk why it isnt working in the css of gradient  */}
-        <div style={{ marginTop: "10px" }}></div> 
+      <div>
+        <div className={`w-full pb-4 border-b border-transparent relative inline-block mt-12 mb-5 ${
+            isDark
+              ? "text-white"
+              : "text-[#1E293B]/80"
+          }`}>
+          <h1 className="text-md  flex justify-start ">
+           All Users
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F56C89] to-[#39D3EC]"></span>
+          </h1>
+        </div>
 
         {/* Input boxes */}
         <input

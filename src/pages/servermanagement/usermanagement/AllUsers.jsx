@@ -49,32 +49,29 @@ export default function UserList() {
 
   const containerStyle = {
     
-    background: isDark ? "transparent" : "#f8fafc",
+    
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     gap: "24px",
     color: isDark ? "#ffffff" : "#0f172a",
-    marginTop: "30px",
   };
 
-  const contentWrapper = {
-    width: "100%",
-  };
+
 
   return (
     <div style={containerStyle}>
-      <div style={contentWrapper}>
-        <h1 style={{color: isDark ? "#fff" : "#0f172a", marginBottom: "10px", fontSize:"20px" }}>
-          All Users
-        </h1>
-        <div
-          style={{
-            height: "3px",
-            background: "linear-gradient(to right, #ff0080, #00bfff)",
-            marginBottom:"20px",
-          }}
-        ></div>
+      <div>
+       <div className={`w-full pb-4 border-b border-transparent relative inline-block mt-12 mb-5 ${
+            isDark
+              ? "text-white"
+              : "text-[#1E293B]/80"
+          }`}>
+          <h1 className="text-md  flex justify-start ">
+           All Users
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F56C89] to-[#39D3EC]"></span>
+          </h1>
+        </div>
 
         <UserTable isDark={isDark} data={currentData} />
         <div style={{ padding: "10px" }}></div>

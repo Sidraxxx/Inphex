@@ -2,11 +2,18 @@ import React from "react";
 import { useTheme } from "../context/ThemeContext";
 import Navbar from "./Navbar";
 import AppRouter from "../routes/AppRouter";
-import { AuthProvider } from "../context/AuthContext";
+import { AuthProvider, useAuth } from "../context/AuthContext";
+import { useLocation } from "react-router-dom";
 
-const Layout = () => {
+const LayoutContent = () => {
   const { theme } = useTheme();
+  const { isAuthenticated } = useAuth(); // ✅ from your context
+  const location = useLocation();
+
   const darkMode = theme === "dark";
+
+  // Hide navbar if not logged in AND on signup page
+  const hideNavbar = !isAuthenticated || location.pathname === "/signup";
 
   return (
     <div
@@ -21,12 +28,18 @@ const Layout = () => {
           : {}
       }
     >
-      <Navbar />
-      <AuthProvider>
-        
+      {/* {!hideNavbar && <Navbar />} */}
+      {isAuthenticated && <Navbar />}
       <AppRouter />
-      </AuthProvider>
     </div>
+  );
+};
+
+const Layout = () => {
+  return (
+    <AuthProvider>
+      <LayoutContent />
+    </AuthProvider>
   );
 };
 

@@ -90,19 +90,20 @@ const darkMode = theme === "dark";
 
   return (
     <div >
-      <div  className='mt-12'>
+      <div  >
         {/* Header */}
-        <div className="flex items-center justify-between mb-4">
-          <h1 className={`text-xl  ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            AIL Framework Status
+        <div className={`w-full pb-4 border-b border-transparent relative inline-block mt-12 mb-5 ${
+            darkMode
+              ? "text-white"
+              : "text-[#1E293B]/80"
+          }`}>
+          <h1 className="text-md  flex justify-start ">
+           Schedulers
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F56C89] to-[#39D3EC]"></span>
           </h1>
-          
         </div>
          
-        {/* Header Line */}
-        <div className={`w-full mb-6 h-0.5 bg-gradient-to-r  from-[#F56C89] to-[#39D3EC]  ${
-          darkMode ? 'bg-slate-600' : 'bg-gray-300'
-        }`}></div>
+      
 
         {/* Status Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-1.5 mb-2 p-28px w-300px rounded">

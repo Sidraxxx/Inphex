@@ -161,22 +161,22 @@ const darkMode = theme === "dark";
   );
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      darkMode ? ' text-white' : ' text-gray-900'
-    }`}>
-      <div className="container mx-auto p-4 max-w-7xl">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
-            <h1 className="text-xl sm:text-2xl font-bold">Filter Onion Domains</h1>
-            
-          </div>
-          <div className={`h-0.5 w-full ${ darkMode? 'bg-gradient-to-r from-[#F46D89]  to-cyan-400' : 'bg-gradient-to-r from-[#F46D89]  to-cyan-400'}`}></div>
+    <div>
+     
+         <div className={`w-full pb-4 border-b border-transparent relative inline-block mt-12 mb-5 ${
+            darkMode
+              ? "text-white"
+              : "text-[#1E293B]/80"
+          }`}>
+          <h1 className="text-md  flex justify-start ">
+           Onion Dmains
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F56C89] to-[#39D3EC]"></span>
+          </h1>
         </div>
 
         {/* Filter Section */}
         <div className={`p-4 sm:p-6 rounded-lg mb-6 ${
-          darkMode ? 'bg-[#0E1116]/20' : 'bg-white'
+          darkMode ?  ' text-white bg-[#0E1116]/20' : 'bg-white text-[#1E293B]/80'
         } shadow-lg`}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
             <h2 className="text-base sm:text-lg font-semibold">Filter Domains by Date Range</h2>
@@ -274,7 +274,11 @@ const darkMode = theme === "dark";
         </div>
 
         {/* Blur Control */}
-        <div className="mb-6">
+        <div className={`mb-6 ${
+                  darkMode 
+                    ? ' text-white' 
+                    : ' text-gray-900'
+                }`}>
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <span className="text-sm font-medium">Hide</span>
             <div className="flex-1 max-w-xs">
@@ -320,7 +324,7 @@ const darkMode = theme === "dark";
           </div>
         )}
       </div>
-    </div>
+   
   );
 };
 

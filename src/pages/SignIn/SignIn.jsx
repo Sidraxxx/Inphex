@@ -8,7 +8,7 @@ export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); // ✅ Use navigate instead of router.push
    const { login } = useAuth();
-
+const { isAuthenticated } = useAuth();
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -30,7 +30,7 @@ event.preventDefault();
   };
 
   return (
-    <div className="mt-25 flex items-center justify-center p-4">
+    <div className=" flex items-center justify-center p-4 h-screen">
       <div className="w-full max-w-md p-8  text-center">
         <h1 className="text-white text-4xl font-bold tracking-widest mb-6">
           <img
@@ -62,6 +62,7 @@ event.preventDefault();
             />
           </div>
           <button
+          onClick={isAuthenticated===true}
             type="submit"
             className={`w-full py-3 rounded-md text-white font-semibold text-lg
               bg-gradient-to-r from-[#FF6B8B] to-[#4ECDC4]

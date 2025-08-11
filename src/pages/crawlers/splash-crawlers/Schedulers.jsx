@@ -66,20 +66,18 @@ const Schedulers = () => {
   };
 
   return (
-    <div className={`${isDark ? 'bg-transparent' : 'bg-white'}`}>
-      <div className="py-8">
+    <div>
+      <div>
         {/* Header */}
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className={`text-xl font-medium ${isDark ? 'text-white' : 'text-black'}`}>
-              Schedulers
-            </h1>
-
-          </div>
-          
-          {/* Gradient separator line */}
-        <div className=" inset-0 bg-gradient-to-r from-[#ff0080] to-[#00bfff] h-1 rounded-md"></div>
-
+        <div className={`w-full pb-4 border-b border-transparent relative inline-block mt-12 mb-5 ${
+            isDark
+              ? "text-white"
+              : "text-[#1E293B]/80"
+          }`}>
+          <h1 className="text-md  flex justify-start ">
+           Schedulers
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F56C89] to-[#39D3EC]"></span>
+          </h1>
         </div>
 
         {/* Table Container */}
