@@ -188,7 +188,7 @@ const VanityExplorer = () => {
       className={`flex items-center gap-1 px-2 py-1 transition-colors border rounded ${
         isDark 
           ? 'text-slate-400 border-[#25313F] hover:text-white disabled:text-slate-600 disabled:cursor-not-allowed' 
-          : 'bg-white border-gray-100 text-gray-400 border-gray-300 hover:text-gray-600  disabled:text-gray-300 disabled:cursor-not-allowed'
+          : 'bg-white border-gray-100 text-gray-400  hover:text-gray-600  disabled:text-gray-300 disabled:cursor-not-allowed'
       }`}
       title="Last"
     >

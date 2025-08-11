@@ -117,7 +117,7 @@ const routeMap = {
   "Servers":"",
   "Sync Queues":"",
   "Profile":"/Profile",
-  "Change Password": "",
+  "Change Password": "/ChangePassword",
   "Add User": "/AddUser",
   "Users List": "/AllUsers",
   "Add Organization":"/AddOrganization",

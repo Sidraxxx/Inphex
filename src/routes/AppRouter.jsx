@@ -17,6 +17,7 @@ import AllCookieJar from "../pages/crawlers/cookiejar/AllCookieJar";
 import ServerStatus from "../pages/servermanagement/diagnostic/ServerStatus";
 import AilSync from "../pages/servermanagement/Ailsync/AilSync";
 import Profile from "../pages/servermanagement/myprofile/Profile";
+import ChangePassword from "../pages/servermanagement/myprofile/ChangePassword";
 import SearchOcrs from "../pages/Tags/Tags Search/SearchOcrs";
 import SearchImages from "../pages/Tags/Tags Search/SearchImages";
 import SearchDomains from "../pages/Tags/Tags Search/SearchDomains";
@@ -76,6 +77,7 @@ const AppRouter = () => {
       <Route path="/ServerStatus" element={<ProtectedRoute><ServerStatus /></ProtectedRoute>} />
       <Route path="/AilSync" element={<ProtectedRoute><AilSync /></ProtectedRoute>} />
       <Route path="/Profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/ChangePassword" element={<ProtectedRoute><ChangePassword/></ProtectedRoute>} />
       <Route path="/AllUsers" element={<ProtectedRoute><AllUsers /></ProtectedRoute>} />
       <Route path="/AddUser" element={<ProtectedRoute><AddUser /></ProtectedRoute>} />
       <Route path="/AddOrganization" element={<ProtectedRoute><AddOrganization /></ProtectedRoute>} />
