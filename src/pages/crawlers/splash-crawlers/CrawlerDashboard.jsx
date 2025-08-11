@@ -360,22 +360,32 @@ const customStyles = {
     {/* Tags Select */}
     <div className="relative">
       <Select
-        options={availableTags
-          .filter((tag) => !selectedTags.includes(tag))
-          .map((tag) => ({ label: tag, value: tag }))}
-        onChange={(selected) => {
-          if (selected?.value) {
-            handleTagSelect(selected.value);
-          }
-        }}
-        placeholder={null}
-        styles={customStyles}
-        
-        isClearable={false}
-        isSearchable={false}
-        components={{ IndicatorSeparator: () => null }} 
-        menuPlacement="top"
-      />
+  options={availableTags
+    .filter((tag) => !selectedTags.includes(tag))
+    .map((tag) => ({ label: tag, value: tag }))}
+  onChange={(selected) => {
+    if (selected?.value) {
+      handleTagSelect(selected.value);
+    }
+  }}
+  placeholder="Select tag..."
+  styles={{
+    ...customStyles,
+    placeholder: (provided) => ({
+      ...provided,
+      color: isDark ? '#9CA3AF' : '#6B7280', // placeholder color
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: isDark ? '#E5E7EB' : '#111827', // text color after selection
+    }),
+  }}
+  isClearable={false}
+  isSearchable={false}
+  components={{ IndicatorSeparator: () => null }}
+  menuPlacement="top"
+/>
+
     </div>
 
     {/* Selected Tags Display */}
